@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Page</title>
+    <script>
+        // Fonction pour définir la couleur de fond dans un cookie
+        function setBgColor(color) {
+            document.cookie = "bgcolor=" + color + "; path=/";
+        }
+
+        // Fonction pour récupérer la couleur de fond à partir du cookie
+        function getBgColor() {
+            var name = "bgcolor=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+            for(var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        // Fonction pour appliquer la couleur de fond à la page
+        function applyBgColor() {
+            var bgColor = getBgColor();
+            if (bgColor) {
+                document.body.style.backgroundColor = bgColor;
+            }
+        }
+
+        // Appeler la fonction au chargement de la page
+        window.onload = applyBgColor;
+    </script>
+</head>
+<body>
+    <h1>Ma Page</h1>
+    <button onclick="setBgColor('lightblue')">Définir la couleur de fond</button>
+</body>
+</html>
