@@ -1,0 +1,280 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: #f4f4f4;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+nav { 
+  background-color: #444;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+section {
+  padding: 20px;
+}
+
+h2 {
+    cursor: pointer;
+  text-align: center;
+}
+
+ul {
+
+  list-style-type: none;
+  
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+li {
+  display: inline;
+  margin-right: 20px;
+}
+
+li a:hover {
+  background-color: #6457A6;
+  border-radius: 8px;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+section {
+  flex: 1;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Ajout de cette ligne pour centrer verticalement */
+}
+
+.manga-card {
+  display: block;
+  margin: 0 auto;
+  margin: 10px;
+  width: 48%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+background-color: #333;
+color: #fff;
+padding: 10px;
+text-align: center;
+}
+
+.manga-card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #333333;
+}
+
+.manga-card-content {
+  padding: 10px;
+}
+
+.manga-card h3 {
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .manga-card {
+      width: 100%; /* Pleine largeur pour une seule colonne sur les petits écrans */
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .manga-container {
+      width: 100%; /* Pleine largeur pour une seule colonne sur les petits écrans */
+  }
+}
+
+.manga-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  border: 2px solid #fff;
+  margin-top: 40px;
+}
+
+.manga-image {
+  flex: 0 0 200px;
+  max-width: 200px;
+  margin-top: 50px;
+}
+
+.manga-image img {
+  width: 100%;
+  height: auto;
+}
+
+.manga-info {
+  flex: 1;
+  padding: 20px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.main-container {
+min-width: 100%;
+max-width: 1500rem;
+display: flex;
+justify-content: center;
+}
+
+aside {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+}
+
+main .title-container {
+border-bottom: 2px solid white;
+padding: 15px 0 5px 0;
+width: 100%;
+}
+
+.chapter-list {
+display: flex;
+flex-direction: column;
+padding: 15px 0 5px 0;
+margin: 0 20px;
+}
+
+main .chapter-container {
+padding-top: 15px;
+bottom: 15px;
+margin: 0 20px;
+}
+
+.no-decoration {
+    text-decoration: none;
+    color: white;
+}
+
+.manga-buttons {
+        margin-top: 10px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .chapter-button,
+    .download-button {
+        padding: 10px;
+        margin: 0 10px;
+        cursor: pointer;
+        border: 1px solid #333;
+        background-color: #ddd;
+        color: #333;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .chapter-button:hover,
+    .download-button:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+.manga-image img {
+      max-width: 100%;
+      height: auto;
+}
+
+.manga-info {
+      margin-top: 10px;
+      text-align: center;
+}
+
+h1, p {
+      margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .manga-container {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .manga-image {
+        margin: auto; 
+        align-self: center;
+        flex-direction: column;
+    }
+
+    .manga-info {
+        order: 1; 
+        text-align: center; 
+        margin-top: 15px; 
+    }
+}
+
+
+h1 {
+  margin-top: 0;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.main-container {
+min-width: 100%;
+max-width: 1500rem;
+display: flex;
+justify-content: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-text {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
