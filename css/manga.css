@@ -1,0 +1,313 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+:root {
+  --primary-color: #e94560;
+  --secondary-color: #ff6b6b;
+  --bg-dark: #0a0a1a;
+  --bg-medium: #1a1a2e;
+  --bg-light: #2a2a4e;
+  --text-light: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--bg-dark),
+    var(--bg-medium),
+    var(--bg-light)
+  );
+  background-attachment: fixed;
+  color: var(--text-light);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+header {
+  background-color: rgba(25, 25, 46, 0.9);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+
+nav ul li {
+  margin: 0 1.5rem;
+}
+
+nav ul li a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--primary-color);
+}
+
+main {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.manga-details {
+  display: flex;
+  background: rgba(25, 25, 46, 0.8);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 40px rgba(242, 240, 240, 0.3);
+}
+
+.manga-cover {
+  flex: 1;
+  max-width: 300px;
+}
+
+.manga-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.manga-info {
+  flex: 2;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.manga-info p {
+  margin-bottom: 0.5rem;
+}
+
+.manga-info strong {
+  color: var(--secondary-color);
+}
+
+.synopsis {
+  margin-top: 2rem;
+}
+
+.synopsis h2 {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  background-color: rgba(25, 25, 46, 0.9);
+  margin-top: 3rem;
+}
+
+@media (max-width: 768px) {
+  .manga-details {
+    flex-direction: column;
+  }
+
+  .manga-cover {
+    max-width: 100%;
+    height: 300px;
+  }
+}
+
+/* Ajoutez ces styles à la fin du fichier CSS */
+
+.chapters-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(25, 25, 46, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 5px 40px rgba(242, 240, 240, 0.3);
+}
+
+.chapters-section h2 {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+#chapter-select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.chapter-content {
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.chapters-section,
+.tomes-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(25, 25, 46, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 5px 40px rgba(242, 240, 240, 0.3);
+}
+
+.chapters-section h2,
+.tomes-section h2 {
+  font-size: 1.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.chapter-navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.nav-button {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.nav-button.active {
+  background-color: var(--primary-color);
+}
+
+.chapter-grid, .tomes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter-card, .tome-card {
+  background-color: var(--bg-light);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.chapter-card:hover, .tome-card:hover {
+  transform: translateY(-5px);
+}
+
+.chapter-card img, .tome-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.chapter-card p, .tome-card p {
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #e8e8e8;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination .ellipsis {
+  margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+  .chapter-grid, .tomes-grid {
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-grid, .tomes-grid {
+      grid-template-columns: 1fr;
+  }
+}
+
+#toggleButton {
+  background-color: rgba(25, 25, 46, 0.8); /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  border: none; /* Supprime les bordures par défaut */
+  padding: 15px 30px; /* Espacement intérieur */
+  font-size: 16px; /* Taille de la police */
+  font-weight: bold; /* Style de la police */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur changeant au survol */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Animation de transition */
+}
+
+#toggleButton:hover {
+  background-color: #ff6b6b; /* Couleur de fond au survol */
+  transform: scale(1.05); /* Légère augmentation de taille au survol */
+}
+
+#toggleButton:active {
+  transform: scale(1); /* Réduction de taille lors du clic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Réduction de l'ombre lors du clic */
+}
+
+#toggleButton:focus {
+  outline: none; /* Supprime le contour de focus par défaut */
+}
+
+.tome-link {
+    text-decoration: none; /* Supprime le soulignement par défaut */
+    color: inherit; /* Utilise la couleur de texte parente */
+    display: block; /* Rend tout le lien cliquable */
+}
+
