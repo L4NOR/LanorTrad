@@ -60,13 +60,80 @@
                 <div class="button-container">
                     <a href="tokyo underworld/Chapitres.html" class="manga-button">Tous les chapitres</a>
                     <a href="tokyo underworld/Tome 03.html" class="manga-button">Dernier tome</a>
+                    <div id="chapters-overlay" class="overlay">
+                        <span class="close-button" onclick="closeChapters()">&times;</span>
+                        <div id="chapter-list" class="chapter-list">
+                            <!-- La liste des chapitres sera insérée ici dynamiquement -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script src="js/intro.js"></script>
+    <script>
+const showChaptersButton = document.getElementById('show-chapters-button');
+const chaptersOverlay = document.getElementById('chapters-overlay');
+const chapterList = document.getElementById('chapter-list');
 
+// Liste des chapitres avec le chemin du fichier PDF
+const chapters = [
+  { number: 1, title: "Tokyo Underworld", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 01.pdf" },
+  { number: 2, title: "Le bourreau", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 02.pdf" },
+  { number: 3, title: "Le pont suspendu de l'enfer", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 03.pdf" },
+  { number: 4, title: "La toile de l'araignée", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 04.pdf" },
+  { number: 5, title: "Contre-attaque", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 05.pdf" },
+  { number: 6, title: "Mort debout", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 06.pdf" },
+  { number: 7, title: "Effondrement", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 07.pdf" },
+  { number: 8, title: "Président de la tour", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 08.pdf" },
+  { number: 9, title: "Yomi et Yami", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 09.pdf" },
+  { number: 10, title: "Le marché des coupables", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 10.pdf" },
+  { number: 11, title: "Les enchères pour les coupables", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 11.pdf" },
+  { number: 12, title: "Le plus coupable des coupables", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 12.pdf" },
+  { number: 13, title: "L'évasion", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 13.pdf" },
+  { number: 14, title: "Le jugement de la tour", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 14.pdf" },
+  { number: 15, title: "Le magasin du désespoir", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 15.pdf" },
+  { number: 16, title: "Dame Antoinette", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 16.pdf" },
+  { number: 17, title: "La chasse aux matières premières", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 17.pdf" },
+  { number: 18, title: "La chasse continue", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 18.pdf" },
+  { number: 19, title: "Les souris attaquent si on les coinces", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 19.pdf" },
+  { number: 20, title: "Amis", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 20.pdf" },
+  { number: 21, title: "Chasse a la tête", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 21.pdf" },
+  { number: 22, title: "Les consommés", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 22.pdf" }
+];
+
+// Affichage de la liste des chapitres
+showChaptersButton.addEventListener('click', () => {
+chaptersOverlay.style.display = 'block';
+document.body.style.overflow = 'hidden';
+
+chapterList.innerHTML = chapters.map(chapter =>
+    `<div class="chapter-item">
+        <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+        <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+            Télécharger
+        </button>
+    </div>`
+).join('');
+});
+
+function closeChapters() {
+chaptersOverlay.style.display = 'none';
+document.body.style.overflow = 'auto';
+}
+
+// Fonction de téléchargement du chapitre en PDF
+function downloadChapter(filePath, chapterNumber) {
+const link = document.createElement('a');
+link.href = filePath; // Chemin du fichier à télécharger
+link.download = `Wild Strawberry Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+document.body.appendChild(link);
+link.click(); // Simulation du clic pour télécharger le fichier
+document.body.removeChild(link); // Suppression du lien après téléchargement
+console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+}
+    </script>
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>
