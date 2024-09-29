@@ -41,6 +41,13 @@
                 <div class="button-container">
                     <a href="wild strawberry/Chapitres.html" class="manga-button">Tous les chapitres</a>
                     <a href="wild strawberry/Chapitre 1.html" class="manga-button">Dernier chapitre</a>
+                    <button id="show-chapters-button" class="manga-button">Télécharger les chapitres</button>
+                    <div id="chapters-overlay" class="overlay">
+                        <span class="close-button" onclick="closeChapters()">&times;</span>
+                        <div id="chapter-list" class="chapter-list">
+                            <!-- La liste des chapitres sera insérée ici dynamiquement -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,6 +55,50 @@
 
     <script src="js/intro.js"></script>
     <script src="js/dl.js"></script>
+    <script>
+            const showChaptersButton = document.getElementById('show-chapters-button');
+const chaptersOverlay = document.getElementById('chapters-overlay');
+const chapterList = document.getElementById('chapter-list');
+
+// Liste des chapitres avec le chemin du fichier PDF
+const chapters = [
+    { number: 1, title: "Jinka", filePath: "images/WILD/pdf/Chapitre01.pdf" },
+    { number: 2, title: "Sanka", filePath: "pdf/chapitre2.pdf" },
+    // Ajoutez d'autres chapitres ici avec le chemin du fichier PDF
+];
+
+// Affichage de la liste des chapitres
+showChaptersButton.addEventListener('click', () => {
+    chaptersOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    chapterList.innerHTML = chapters.map(chapter =>
+        `<div class="chapter-item">
+            <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+            <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+                Télécharger
+            </button>
+        </div>`
+    ).join('');
+});
+
+// Fermer la liste des chapitres
+function closeChapters() {
+    chaptersOverlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Fonction de téléchargement du chapitre en PDF
+function downloadChapter(filePath, chapterNumber) {
+    const link = document.createElement('a');
+    link.href = filePath; // Chemin du fichier à télécharger
+    link.download = `Jinka Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+    document.body.appendChild(link);
+    link.click(); // Simulation du clic pour télécharger le fichier
+    document.body.removeChild(link); // Suppression du lien après téléchargement
+    console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+}
+    </script>
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>

@@ -155,3 +155,62 @@ footer {
     flex-direction: column;
   }
 }
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  overflow-y: auto;
+}
+.chapter-list {
+  color: white;
+  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+}
+.chapter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+.download-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+.manga-button, #show-chapters-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  border: none; /* Ajout pour le bouton */
+  cursor: pointer; /* Ajout pour le bouton */
+  font-family: inherit; /* Pour garder la même police */
+  font-size: inherit; /* Pour garder la même taille de police */
+}
+
+.manga-button:hover, #show-chapters-button:hover {
+  background-color: var(--secondary-color);
+}
