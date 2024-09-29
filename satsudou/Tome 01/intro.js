@@ -27,7 +27,7 @@ function initializeChapterSelect() {
         var option = document.createElement("option");
         option.value = i;
         option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/satsudou/Chapitre%200" + i + ".html";
+        option.dataset.redirect = "https://lanortrad.netlify.app/satsudou/Tome%2001/Chapitre%200" + i + ".html";
         if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
             option.selected = true;
         }

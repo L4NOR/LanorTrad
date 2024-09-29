@@ -109,7 +109,7 @@ function closeChapters() {
 function downloadChapter(filePath, chapterNumber) {
     const link = document.createElement('a');
     link.href = filePath; // Chemin du fichier à télécharger
-    link.download = `Wild Wtrawberry Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+    link.download = `Wild Strawberry Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
     document.body.appendChild(link);
     link.click(); // Simulation du clic pour télécharger le fichier
     document.body.removeChild(link); // Suppression du lien après téléchargement
