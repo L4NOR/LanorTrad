@@ -1,80 +1,81 @@
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-        document.getElementById('intro').style.display = 'none';
-        document.getElementById('main-content').style.opacity = '1';
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('main-content').style.opacity = '1';
     }, 3000);
-});
-
-function initializeChapterSelect() {
+  });
+  
+  function initializeChapterSelect() {
     var selectMenu = document.getElementById("chapter-select");
-
+  
     function getCurrentPageItem() {
-        var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20([\d\.]+)/);
-        var tomeMatch = url.match(/Tome%20(\d+)/);
-        
-        if (chapterMatch) {
-            return { type: 'Chapitre', number: chapterMatch[1] };
-        } else if (tomeMatch) {
-            return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
-        }
-        return null;
+      var url = window.location.href;
+      var chapterMatch = url.match(/Chapitre%20([\d\.]+)/);
+      var tomeMatch = url.match(/Tome%20(\d+)/);
+      if (chapterMatch) {
+        return { type: 'Chapitre', number: chapterMatch[1] };
+      } else if (tomeMatch) {
+        return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
+      }
+      return null;
     }
-
+  
     var currentPageItem = getCurrentPageItem();
-
-    // Ajouter le chapitre 64.5
+  
+    // Ajouter le chapitre 138.5
     var specialChapter = {
-        value: "138.5",
-        text: "Chapitre 138.5",
-        url: "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20138.5.html"
+      value: "138.5",
+      text: "Chapitre 138.5",
+      url: "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20138.5.html"
     };
-
-    var option = document.createElement("option");
-    option.value = specialChapter.value;
-    option.text = specialChapter.text;
-    option.dataset.redirect = specialChapter.url;
-    if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
-        option.selected = true;
-    }
-    selectMenu.appendChild(option);
-
-    // Ajouter les chapitres normaux
+  
+    // Ajouter les chapitres normaux et le chapitre spécial dans l'ordre
     for (var i = 140; i >= 136; i--) {
+      if (i === 139) {
         var option = document.createElement("option");
-        option.value = i;
-        option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20" + i + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && i.toString() === currentPageItem.number) {
-            option.selected = true;
+        option.value = specialChapter.value;
+        option.text = specialChapter.text;
+        option.dataset.redirect = specialChapter.url;
+        if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
+          option.selected = true;
         }
         selectMenu.appendChild(option);
+      }
+  
+      var option = document.createElement("option");
+      option.value = i;
+      option.text = "Chapitre " + i;
+      option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20" + i + ".html";
+      if (currentPageItem && currentPageItem.type === 'Chapitre' && i.toString() === currentPageItem.number) {
+        option.selected = true;
+      }
+      selectMenu.appendChild(option);
     }
-
+  
     selectMenu.addEventListener("change", function() {
-        var selectedOption = selectMenu.options[selectMenu.selectedIndex];
-        if (selectedOption && selectedOption.dataset.redirect) {
-            window.location.href = selectedOption.dataset.redirect;
-        }
+      var selectedOption = selectMenu.options[selectMenu.selectedIndex];
+      if (selectedOption && selectedOption.dataset.redirect) {
+        window.location.href = selectedOption.dataset.redirect;
+      }
     });
-}
-
-function scrollToTop() {
+  }
+  
+  function scrollToTop() {
     window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+      top: 0,
+      behavior: 'smooth'
     });
-}
-
-function scrollFunction() {
+  }
+  
+  function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("scrollToTopBtn").style.display = "block";
+      document.getElementById("scrollToTopBtn").style.display = "block";
     } else {
-        document.getElementById("scrollToTopBtn").style.display = "none";
+      document.getElementById("scrollToTopBtn").style.display = "none";
     }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
+  }
+  
+  document.addEventListener("DOMContentLoaded", function() {
     initializeChapterSelect();
     window.onscroll = scrollFunction;
-});
+  });

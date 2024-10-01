@@ -23,24 +23,26 @@ function initializeChapterSelect() {
 
     var currentPageItem = getCurrentPageItem();
 
-    // Ajouter le chapitre 64.5
+    // Définir le chapitre spécial 64.5
     var specialChapter = {
         value: "64.5",
         text: "Chapitre 64.5",
         url: "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%2064.5.html"
     };
 
-    var option = document.createElement("option");
-    option.value = specialChapter.value;
-    option.text = specialChapter.text;
-    option.dataset.redirect = specialChapter.url;
-    if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
-        option.selected = true;
-    }
-    selectMenu.appendChild(option);
-
-    // Ajouter les chapitres normaux
+    // Ajouter les chapitres normaux et le chapitre spécial dans l'ordre
     for (var i = 67; i >= 63; i--) {
+        if (i === 65) {
+            var option = document.createElement("option");
+            option.value = specialChapter.value;
+            option.text = specialChapter.text;
+            option.dataset.redirect = specialChapter.url;
+            if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
+                option.selected = true;
+            }
+            selectMenu.appendChild(option);
+        }
+
         var option = document.createElement("option");
         option.value = i;
         option.text = "Chapitre " + i;
