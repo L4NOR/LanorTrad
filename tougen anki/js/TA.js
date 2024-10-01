@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createChapitresSection() {
-        const chapitres = [166, 165, 164, 163, 162, 161, 160, 159];
+        const chapitres = [168];
         const totalChapitres = chapitres.length;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalChapitres);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createTomesSection() {
-        const totalTomes = 18;
+        const totalTomes = 19;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalTomes);
 
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function changePage(direction) {
-        const totalItems = isChapitresVisible ? 8 : 18; // Nombre total de chapitres ou de tomes
+        const totalItems = isChapitresVisible ? 8 : 19; // Nombre total de chapitres ou de tomes
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         
         currentPage += direction;

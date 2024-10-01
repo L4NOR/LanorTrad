@@ -27,12 +27,12 @@ function initializeChapterSelect() {
     var currentPageItem = getCurrentPageItem();
 
     // Crée les options du chapitre entre 159 et 166 (modifiable selon vos besoins)
-    for (var i = 166; i >= 159; i--) {
+    for (var i = 167; i >= 159; i--) {
         var option = document.createElement("option");
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;
         option.text = "Chapitre " + formattedNumber;
-        option.dataset.redirect = "https://lanortrad.netlify.app/tougen%20anki/Chapitre%20" + formattedNumber + ".html";
+        option.dataset.redirect = "https://lanortrad.netlify.app/tougen%20anki/Chapitre%20/" + formattedNumber + ".html";
 
         // Si l'URL actuelle correspond à un chapitre, sélectionnez-le par défaut
         if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
