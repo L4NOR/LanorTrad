@@ -10,11 +10,11 @@ function initializeChapterSelect() {
 
     function getCurrentPageItem() {
         var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20(\d+(?:\.\d+)?)/);
+        var chapterMatch = url.match(/Chapitre%20([\d\.]+)/);
         var tomeMatch = url.match(/Tome%20(\d+)/);
-
+        
         if (chapterMatch) {
-            return { type: 'Chapitre', number: parseFloat(chapterMatch[1]) };
+            return { type: 'Chapitre', number: chapterMatch[1] };
         } else if (tomeMatch) {
             return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
         }
@@ -23,18 +23,33 @@ function initializeChapterSelect() {
 
     var currentPageItem = getCurrentPageItem();
 
-    var chapters = [67, 66, 65, 64.5, 64, 63];
+    // Ajouter le chapitre 64.5
+    var specialChapter = {
+        value: "64.5",
+        text: "Chapitre 64.5",
+        url: "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%2064.5.html"
+    };
 
-    chapters.forEach(function(chapter) {
+    var option = document.createElement("option");
+    option.value = specialChapter.value;
+    option.text = specialChapter.text;
+    option.dataset.redirect = specialChapter.url;
+    if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
+        option.selected = true;
+    }
+    selectMenu.appendChild(option);
+
+    // Ajouter les chapitres normaux
+    for (var i = 67; i >= 63; i--) {
         var option = document.createElement("option");
-        option.value = chapter;
-        option.text = "Chapitre " + chapter;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%20" + chapter + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && chapter === currentPageItem.number) {
+        option.value = i;
+        option.text = "Chapitre " + i;
+        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%20" + i + ".html";
+        if (currentPageItem && currentPageItem.type === 'Chapitre' && i.toString() === currentPageItem.number) {
             option.selected = true;
         }
         selectMenu.appendChild(option);
-    });
+    }
 
     selectMenu.addEventListener("change", function() {
         var selectedOption = selectMenu.options[selectMenu.selectedIndex];
