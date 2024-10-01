@@ -32,7 +32,7 @@ function initializeChapterSelect() {
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;
         option.text = "Chapitre " + formattedNumber;
-        option.dataset.redirect = "https://lanortrad.netlify.app/tougen%20anki/Chapitre%20/tome 19/" + formattedNumber + ".html";
+        option.dataset.redirect = "https://lanortrad.netlify.app/tougen%20anki//tome 19/Chapitre%20" + formattedNumber + ".html";
 
         // Si l'URL actuelle correspond à un chapitre, sélectionnez-le par défaut
         if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
