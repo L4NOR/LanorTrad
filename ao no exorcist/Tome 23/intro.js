@@ -5,35 +5,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
 });
 
-function initializeChapterSelect() {
+function initializeChapterSelect() { 
     var selectMenu = document.getElementById("chapter-select");
 
+    // Fonction pour obtenir le chapitre actuel à partir de l'URL
     function getCurrentPageItem() {
         var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20(\d+)/);
-        var tomeMatch = url.match(/Tome%20(\d+)/);
+        var chapterMatch = url.match(/chapitre%20(\d+)/i); // Match l'URL avec "chapitre" suivi d'un nombre, insensible à la casse
 
         if (chapterMatch) {
-            return { type: 'Chapitre', number: parseInt(chapterMatch[1], 10) };
-        } else if (tomeMatch) {
-            return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
+            return parseInt(chapterMatch[1], 10);
         }
         return null;
     }
 
-    var currentPageItem = getCurrentPageItem();
+    // Fonction pour formater les numéros à deux chiffres (ex: 01, 02, ...)
+    function formatNumber(number) {
+        return number < 10 ? '0' + number : number;
+    }
 
+    var currentChapter = getCurrentPageItem();
+
+    // Crée les options du chapitre entre 159 et 167
     for (var i = 108; i >= 104; i--) {
         var option = document.createElement("option");
-        option.value = i;
-        option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 23/Chapitre%20" + i + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
+        var formattedNumber = formatNumber(i);
+        option.value = formattedNumber;
+        option.text = "Chapitre " + formattedNumber;
+        option.dataset.redirect = `https://lanortrad.netlify.app/ao%20no%20exorcist/tome%2023/chapitre%20${formattedNumber}`;
+
+        // Sélectionne le chapitre actuel ou le chapitre 167 par défaut
+        if (i === currentChapter || (currentChapter === null && i === 167)) {
             option.selected = true;
         }
+
         selectMenu.appendChild(option);
     }
 
+    // Écouteur d'événement pour rediriger vers la page sélectionnée
     selectMenu.addEventListener("change", function() {
         var selectedOption = selectMenu.options[selectMenu.selectedIndex];
         if (selectedOption && selectedOption.dataset.redirect) {
@@ -57,7 +66,6 @@ function scrollFunction() {
     }
 }
 
-// Ajoutez ceci à la fin de votre fichier JavaScript
 document.addEventListener("DOMContentLoaded", function() {
     initializeChapterSelect();
     window.onscroll = scrollFunction;

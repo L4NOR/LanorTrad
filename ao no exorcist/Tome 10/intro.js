@@ -28,7 +28,7 @@ function initializeChapterSelect() {
 
     // Ajouter les chapitres bonus
     var bonusChapters = [
-        { value: "bonus1", text: "Chapitre Bonus", url: "https://lanortrad.netlify.app/ao no exorcist/Tome 10/Chapitre%20Bonus.html" }
+        { value: "bonus", text: "Chapitre Bonus", url: "https://lanortrad.netlify.app/ao no exorcist/Tome 10/Chapitre%20Bonus.html" }
     ];
 
     bonusChapters.forEach(function(chapter) {
@@ -62,6 +62,13 @@ function initializeChapterSelect() {
     });
 }
 
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         document.getElementById("scrollToTopBtn").style.display = "block";
@@ -70,7 +77,6 @@ function scrollFunction() {
     }
 }
 
-// Ajoutez ceci à la fin de votre fichier JavaScript
 document.addEventListener("DOMContentLoaded", function() {
     initializeChapterSelect();
     window.onscroll = scrollFunction;

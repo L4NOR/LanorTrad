@@ -59,7 +59,6 @@ function scrollFunction() {
     }
 }
 
-// Ajoutez ceci à la fin de votre fichier JavaScript
 document.addEventListener("DOMContentLoaded", function() {
     initializeChapterSelect();
     window.onscroll = scrollFunction;

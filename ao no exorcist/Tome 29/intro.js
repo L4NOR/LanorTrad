@@ -10,11 +10,11 @@ function initializeChapterSelect() {
 
     function getCurrentPageItem() {
         var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20(\d+)/);
+        var chapterMatch = url.match(/Chapitre%20(\d+(?:\.\d+)?)/);
         var tomeMatch = url.match(/Tome%20(\d+)/);
 
         if (chapterMatch) {
-            return { type: 'Chapitre', number: parseInt(chapterMatch[1], 10) };
+            return { type: 'Chapitre', number: parseFloat(chapterMatch[1]) };
         } else if (tomeMatch) {
             return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
         }
@@ -23,16 +23,18 @@ function initializeChapterSelect() {
 
     var currentPageItem = getCurrentPageItem();
 
-    for (var i = 140; i >= 136; i--) {
+    var chapters = [140, 139, 138.5, 138, 137, 136];
+
+    chapters.forEach(function(chapter) {
         var option = document.createElement("option");
-        option.value = i;
-        option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20" + i + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
+        option.value = chapter;
+        option.text = "Chapitre " + chapter;
+        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 29/Chapitre%20" + chapter + ".html";
+        if (currentPageItem && currentPageItem.type === 'Chapitre' && chapter === currentPageItem.number) {
             option.selected = true;
         }
         selectMenu.appendChild(option);
-    }
+    });
 
     selectMenu.addEventListener("change", function() {
         var selectedOption = selectMenu.options[selectMenu.selectedIndex];
@@ -57,7 +59,6 @@ function scrollFunction() {
     }
 }
 
-// Ajoutez ceci à la fin de votre fichier JavaScript
 document.addEventListener("DOMContentLoaded", function() {
     initializeChapterSelect();
     window.onscroll = scrollFunction;
