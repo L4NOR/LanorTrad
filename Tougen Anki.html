@@ -73,69 +73,7 @@
     </main>
 
     <script src="js/intro.js"></script>
-    <script>
-const showChaptersButton = document.getElementById('show-chapters-button');
-const chaptersOverlay = document.getElementById('chapters-overlay');
-const chapterList = document.getElementById('chapter-list');
-
-// Titres personnalisés pour certains chapitres
-const customTitles = {
-    1: "Mitsuo Akamori",
-    2: "Shoshin Katsushiryu",
-    3: "Ordinaire",
-    4: "Pressentiment",
-    5: "Tabac, chaise et stylo",
-    6: "Imprudence",
-    7: "100 façons infaillibles de gagner pour un employé compétent",
-    8: "La technique du pied meurtrier",
-    9: "Un professeur honnête",
-    10: "Ouais, d'accord",
-    11: "Aller là-bas et les battre !"
-    // Tu peux continuer à ajouter des titres spécifiques ici pour les autres chapitres
-};
-
-// Liste des chapitres avec le chemin du fichier PDF, générée automatiquement pour 152 chapitres
-const chapters = [];
-
-for (let i = 1; i <= 166; i++) {
-    chapters.push({
-        number: i,
-        title: customTitles[i] || `Tougen Anki Chapitre ${i}`, // Utiliser les titres personnalisés ou générer un titre par défaut
-        filePath: `images/TA/pdf/Tougen Anki Chapitre ${i.toString().padStart(2, '0')}.pdf` // Chemin du fichier PDF
-    });
-}
-
-// Affichage de la liste des chapitres
-showChaptersButton.addEventListener('click', () => {
-    chaptersOverlay.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-
-    chapterList.innerHTML = chapters.map(chapter =>
-        `<div class="chapter-item">
-            <span>Chapitre ${chapter.number} : ${chapter.title}</span>
-            <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
-                Télécharger
-            </button>
-        </div>`
-    ).join('');
-});
-
-function closeChapters() {
-    chaptersOverlay.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-// Fonction de téléchargement du chapitre en PDF
-function downloadChapter(filePath, chapterNumber) {
-    const link = document.createElement('a');
-    link.href = filePath; // Chemin du fichier à télécharger
-    link.download = `Tougen Anki Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
-    document.body.appendChild(link);
-    link.click(); // Simulation du clic pour télécharger le fichier
-    document.body.removeChild(link); // Suppression du lien après téléchargement
-    console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
-}
-</script>
+    <script src="js/TA.js"></script>
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>

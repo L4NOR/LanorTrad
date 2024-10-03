@@ -27,7 +27,7 @@ function initializeChapterSelect() {
     var currentChapter = getCurrentPageItem();
 
     // Crée les options du chapitre entre 159 et 167
-    for (var i = 168; i >= 159; i--) {
+    for (var i = 170; i >= 168; i--) {
         var option = document.createElement("option");
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;
