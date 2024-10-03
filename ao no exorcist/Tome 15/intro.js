@@ -6,60 +6,74 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeChapterSelect() {
-    var selectMenu = document.getElementById("chapter-select");
+  var selectMenu = document.getElementById("chapter-select");
+  var prevButton = document.getElementById("prevChapter");
+  var nextButton = document.getElementById("nextChapter");
 
-    function getCurrentPageItem() {
-        var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20([\d\.]+)/);
-        var tomeMatch = url.match(/Tome%20(\d+)/);
-        
-        if (chapterMatch) {
-            return { type: 'Chapitre', number: chapterMatch[1] };
-        } else if (tomeMatch) {
-            return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
-        }
-        return null;
+  function getCurrentPageItem() {
+    var url = window.location.href;
+    var chapterMatch = url.match(/chapitre%20(\d+(?:\.\d+)?)/i);
+    if (chapterMatch) {
+      return chapterMatch[1];
     }
+    return null;
+  }
 
-    var currentPageItem = getCurrentPageItem();
+  function formatNumber(number) {
+    return number < 10 ? "0" + number : number;
+  }
 
-    // Définir le chapitre spécial 64.5
-    var specialChapter = {
-        value: "64.5",
-        text: "Chapitre 64.5",
-        url: "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%2064.5.html"
-    };
-
-    // Ajouter les chapitres normaux et le chapitre spécial dans l'ordre
-    for (var i = 67; i >= 63; i--) {
-        if (i === 65) {
-            var option = document.createElement("option");
-            option.value = specialChapter.value;
-            option.text = specialChapter.text;
-            option.dataset.redirect = specialChapter.url;
-            if (currentPageItem && currentPageItem.type === 'Chapitre' && currentPageItem.number === specialChapter.value) {
-                option.selected = true;
-            }
-            selectMenu.appendChild(option);
-        }
-
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 15/Chapitre%20" + i + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && i.toString() === currentPageItem.number) {
-            option.selected = true;
-        }
-        selectMenu.appendChild(option);
+  function navigateChapter(direction) {
+    var currentIndex = selectMenu.selectedIndex;
+    var newIndex = currentIndex + direction;
+    if (newIndex >= 0 && newIndex < selectMenu.options.length) {
+      selectMenu.selectedIndex = newIndex;
+      var selectedOption = selectMenu.options[newIndex];
+      if (selectedOption && selectedOption.dataset.redirect) {
+        window.location.href = selectedOption.dataset.redirect;
+      }
     }
+  }
 
-    selectMenu.addEventListener("change", function() {
-        var selectedOption = selectMenu.options[selectMenu.selectedIndex];
-        if (selectedOption && selectedOption.dataset.redirect) {
-            window.location.href = selectedOption.dataset.redirect;
-        }
-    });
+  var currentChapter = getCurrentPageItem();
+
+  // Vérifier si le menu de sélection est vide avant d'ajouter les options
+  if (selectMenu.options.length === 0) {
+    var chapters = [67, 66, 65, '64.5', 64, 63];
+    for (var i = 0; i < chapters.length; i++) {
+      var option = document.createElement("option");
+      var chapterNumber = chapters[i];
+      var formattedNumber = typeof chapterNumber === 'number' ? formatNumber(chapterNumber) : chapterNumber;
+      option.value = formattedNumber;
+      option.text = "Chapitre " + formattedNumber;
+      option.dataset.redirect = `https://lanortrad.netlify.app/ao%20no%20exorcist/tome%2015/chapitre%20${formattedNumber}`;
+
+      if (formattedNumber === currentChapter || (currentChapter === null && formattedNumber === '06')) {
+        option.selected = true;
+      }
+
+      selectMenu.appendChild(option);
+    }
+  }
+
+  selectMenu.addEventListener("change", function () {
+    var selectedOption = selectMenu.options[selectMenu.selectedIndex];
+    if (selectedOption && selectedOption.dataset.redirect) {
+      window.location.href = selectedOption.dataset.redirect;
+    }
+  });
+
+  prevButton.addEventListener("click", function () {
+    navigateChapter(-1);
+  });
+
+  nextButton.addEventListener("click", function () {
+    navigateChapter(1);
+  });
 }
+
+// Appeler la fonction d'initialisation lorsque le DOM est chargé
+document.addEventListener("DOMContentLoaded", initializeChapterSelect);
 
 function scrollToTop() {
     window.scrollTo({

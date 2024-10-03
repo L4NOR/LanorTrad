@@ -6,61 +6,83 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeChapterSelect() {
-    var selectMenu = document.getElementById("chapter-select");
+  var selectMenu = document.getElementById("chapter-select");
+  var prevButton = document.getElementById("prevChapter");
+  var nextButton = document.getElementById("nextChapter");
 
-    function getCurrentPageItem() {
-        var url = window.location.href;
-        var chapterMatch = url.match(/Chapitre%20(\d+)/);
-        var tomeMatch = url.match(/Tome%20(\d+)/);
-        var bonusMatch = url.match(/Chapitre%20Bonus%20\((\d+)\)/);
-        
-        if (bonusMatch) {
-            return { type: 'Bonus', number: parseInt(bonusMatch[1], 10) };
-        } else if (chapterMatch) {
-            return { type: 'Chapitre', number: parseInt(chapterMatch[1], 10) };
-        } else if (tomeMatch) {
-            return { type: 'Tome', number: parseInt(tomeMatch[1], 10) };
-        }
-        return null;
-    }
+  function getCurrentPageItem() {
+      var url = window.location.href;
+      var chapterMatch = url.match(/chapitre%20(\d+)/i);
+      if (chapterMatch) {
+          return parseInt(chapterMatch[1], 10);
+      }
+      return null;
+  }
 
-    var currentPageItem = getCurrentPageItem();
+  function formatNumber(number) {
+      return number < 10 ? "0" + number : number;
+  }
 
-    // Ajouter les chapitres bonus
-    var bonusChapters = [
-        { value: "bonus", text: "Chapitre Bonus", url: "https://lanortrad.netlify.app/ao no exorcist/Tome 10/Chapitre%20Bonus.html" }
-    ];
+  function navigateChapter(direction) {
+      var currentIndex = selectMenu.selectedIndex;
+      var newIndex = currentIndex + direction;
+      if (newIndex >= 0 && newIndex < selectMenu.options.length) {
+          selectMenu.selectedIndex = newIndex;
+          var selectedOption = selectMenu.options[newIndex];
+          if (selectedOption && selectedOption.dataset.redirect) {
+              window.location.href = selectedOption.dataset.redirect;
+          }
+      }
+  }
 
-    bonusChapters.forEach(function(chapter) {
-        var option = document.createElement("option");
-        option.value = chapter.value;
-        option.text = chapter.text;
-        option.dataset.redirect = chapter.url;
-        if (currentPageItem && currentPageItem.type === 'Bonus' && chapter.text.includes(`(${currentPageItem.number})`)) {
-            option.selected = true;
-        }
-        selectMenu.appendChild(option);
-    });
+  var currentChapter = getCurrentPageItem();
 
-    // Ajouter les chapitres normaux
-    for (var i = 41; i >= 38; i--) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = "Chapitre " + i;
-        option.dataset.redirect = "https://lanortrad.netlify.app/ao no exorcist/Tome 10/Chapitre%20" + i + ".html";
-        if (currentPageItem && currentPageItem.type === 'Chapitre' && i === currentPageItem.number) {
-            option.selected = true;
-        }
-        selectMenu.appendChild(option);
-    }
+  // Vérifier si le menu de sélection est vide avant d'ajouter les options
+  if (selectMenu.options.length === 0) {
+      // Ajouter les chapitres bonus
+      var bonusChapters = ["Chapitre Bonus"];
+      for (var i = 0; i < bonusChapters.length; i++) {
+          var option = document.createElement("option");
+          option.value = "bonus" + (i + 1);
+          option.text = bonusChapters[i];
+          option.dataset.redirect = `https://lanortrad.netlify.app/ao%20no%20exorcist/tome%2010/${bonusChapters[i].toLowerCase().replace(' ', '%20')}`;
+          selectMenu.appendChild(option);
+      }
 
-    selectMenu.addEventListener("change", function() {
-        var selectedOption = selectMenu.options[selectMenu.selectedIndex];
-        if (selectedOption && selectedOption.dataset.redirect) {
-            window.location.href = selectedOption.dataset.redirect;
-        }
-    });
+      // Ajouter les chapitres 20 à 23
+      for (var i = 41; i >= 38; i--) {
+          var option = document.createElement("option");
+          var formattedNumber = formatNumber(i);
+          option.value = formattedNumber;
+          option.text = "Chapitre " + formattedNumber;
+          option.dataset.redirect = `https://lanortrad.netlify.app/ao%20no%20exorcist/tome%2010/chapitre%20${formattedNumber}`;
+
+          if (i === currentChapter || (currentChapter === null && i === 6)) {
+              option.selected = true;
+          }
+
+          selectMenu.appendChild(option);
+      }
+  }
+
+  selectMenu.addEventListener("change", function () {
+      var selectedOption = selectMenu.options[selectMenu.selectedIndex];
+      if (selectedOption && selectedOption.dataset.redirect) {
+          window.location.href = selectedOption.dataset.redirect;
+      }
+  });
+
+  prevButton.addEventListener("click", function () {
+      navigateChapter(-1);
+  });
+
+  nextButton.addEventListener("click", function () {
+      navigateChapter(1);
+  });
 }
+
+// Appeler la fonction d'initialisation lorsque le DOM est chargé
+document.addEventListener("DOMContentLoaded", initializeChapterSelect);
 
 function scrollToTop() {
     window.scrollTo({
