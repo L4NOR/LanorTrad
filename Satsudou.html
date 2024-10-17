@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+<html lang="fr">
+        <!--Scripts-->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-2MZGH30P4J');
+        </script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+        <!--SEO-->
+        <meta property="og:title" content="Satsudou">
+        <meta property="og:description" content="Akamori Mitsuo veut être un salarié ordinaire mais... C’est un meurtrier de génie né dans une famille qui pratique l’art ancien de tuer depuis des siècles. Akamori fait face à des obstacles comme Yakuza, des combattants et des gangs sur le chemin qui mène à son besoin.">
+        <meta property="og:image" content="https://zupimages.net/up/24/28/9a12.jpg">
+        <meta property="og:url" content="https://lanortrad.netlify.app/satsudou">
+        <meta property="og:site_name" content="LanorTrad">
+        <meta property="og:type" content="website">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/manga1.css">
+    <link rel="stylesheet" href="css/intro.css">
+    <title>Satsudou - LanorTrad</title>
+</head>
+<body>
+    <div id="intro">
+        <h1>Chargement...</h1>
+    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="https://lanortrad.netlify.app/">Accueil</a></li>
+                <li><a href="https://linktr.ee/l4nor">Réseaux</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="manga-details">
+            <div class="manga-cover">
+                <img src="images/SAT/T03.jpg" alt="Couverture de Satsudou">
+            </div>
+            <div class="manga-info">
+                <h1>Satsudou</h1>
+                <p><strong>Auteur :</strong> Yukinaga Chicchi</p>
+                <p><strong>Artiste :</strong> Nadai Nishi</p>
+                <p><strong>Année de publication :</strong> 2023</p>
+                <p><strong>Genres :</strong> Action, Comédie, Arts Martiaux</p>
+                <p><strong>Status :</strong> Arrêté</p>
+                <div class="synopsis">
+                    <h2>Synopsis</h2>
+                    <p>Akamori Mitsuo veut être un salarié ordinaire mais... C’est un meurtrier de génie né dans une famille qui pratique l’art ancien de tuer depuis des siècles. Akamori fait face à des obstacles comme Yakuza, des combattants et des gangs sur le chemin qui mène à son besoin.</p>
+                </div>
+                <div class="button-container">
+                    <a href="satsudou/Chapitres.html" class="manga-button">Tous les chapitres</a>
+                    <a href="satsudou/Chapitre 11.html" class="manga-button">Dernier chapitre</a>
+                    <button id="show-chapters-button" class="manga-button">Télécharger les chapitres</button>
+                    <div id="chapters-overlay" class="overlay">
+                        <span class="close-button" onclick="closeChapters()">&times;</span>
+                        <div id="chapter-list" class="chapter-list">
+                            <!-- La liste des chapitres sera insérée ici dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/intro.js"></script>
+    <script>
+const showChaptersButton = document.getElementById('show-chapters-button');
+const chaptersOverlay = document.getElementById('chapters-overlay');
+const chapterList = document.getElementById('chapter-list');
+
+// Liste des chapitres avec le chemin du fichier PDF
+const chapters = [
+    { number: 1, title: "Mitsuo Akamori", filePath: "images/SAT/pdf/Satsudou Chapitre 01.pdf" },
+    { number: 2, title: "Shoshin Katsushiryu", filePath: "images/SAT/pdf/Satsudou Chapitre 02.pdf" },
+    { number: 3, title: "Ordinaire", filePath: "images/SAT/pdf/Satsudou Chapitre 03.pdf" },
+    { number: 4, title: "Pressentiment", filePath: "images/SAT/pdf/Satsudou Chapitre 04.pdf" },
+    { number: 5, title: "Tabac, chaise et stylo", filePath: "images/SAT/pdf/Satsudou Chapitre 05.pdf" },
+    { number: 6, title: "Imprudence", filePath: "images/SAT/pdf/Satsudou Chapitre 06.pdf" },
+    { number: 7, title: "100 façons infaillibles de gagner pour un employé compétent", filePath: "images/SAT/pdf/Satsudou Chapitre 07.pdf" },
+    { number: 8, title: "La technique du pied meurtrier", filePath: "images/SAT/pdf/Satsudou Chapitre 08.pdf" },
+    { number: 9, title: "Un professeur honnête", filePath: "images/SAT/pdf/Satsudou Chapitre 09.pdf" },
+    { number: 10, title: "Ouais, d'accord", filePath: "images/SAT/pdf/Satsudou Chapitre 10.pdf" },
+    { number: 11, title: "Aller là-bas et les battre !", filePath: "images/SAT/pdf/Satsudou Chapitre 11.pdf" }
+];
+
+
+// Affichage de la liste des chapitres
+showChaptersButton.addEventListener('click', () => {
+chaptersOverlay.style.display = 'block';
+document.body.style.overflow = 'hidden';
+
+chapterList.innerHTML = chapters.map(chapter =>
+    `<div class="chapter-item">
+        <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+        <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+            Télécharger
+        </button>
+    </div>`
+).join('');
+});
+
+function closeChapters() {
+chaptersOverlay.style.display = 'none';
+document.body.style.overflow = 'auto';
+}
+
+// Fonction de téléchargement du chapitre en PDF
+function downloadChapter(filePath, chapterNumber) {
+const link = document.createElement('a');
+link.href = filePath; // Chemin du fichier à télécharger
+link.download = `Satsudou Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+document.body.appendChild(link);
+link.click(); // Simulation du clic pour télécharger le fichier
+document.body.removeChild(link); // Suppression du lien après téléchargement
+console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+}
+</script>
+    <footer>
+        <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
