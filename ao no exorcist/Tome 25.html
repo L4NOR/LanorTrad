@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+
+    <!--Scripts-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-2MZGH30P4J');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!--SEO-->
+    <meta property="og:title" content="Ao No Exorcist - Tome 25">
+    <meta property="og:description" content="Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan, il s'inscrit à l'académie de la Croix-Vraie. Avec l'aide de son frère jumeau Yukio et de ses nouveaux camarades, Rin doit apprendre à maîtriser ses pouvoirs démoniaques tout en gardant son identité secrète.">
+    <meta property="og:image" content="https://zupimages.net/up/24/23/6q1q.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/ao no exorcist/Tome 25.html">
+    <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:type" content="website">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ao No Exorcist - Tome 25 - LanorTrad</title>
+    <link rel="stylesheet" href="intro.css">
+    <link rel="stylesheet" href="chapitre.css">
+    <script src="Description.js"></script>
+</head>
+<body>
+    <div id="intro">
+        <h1>Chargement...</h1>
+    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="https://lanortrad.netlify.app/">Accueil</a></li>
+                <li><a href="https://linktr.ee/l4nor">Réseaux</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="tome-container">
+            <div class="tome-cover">
+                <img src="images/T25.jpg" alt="Couverture du tome">
+            </div>
+            <div class="chapters-list">
+                <h2>Les Chapitres :</h2>
+                <div class="chapters-grid" id="chaptersGrid"></div>
+            </div>
+        </div>
+    </main>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">&#8593;</button>
+
+    <footer>
+        <p>&copy; 2024 LanorTrad - Tous droits réservés.</p>
+    </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chaptersGrid = document.getElementById('chaptersGrid');
+    const startChapter = 115;
+    const endChapter = 120;
+
+    for (let i = startChapter; i <= endChapter; i++) {
+        const chapterButton = document.createElement('button');
+        chapterButton.classList.add('chapter-button');
+        chapterButton.textContent = `Chapitre ${i}`;
+        chapterButton.addEventListener('click', () => {
+            window.location.href = `Tome 25/Chapitre ${i}.html`; 
+        });
+        chaptersGrid.appendChild(chapterButton);
+    }
+});
+
+    </script>
+    <script src="intro.js"></script>
+    <script src="chapitre.js"></script>
+</body>
+</html>
