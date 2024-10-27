@@ -161,4 +161,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     button.addEventListener('click', myFunction);
 });
 
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("scrollToTopBtn").style.display = "block";
+    } else {
+        document.getElementById("scrollToTopBtn").style.display = "none";
+    }
+}
+
 displayImage(currentImageIndex);

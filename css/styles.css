@@ -149,22 +149,10 @@ nav ul li a {
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  position: relative;
 }
 
-nav ul li a::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary-color);
-  transition: width 0.3s ease;
-}
-
-nav ul li a:hover::after {
-  width: 100%;
+nav ul li a:hover {
+  color: var(--primary-color);
 }
 
 .hero-section {
