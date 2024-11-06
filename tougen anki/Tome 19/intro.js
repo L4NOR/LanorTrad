@@ -39,7 +39,7 @@ function initializeChapterSelect() {
   
     // Vérifier si le menu de sélection est vide avant d'ajouter les options
     if (selectMenu.options.length === 0) {
-      for (var i = 167; i >= 159; i--) {
+      for (var i = 168; i >= 160; i--) {
         var option = document.createElement("option");
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;
@@ -73,7 +73,7 @@ function initializeChapterSelect() {
   // Appeler la fonction d'initialisation lorsque le DOM est chargé
   document.addEventListener("DOMContentLoaded", initializeChapterSelect);
 
-function scrollToTop() {
+  function scrollToTop() {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -81,17 +81,17 @@ function scrollToTop() {
 }
 
 function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("scrollToTopBtn").style.display = "block";
-    } else {
-        document.getElementById("scrollToTopBtn").style.display = "none";
+    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    if (scrollToTopBtn) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    initializeChapterSelect();
-    window.onscroll = scrollFunction;
-});
+window.onscroll = scrollFunction;
 
 var meta = document.createElement('meta');
 meta.name = "google-site-verification";

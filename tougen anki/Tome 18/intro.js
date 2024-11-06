@@ -39,12 +39,12 @@ function initializeChapterSelect() {
   
     // Vérifier si le menu de sélection est vide avant d'ajouter les options
     if (selectMenu.options.length === 0) {
-      for (var i = 158; i >= 150; i--) {
+      for (var i = 159; i >= 151; i--) {
         var option = document.createElement("option");
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;
         option.text = "Chapitre " + formattedNumber;
-        option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/tome%2018/chapitre%20${formattedNumber}`;
+        option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/tome%2020/chapitre%20${formattedNumber}`;
   
         if (i === currentChapter || (currentChapter === null && i === 6)) {
           option.selected = true;
@@ -73,7 +73,7 @@ function initializeChapterSelect() {
   // Appeler la fonction d'initialisation lorsque le DOM est chargé
   document.addEventListener("DOMContentLoaded", initializeChapterSelect);
 
-function scrollToTop() {
+  function scrollToTop() {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -81,17 +81,17 @@ function scrollToTop() {
 }
 
 function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("scrollToTopBtn").style.display = "block";
-    } else {
-        document.getElementById("scrollToTopBtn").style.display = "none";
+    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    if (scrollToTopBtn) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    initializeChapterSelect();
-    window.onscroll = scrollFunction;
-});
+window.onscroll = scrollFunction;
 
 var meta = document.createElement('meta');
 meta.name = "google-site-verification";

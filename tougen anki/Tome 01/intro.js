@@ -75,23 +75,23 @@ document.addEventListener("DOMContentLoaded", initializeChapterSelect);
 
 function scrollToTop() {
   window.scrollTo({
-    top: 0,
-    behavior: "smooth",
+      top: 0,
+      behavior: 'smooth'
   });
 }
 
 function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("scrollToTopBtn").style.display = "block";
-  } else {
-    document.getElementById("scrollToTopBtn").style.display = "none";
+  var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  if (scrollToTopBtn) {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          scrollToTopBtn.style.display = "block";
+      } else {
+          scrollToTopBtn.style.display = "none";
+      }
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  initializeChapterSelect();
-  window.onscroll = scrollFunction;
-});
+window.onscroll = scrollFunction;
 
 var meta = document.createElement('meta');
 meta.name = "google-site-verification";

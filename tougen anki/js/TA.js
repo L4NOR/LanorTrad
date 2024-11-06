@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createChapitresSection() {
-        const chapitres = [174, 173, 172, 171, 170, 169, 168];
+        const chapitres = [];
         const totalChapitres = chapitres.length;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalChapitres);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createTomesSection() {
-        const totalTomes = 19;
+        const totalTomes = 20;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalTomes);
 
