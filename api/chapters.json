@@ -2,31 +2,31 @@
     {
         "manga": "Ao No Exorcist",
         "chapter": 154,
-        "status": "En Attente",
-        "isNew": false
+        "status": "Sortie",
+        "isNew": true
     },
     {
         "manga": "Satsudou",
         "chapter": 13,
         "status": "Sortie",
-        "isNew": false
+        "isNew": true
     },
     {
         "manga": "Tokyo Underworld",
         "chapter": 23,
-        "status": "En cours de Qcheck",
+        "status": "Sortie",
         "isNew": true
-    }
-      {
+    },
+    {
         "manga": "Tougen Anki",
-        "chapter": 178,
-        "status": "En cours de Traduction",
-        "isNew": false
-    }
-      {
+        "chapter": 177,
+        "status": "Sortie",
+        "isNew": true
+    },
+    {
         "manga": "Wild Strawberry",
-        "chapter": 4,
-        "status": "En cours de Qcheck",
-        "isNew": false
+        "chapter": 3,
+        "status": "Sortie",
+        "isNew": true
     }
 ]
