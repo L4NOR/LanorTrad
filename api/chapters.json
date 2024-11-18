@@ -1,0 +1,32 @@
+[
+    {
+        "manga": "Ao No Exorcist",
+        "chapter": 154,
+        "status": "En Attente",
+        "isNew": true
+    },
+    {
+        "manga": "Satsudou",
+        "chapter": 12,
+        "status": "En cours de traduction",
+        "isNew": false
+    },
+    {
+        "manga": "Tokyo Underworld",
+        "chapter": 23,
+        "status": "En cours de Qcheck",
+        "isNew": false
+    }
+      {
+        "manga": "Tougen Anki",
+        "chapter": 178,
+        "status": "En cours de Traduction",
+        "isNew": false
+    }
+      {
+        "manga": "Wild Strawberry",
+        "chapter": 4,
+        "status": "En cours de Qcheck",
+        "isNew": false
+    }
+]
