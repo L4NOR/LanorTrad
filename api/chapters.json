@@ -3,19 +3,19 @@
         "manga": "Ao No Exorcist",
         "chapter": 154,
         "status": "En Attente",
-        "isNew": true
+        "isNew": false
     },
     {
         "manga": "Satsudou",
         "chapter": 13,
-        "status": "En cours de traduction",
-        "isNew": true
+        "status": "Sortie",
+        "isNew": false
     },
     {
         "manga": "Tokyo Underworld",
         "chapter": 23,
         "status": "En cours de Qcheck",
-        "isNew": false
+        "isNew": true
     }
       {
         "manga": "Tougen Anki",
