@@ -1,91 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('main-content').style.opacity = '1';
-  }, 3000);
-  
-  initializeChapterSelect();
-  window.onscroll = scrollFunction;
+    // Masquer l'intro et afficher le contenu principal après 3 secondes
+    setTimeout(() => {
+        const intro = document.getElementById('intro');
+        const mainContent = document.getElementById('main-content');
+        if (intro) intro.style.display = 'none';
+        if (mainContent) mainContent.style.opacity = '1';
+    }, 3000);
+
+    initializeChapterSelect();
+    window.onscroll = scrollFunction;
+
+    // Ajouter la vérification Google
+    const meta = document.createElement('meta');
+    meta.name = "google-site-verification";
+    meta.content = "eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs";
+    document.head.appendChild(meta);
 });
 
+// Initialiser le menu déroulant des chapitres
 function initializeChapterSelect() {
-  var selectMenu = document.getElementById("chapter-select");
-  var prevButton = document.getElementById("prevChapter");
-  var nextButton = document.getElementById("nextChapter");
+    const selectMenu = document.getElementById("chapter-select");
+    const prevButton = document.getElementById("prevChapter");
+    const nextButton = document.getElementById("nextChapter");
 
-  function getCurrentPageItem() {
-      var url = window.location.href;
-      var chapterMatch = url.match(/chapitre%20(\d+)/i);
-      if (chapterMatch) {
-          return parseInt(chapterMatch[1], 10);
-      }
-      return null;
-  }
+    if (!selectMenu) return; // Arrêter si le menu de sélection n'existe pas
 
-  function formatNumber(number) {
-      return number < 10 ? "0" + number : number;
-  }
+    const currentChapter = getCurrentPageItem();
 
-  function navigateChapter(direction) {
-      var currentIndex = selectMenu.selectedIndex;
-      var newIndex = currentIndex + direction;
-      if (newIndex >= 0 && newIndex < selectMenu.options.length) {
-          selectMenu.selectedIndex = newIndex;
-          var selectedOption = selectMenu.options[newIndex];
-          if (selectedOption && selectedOption.dataset.redirect) {
-              window.location.href = selectedOption.dataset.redirect;
-          }
-      }
-  }
+    // Ajouter les options de chapitre au menu si elles n'existent pas déjà
+    if (selectMenu.options.length === 0) {
+        for (let i = 174; i >= 168; i--) {
+            const option = document.createElement("option");
+            const formattedNumber = formatNumber(i);
+            option.value = formattedNumber;
+            option.text = `Chapitre ${formattedNumber}`;
+            option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/chapitre%20${formattedNumber}`;
 
-  var currentChapter = getCurrentPageItem();
+            if (i === currentChapter) {
+                option.selected = true;
+            }
 
-  // Vérifier si le menu de sélection est vide avant d'ajouter les options
-  if (selectMenu.options.length === 0) {
-      for (var i = 174; i >= 168; i--) {
-          var option = document.createElement("option");
-          var formattedNumber = formatNumber(i);
-          option.value = formattedNumber;
-          option.text = "Chapitre " + formattedNumber;
-          option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/chapitre%20${formattedNumber}`;
+            selectMenu.appendChild(option);
+        }
+    }
 
-          if (i === currentChapter || (currentChapter === null && i === 6)) {
-              option.selected = true;
-          }
+    // Naviguer vers un chapitre
+    function navigateChapter(direction) {
+        const currentIndex = selectMenu.selectedIndex;
+        const newIndex = currentIndex + direction;
+        if (newIndex >= 0 && newIndex < selectMenu.options.length) {
+            const selectedOption = selectMenu.options[newIndex];
+            if (selectedOption && selectedOption.dataset.redirect) {
+                window.location.href = selectedOption.dataset.redirect;
+            }
+        }
+    }
 
-          selectMenu.appendChild(option);
-      }
-  }
-
-  selectMenu.addEventListener("change", function () {
-      var selectedOption = selectMenu.options[selectMenu.selectedIndex];
-      if (selectedOption && selectedOption.dataset.redirect) {
-          window.location.href = selectedOption.dataset.redirect;
-      }
-  });
-
-  if (prevButton) {
-      prevButton.addEventListener("click", function () {
-          navigateChapter(-1);
-      });
-  }
-
-  if (nextButton) {
-      nextButton.addEventListener("click", function () {
-          navigateChapter(1);
-      });
-  }
-}
-
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    // Ajouter les gestionnaires d'événements
+    selectMenu.addEventListener("change", () => {
+        const selectedOption = selectMenu.options[selectMenu.selectedIndex];
+        if (selectedOption && selectedOption.dataset.redirect) {
+            window.location.href = selectedOption.dataset.redirect;
+        }
     });
+
+    if (prevButton) {
+        prevButton.addEventListener("click", () => navigateChapter(-1));
+    }
+    if (nextButton) {
+        nextButton.addEventListener("click", () => navigateChapter(1));
+    }
 }
 
+// Obtenir le chapitre actuel à partir de l'URL
+function getCurrentPageItem() {
+    const url = window.location.href;
+    const match = url.match(/chapitre%20(\d+)/i);
+    return match ? parseInt(match[1], 10) : null;
+}
+
+// Formater les numéros de chapitre (ex: 01, 02, ...)
+function formatNumber(number) {
+    return number < 10 ? `0${number}` : `${number}`;
+}
+
+// Afficher ou masquer le bouton de remontée
 function scrollFunction() {
-    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
     if (scrollToTopBtn) {
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
             scrollToTopBtn.style.display = "block";
@@ -95,13 +96,7 @@ function scrollFunction() {
     }
 }
 
-window.onscroll = scrollFunction;
-
-
-// Ajoutez ceci à la fin de votre fichier JavaScript
-document.addEventListener("DOMContentLoaded", function() {
-  var meta = document.createElement('meta');
-  meta.name = "google-site-verification";
-  meta.content = "eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs";
-  document.getElementsByTagName('head')[0].appendChild(meta);
-});
+// Remonter en haut de la page
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}

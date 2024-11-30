@@ -1,10 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Fonction pour générer la navbar
+  function initializeNavbar() {
+    const navbar = document.getElementById("main-navbar");
+
+    // Supprimer l'ancien contenu de la navbar
+    navbar.innerHTML = "";
+
+    // Définir les liens de navigation
+    const navLinks = [
+      { text: "Accueil", url: "https://lanortrad.netlify.app/" },
+      { text: "Chapitres", url: "https://lanortrad.netlify.app/tougen%20anki" },
+      { text: "Réseaux", url: "https://linktr.ee/l4nor" },
+      // Ajoutez ici d'autres liens si nécessaire
+    ];
+
+    // Générer la liste des liens
+    const ul = document.createElement("ul");
+    navLinks.forEach(link => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = link.url;
+      a.textContent = link.text;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    // Ajouter la liste au navbar
+    navbar.appendChild(ul);
+  }
+
+  // Initialiser la barre de navigation
+  initializeNavbar();
+
+  // Écran de chargement
   setTimeout(() => {
     document.getElementById("intro").style.display = "none";
     document.getElementById("main-content").style.opacity = "1";
   }, 3000);
+
+  // Appeler les autres fonctions d'initialisation
+  initializeChapterSelect();
 });
 
+// Fonction d'initialisation du menu des chapitres (inchangé)
 function initializeChapterSelect() {
   var selectMenu = document.getElementById("chapter-select");
   var prevButton = document.getElementById("prevChapter");
@@ -70,29 +108,28 @@ function initializeChapterSelect() {
   });
 }
 
-// Appeler la fonction d'initialisation lorsque le DOM est chargé
-document.addEventListener("DOMContentLoaded", initializeChapterSelect);
-
+// Fonction pour afficher le bouton "Retour en haut"
 function scrollToTop() {
   window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+    top: 0,
+    behavior: 'smooth'
   });
 }
 
 function scrollFunction() {
   var scrollToTopBtn = document.getElementById("scrollToTopBtn");
   if (scrollToTopBtn) {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          scrollToTopBtn.style.display = "block";
-      } else {
-          scrollToTopBtn.style.display = "none";
-      }
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      scrollToTopBtn.style.display = "block";
+    } else {
+      scrollToTopBtn.style.display = "none";
+    }
   }
 }
 
 window.onscroll = scrollFunction;
 
+// Ajout de la vérification Google
 var meta = document.createElement('meta');
 meta.name = "google-site-verification";
 meta.content = "eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs";
