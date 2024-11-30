@@ -432,6 +432,7 @@ body {
   </style>
 </head>
 <body>
+  
   <div class="lights"></div>
 
   <div class="calendar-container">
@@ -449,6 +450,50 @@ body {
     </div>
   </div>
 
+  <audio id="audio-player" src="audio/SonNoëlByLanor.mp3" autoplay muted></audio>
+
+  <script>
+    window.addEventListener('load', () => {
+      const audioPlayer = document.getElementById('audio-player');
+
+      // Fonction de fondu (fade-in) sur l'audio
+      const fadeIn = (audioElement, duration) => {
+        let volume = 0;
+        audioElement.muted = false;
+        const fadeInterval = setInterval(() => {
+          if (volume < 0.5) { // On arrête le fade à 50% de volume
+            volume += 0.01;
+            audioElement.volume = volume;
+          } else {
+            clearInterval(fadeInterval);
+          }
+        }, duration / 50); // Durée du fade-in, ici on divise par 50 pour une augmentation douce
+      };
+
+      // Fonction de fondu (fade-out) pour arrêter l'audio
+      const fadeOut = (audioElement, duration) => {
+        let volume = 0.5;
+        const fadeInterval = setInterval(() => {
+          if (volume > 0) {
+            volume -= 0.01;
+            audioElement.volume = volume;
+          } else {
+            audioElement.pause();
+            audioElement.currentTime = 0; // Remet l'audio au début
+            clearInterval(fadeInterval);
+          }
+        }, duration / 50); // Durée du fade-out
+      };
+
+      // Essaye de lire l'audio automatiquement
+      audioPlayer.play().then(() => {
+        fadeIn(audioPlayer, 2000); // 2 secondes pour le fade-in
+        console.warn('Lecture automatique bloquée :', error);
+        // Si la lecture automatique échoue, l'utilisateur devra interagir pour démarrer l'audio
+        // Cependant, ici il n'y a plus de bouton ou interaction explicite demandée
+      });
+    });
+  </script>
   <script>
     // Configuration du calendrier
     const pastDays = [0]; // Jours déjà passés
