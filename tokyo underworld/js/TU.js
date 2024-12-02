@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createTomesSection() {
-        const totalTomes = 3;
+        const totalTomes = 4;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalTomes);
 
