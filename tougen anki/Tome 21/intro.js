@@ -47,12 +47,12 @@ function initializeChapterSelect() {
   // Ajouter les options de chapitre si le menu est vide
   function populateChapterOptions() {
       if (selectMenu.options.length === 0) {
-          for (let i = 177; i >= 169; i--) {
+          for (let i = 0; i >= 178; i--) {
               const option = document.createElement("option");
               const formattedNumber = formatNumber(i);
               option.value = formattedNumber;
               option.text = `Chapitre ${formattedNumber}`;
-              option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/tome%2020/chapitre%20${formattedNumber}`;
+              option.dataset.redirect = `https://lanortrad.netlify.app/tougen%20anki/tome%2021/chapitre%20${formattedNumber}`;
 
               if (i === currentChapter) {
                   option.selected = true;
