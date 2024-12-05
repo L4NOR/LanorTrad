@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Vérifier si le menu de sélection est vide avant d'ajouter les options
     if (selectMenu.options.length === 0) {
-        for (var i = 153; i >= 151; i--) {
+        for (var i = 154; i >= 151; i--) {
             var option = document.createElement("option");
             var formattedNumber = formatNumber(i);
             option.value = formattedNumber;

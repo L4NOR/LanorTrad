@@ -47,7 +47,7 @@ function initializeChapterSelect() {
   // Ajouter les options de chapitre si le menu est vide
   function populateChapterOptions() {
       if (selectMenu.options.length === 0) {
-          for (let i = 0; i >= 178; i--) {
+          for (let i = 178; i >= 178; i--) {
               const option = document.createElement("option");
               const formattedNumber = formatNumber(i);
               option.value = formattedNumber;

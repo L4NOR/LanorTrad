@@ -39,7 +39,7 @@ function initializeChapterSelect() {
   
     // Vérifier si le menu de sélection est vide avant d'ajouter les options
     if (selectMenu.options.length === 0) {
-      for (var i = 23; i >= 23; i--) {
+      for (var i = 24; i >= 23; i--) {
         var option = document.createElement("option");
         var formattedNumber = formatNumber(i);
         option.value = formattedNumber;

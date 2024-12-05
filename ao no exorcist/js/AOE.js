@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createChapitresSection() {
-        const chapitres = [153, 152, 151]; // Seulement les chapitres 152 et 151
+        const chapitres = [154, 153, 152, 151]; // Seulement les chapitres 152 et 151
         const totalChapitres = chapitres.length;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalChapitres);
