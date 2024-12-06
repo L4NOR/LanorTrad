@@ -39,7 +39,10 @@ function initializeChapterSelect() {
 
     // Créer les options pour les chapitres de "Wild Strawberry"
     var chapters = [
-        { number: 5, url: "https://lanortrad.netlify.app/wild strawberry/Chapitre%205.html" }
+        { number: 1, url: "https://lanortrad.netlify.app/wild strawberry/Chapitre%201.html" },
+        { number: 2, url: "https://lanortrad.netlify.app/wild strawberry/Chapitre%202.html" },
+        { number: 3, url: "https://lanortrad.netlify.app/wild strawberry/Chapitre%203.html" },
+        { number: 4, url: "https://lanortrad.netlify.app/wild strawberry/Chapitre%204.html" }
     ];
 
     chapters.forEach(chapter => {
