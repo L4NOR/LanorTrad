@@ -37,22 +37,40 @@ function initializeChapterSelect() {
   
     var currentChapter = getCurrentPageItem();
   
-    // Vérifier si le menu de sélection est vide avant d'ajouter les options
-    if (selectMenu.options.length === 0) {
-      for (var i = 24; i >= 23; i--) {
-        var option = document.createElement("option");
-        var formattedNumber = formatNumber(i);
-        option.value = formattedNumber;
-        option.text = "Chapitre " + formattedNumber;
-        option.dataset.redirect = `https://lanortrad.netlify.app/tokyo%20underworld/tome%2004/chapitre%20${formattedNumber}`;
-  
-        if (i === currentChapter || (currentChapter === null && i === 6)) {
-          option.selected = true;
-        }
-  
-        selectMenu.appendChild(option);
+// Vérifier si le menu de sélection est vide avant d'ajouter les options
+if (selectMenu.options.length === 0) {
+  for (var i = 25; i >= 23; i--) {
+    // Ajouter le chapitre 24.5 après le chapitre 25
+    if (i === 24) {
+      var option = document.createElement("option");
+      var formattedNumber = "24.5";
+      option.value = formattedNumber;
+      option.text = "Chapitre " + formattedNumber;
+      option.dataset.redirect = `https://lanortrad.netlify.app/tokyo%20underworld/tome%2004/chapitre%20${formattedNumber}`;
+      
+      // Sélectionner par défaut si l'URL correspond
+      if (window.location.href.includes(`chapitre%20${formattedNumber}`)) {
+        option.selected = true;
       }
+
+      selectMenu.appendChild(option);
     }
+
+    var option = document.createElement("option");
+    var formattedNumber = formatNumber(i);
+    option.value = formattedNumber;
+    option.text = "Chapitre " + formattedNumber;
+    option.dataset.redirect = `https://lanortrad.netlify.app/tokyo%20underworld/tome%2004/chapitre%20${formattedNumber}`;
+
+    // Sélectionner par défaut si l'URL correspond
+    if (window.location.href.includes(`chapitre%20${formattedNumber}`)) {
+      option.selected = true;
+    }
+
+    selectMenu.appendChild(option);
+  }
+}
+
   
     selectMenu.addEventListener("change", function () {
       var selectedOption = selectMenu.options[selectMenu.selectedIndex];

@@ -1,0 +1,113 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+
+    <!--Scripts-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-2MZGH30P4J');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+    var test = "Chapitre 3";
+    var imgUrls = [ 
+    ];
+    imgUrls.forEach(function(url) {
+    var img = document.createElement('img');
+    img.src = url;
+    img.loading = 'lazy';
+    img.className = 'hidden-image'; 
+    imageContainer.appendChild(img);
+    });
+    </script>
+
+    <!--SEO-->
+    <meta property="og:title" content="Tokyo Underworld - Chapitre 24.5">
+    <meta property="og:description" content="Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et sont jugés sans pitié pour leurs crimes de la manière la plus cruelle qui soit !">
+    <meta property="og:image" content="https://i.postimg.cc/CLx0x5yW/T04.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/tokyo underworld/Tome 04/Chapitre 24.5.html">
+    <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:type" content="website">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Underworld - Chapitre 24.5 - LanorTrad</title>
+    <link rel="stylesheet" href="intro.css">
+    <link rel="stylesheet" href="chapitre.css">
+    <script src="Description.js"></script>
+</head>
+<body>
+    <div id="intro">
+        <h1>Chargement...</h1>
+    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="https://lanortrad.netlify.app/">Accueil</a></li>
+                <li><a href="https://lanortrad.netlify.app/tokyo%20underworld">Chapitres</a></li>
+                <li><a href="https://linktr.ee/l4nor">Réseaux</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dropdown">
+        <button class="dropbtn">Options</button>
+        <div class="dropdown-content">
+            <div>
+                <label for="image-size">Taille des images:</label>
+                <input type="range" id="image-size" name="image-size" min="50" max="250" value="100">
+            </div>
+            <div>
+                <label for="chapter-select">Sélectionner le chapitre:</label>
+                <select id="chapter-select" name="chapter-select">
+                </select>
+            </div>
+            <div>
+                <button id="scan-by-scan">Scan par scan</button>
+                <button id="all-in-one">Tout dans une page</button>
+            </div>
+        </div>
+      </div>    
+
+    <main>
+        <h1 id="chapter-title">Chapitre 24.5</h1>
+        <br>
+        <div id="chapter-images" class="chapter-images">
+
+        </div>
+    </main>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">&#8593;</button>
+
+    <footer>
+        <p>&copy; 2024 LanorTrad - Tous droits réservés.</p>
+    </footer>
+    <script>
+        function generateImages() {
+            const container = document.getElementById('chapter-images');
+            
+            for (let i = 1; i <= 2; i++) {
+                let num = i.toString().padStart(3, '0'); 
+                let imgElement = document.createElement('img'); 
+                imgElement.src = `Tome 04/24.5/${num}.png`; 
+                imgElement.alt = `Tokyo Underworld Tome 4 Page ${num}`; 
+                container.appendChild(imgElement); 
+            }
+        }
+
+        generateImages();
+    </script>
+    <script src="intro.js"></script>
+    <script src="chapitre.js"></script>
+    <script type="text/javascript" src="https://myutaku.com/js/myutaku.js"></script>
+</body>
+</html>

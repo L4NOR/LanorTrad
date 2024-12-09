@@ -76,12 +76,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const chaptersGrid = document.getElementById('chaptersGrid');
     const startChapter = 23;
-    const endChapter = 24;
+    const endChapter = 25;
 
     for (let i = startChapter; i <= endChapter; i++) {
         // Formate le numéro du chapitre avec un zéro devant si nécessaire
         const formattedChapterNumber = i.toString().padStart(2, '0');
-        
+
+        // Crée le bouton pour le chapitre
         const chapterButton = document.createElement('button');
         chapterButton.classList.add('chapter-button');
         chapterButton.textContent = `Chapitre ${i}`;
@@ -89,6 +90,17 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = `Tome 04/Chapitre ${formattedChapterNumber}.html`; 
         });
         chaptersGrid.appendChild(chapterButton);
+
+        // Ajouter le chapitre 24.5 après le chapitre 24
+        if (i === 24) {
+            const chapter24_5Button = document.createElement('button');
+            chapter24_5Button.classList.add('chapter-button');
+            chapter24_5Button.textContent = "Chapitre 24.5";
+            chapter24_5Button.addEventListener('click', () => {
+                window.location.href = "Tome 04/Chapitre 24.5.html";
+            });
+            chaptersGrid.appendChild(chapter24_5Button);
+        }
     }
 });
 
