@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createChapitresSection() {
-        const chapitres = [13, 12, 11, 10, 9, 8, 7]; // Liste des chapitres disponibles
+        const chapitres = [14, 13, 12, 11, 10, 9, 8, 7]; // Liste des chapitres disponibles
         const totalChapitres = chapitres.length;
         const start = (currentPage - 1) * itemsPerPage;
         const end = Math.min(start + itemsPerPage, totalChapitres);
