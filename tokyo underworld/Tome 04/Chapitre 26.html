@@ -19,29 +19,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!--SEO-->
-    <meta property="og:title" content="Tokyo Underworld - Tome 4">
+    <meta property="og:title" content="Tokyo Underworld - Chapitre 26">
     <meta property="og:description" content="Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et sont jugés sans pitié pour leurs crimes de la manière la plus cruelle qui soit !">
-    <meta property="og:image" content="https://zupimages.net/up/24/28/0xwu.jpg">
-    <meta property="og:url" content="https://lanortrad.netlify.app/tokyo underworld/Tome 04.html">
+    <meta property="og:image" content="https://i.postimg.cc/CLx0x5yW/T04.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/tokyo underworld/Tome 04/Chapitre 26.html">
     <meta property="og:site_name" content="LanorTrad">
     <meta property="og:type" content="website">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokyo Underworld - Tome 04 - LanorTrad</title>
+    <title>Tokyo Underworld - Chapitre 26 - LanorTrad</title>
     <link rel="stylesheet" href="intro.css">
     <link rel="stylesheet" href="chapitre.css">
     <script src="Description.js"></script>
-    <link rel="stylesheet" href="../css/Noël.css">
 </head>
 <body>
-
-    <div class="snowflakes" aria-hidden="true">
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-        <div class="snowflake">❄</div>
-    </div>  
-
     <div id="intro">
         <h1>Chargement...</h1>
     </div>
@@ -49,20 +41,36 @@
         <nav>
             <ul>
                 <li><a href="https://lanortrad.netlify.app/">Accueil</a></li>
+                <li><a href="https://lanortrad.netlify.app/tokyo%20underworld">Chapitres</a></li>
                 <li><a href="https://linktr.ee/l4nor">Réseaux</a></li>
             </ul>
         </nav>
     </header>
 
+    <div class="dropdown">
+        <button class="dropbtn">Options</button>
+        <div class="dropdown-content">
+            <div>
+                <label for="image-size">Taille des images:</label>
+                <input type="range" id="image-size" name="image-size" min="50" max="250" value="100">
+            </div>
+            <div>
+                <label for="chapter-select">Sélectionner le chapitre:</label>
+                <select id="chapter-select" name="chapter-select">
+                </select>
+            </div>
+            <div>
+                <button id="scan-by-scan">Scan par scan</button>
+                <button id="all-in-one">Tout dans une page</button>
+            </div>
+        </div>
+      </div>    
+
     <main>
-        <div class="tome-container">
-            <div class="tome-cover">
-                <img src="images/T04.jpg" alt="Couverture du tome">
-            </div>
-            <div class="chapters-list">
-                <h2>Les Chapitres :</h2>
-                <div class="chapters-grid" id="chaptersGrid"></div>
-            </div>
+        <h1 id="chapter-title">Chapitre 26</h1>
+        <br>
+        <div id="chapter-images" class="chapter-images">
+
         </div>
     </main>
 
@@ -71,41 +79,23 @@
     <footer>
         <p>&copy; 2024 LanorTrad - Tous droits réservés.</p>
     </footer>
-    <script src="../js/Noël.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const chaptersGrid = document.getElementById('chaptersGrid');
-    const startChapter = 23;
-    const endChapter = 26;
-
-    for (let i = startChapter; i <= endChapter; i++) {
-        // Formate le numéro du chapitre avec un zéro devant si nécessaire
-        const formattedChapterNumber = i.toString().padStart(2, '0');
-
-        // Crée le bouton pour le chapitre
-        const chapterButton = document.createElement('button');
-        chapterButton.classList.add('chapter-button');
-        chapterButton.textContent = `Chapitre ${i}`;
-        chapterButton.addEventListener('click', () => {
-            window.location.href = `Tome 04/Chapitre ${formattedChapterNumber}.html`; 
-        });
-        chaptersGrid.appendChild(chapterButton);
-
-        // Ajouter le chapitre 24.5 après le chapitre 24
-        if (i === 24) {
-            const chapter24_5Button = document.createElement('button');
-            chapter24_5Button.classList.add('chapter-button');
-            chapter24_5Button.textContent = "Chapitre 24.5";
-            chapter24_5Button.addEventListener('click', () => {
-                window.location.href = "Tome 04/Chapitre 24.5.html";
-            });
-            chaptersGrid.appendChild(chapter24_5Button);
+        function generateImages() {
+            const container = document.getElementById('chapter-images');
+            
+            for (let i = 1; i <= 25; i++) {
+                let num = i.toString().padStart(3, '0'); 
+                let imgElement = document.createElement('img'); 
+                imgElement.src = `Tome 04/26/${num}.png`; 
+                imgElement.alt = `Tokyo Underworld Tome 4 Page ${num}`; 
+                container.appendChild(imgElement); 
+            }
         }
-    }
-});
 
+        generateImages();
     </script>
     <script src="intro.js"></script>
     <script src="chapitre.js"></script>
+    <script src="../../js/myutaku.js"></script>
 </body>
 </html>

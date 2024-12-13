@@ -39,7 +39,7 @@ function initializeChapterSelect() {
   
 // Vérifier si le menu de sélection est vide avant d'ajouter les options
 if (selectMenu.options.length === 0) {
-  for (var i = 25; i >= 23; i--) {
+  for (var i = 26; i >= 23; i--) {
     // Ajouter le chapitre 24.5 après le chapitre 25
     if (i === 24) {
       var option = document.createElement("option");
