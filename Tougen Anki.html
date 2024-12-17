@@ -13,6 +13,8 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="js/intro.js"></script>
+        <script src="js/Noël.js"></script>
     
         <!--SEO-->
         <meta property="og:title" content="Tougen Anki - Liste des Chapitres">
@@ -80,9 +82,227 @@
         </div>
     </main>
 
-    <script src="js/intro.js"></script>
-    <script src="js/TA.js"></script>
-    <script src="js/Noël.js"></script>
+    <script>
+const showChaptersButton = document.getElementById('show-chapters-button');
+const chaptersOverlay = document.getElementById('chapters-overlay');
+const chapterList = document.getElementById('chapter-list');
+
+// Liste des chapitres avec le chemin du fichier PDF
+const chapters = [
+    { number: 1, title: "Sang d'oni", filePath: "images/TougenAnki/pdf/Chapitre 01.pdf" },
+    { number: 2, title: "L'agence Momotarô", filePath: "images/TougenAnki/pdf/Chapitre 02.pdf" },
+    { number: 3, title: "Dommage pour toi", filePath: "images/TougenAnki/pdf/Chapitre 03.pdf" },
+    { number: 4, title: "Des graines de qualité", filePath: "images/TougenAnki/pdf/Chapitre 04.pdf" },
+    { number: 5, title: "Il vous faudra enchaîner les victoires", filePath: "images/TougenAnki/pdf/Chapitre 05.pdf" },
+    { number: 6, title: "Hémocorrosion : Effusion", filePath: "images/TougenAnki/pdf/Chapitre 06.pdf" },
+    { number: 7, title: "Elle vous tuera", filePath: "images/TougenAnki/pdf/Chapitre 07.pdf" },
+    { number: 8, title: "Je ne peux pas t'abandonner !", filePath: "images/TougenAnki/pdf/Chapitre 08.pdf" },
+    { number: 9, title: "Les choses sérieuses ne font que commencer !", filePath: "images/TougenAnki/pdf/Chapitre 09.pdf" },
+    { number: 10, title: "C'est pas mes oignons", filePath: "images/TougenAnki/pdf/Chapitre 10.pdf" },
+    { number: 11, title: "Ton Père", filePath: "images/TougenAnki/pdf/Chapitre 11.pdf" },
+    { number: 12, title: "Collaboration", filePath: "images/TougenAnki/pdf/Chapitre 12.pdf" },
+    { number: 13, title: "Fonce vers la ligne d'arrivée", filePath: "images/TougenAnki/pdf/Chapitre 13.pdf" },
+    { number: 14, title: "Les détraqués", filePath: "images/TougenAnki/pdf/Chapitre 14.pdf" },
+    { number: 15, title: "Kyôya Oiranzaka", filePath: "images/TougenAnki/pdf/Chapitre 15.pdf" },
+    { number: 16, title: "Mon champ de bataille", filePath: "images/TougenAnki/pdf/Chapitre 16.pdf" },
+    { number: 17, title: "À la limite du supportable", filePath: "images/TougenAnki/pdf/Chapitre 17.pdf" },
+    { number: 18, title: "La cruauté a des limites", filePath: "images/TougenAnki/pdf/Chapitre 18.pdf" },
+    { number: 19, title: "Je préfère être du côté des méchants", filePath: "images/TougenAnki/pdf/Chapitre 19.pdf" },
+    { number: 20, title: "Belle et redoutable", filePath: "images/TougenAnki/pdf/Chapitre 20.pdf" },
+    { number: 21, title: "Tout est prêt", filePath: "images/TougenAnki/pdf/Chapitre 21.pdf" },
+    { number: 22, title: "Dévouement maladif", filePath: "images/TougenAnki/pdf/Chapitre 22.pdf" },
+    { number: 23, title: "I love, un amour insensé", filePath: "images/TougenAnki/pdf/Chapitre 23.pdf" },
+    { number: 24, title: "Impossible, Impossible, Impossible", filePath: "images/TougenAnki/pdf/Chapitre 24.pdf" },
+    { number: 25, title: "Chronique d'un héros raté", filePath: "images/TougenAnki/pdf/Chapitre 25.pdf" },
+    { number: 26, title: "J'ai pas la classe ?", filePath: "images/TougenAnki/pdf/Chapitre 26.pdf" },
+    { number: 27, title: "Tu flippes ?", filePath: "images/TougenAnki/pdf/Chapitre 27.pdf" },
+    { number: 28, title: "Que va donner la colère du jour ?", filePath: "images/TougenAnki/pdf/Chapitre 28.pdf" },
+    { number: 29, title: "Le problème, c'est que tu n'essayes même pas de changer", filePath: "images/TougenAnki/pdf/Chapitre 29.pdf" },
+    { number: 30, title: "L'âme d'un momotarô", filePath: "images/TougenAnki/pdf/Chapitre 30.pdf" },
+    { number: 31, title: "L'héritier de kishin", filePath: "images/TougenAnki/pdf/Chapitre 31.pdf" },
+    { number: 32, title: "Parce que j'ai un coeur", filePath: "images/TougenAnki/pdf/Chapitre 32.pdf" },
+    { number: 33, title: "Courage !!", filePath: "images/TougenAnki/pdf/Chapitre 33.pdf" },
+    { number: 34, title: "Je hais ce type", filePath: "images/TougenAnki/pdf/Chapitre 34.pdf" },
+    { number: 35, title: "Merci !", filePath: "images/TougenAnki/pdf/Chapitre 35.pdf" },
+    { number: 36, title: "Répartition des chambres", filePath: "images/TougenAnki/pdf/Chapitre 36.pdf" },
+    { number: 37, title: "Mikado, la porte des Dieux", filePath: "images/TougenAnki/pdf/Chapitre 37.pdf" },
+    { number: 38, title: "Et si...", filePath: "images/TougenAnki/pdf/Chapitre 38.pdf" },
+    { number: 39, title: "Ma propre règle", filePath: "images/TougenAnki/pdf/Chapitre 39.pdf" },
+    { number: 40, title: "Tant mieux !", filePath: "images/TougenAnki/pdf/Chapitre 40.pdf" },
+    { number: 41, title: "Les troupes de l'arrondissement de Nerima", filePath: "images/TougenAnki/pdf/Chapitre 41.pdf" },
+    { number: 42, title: "Détermination", filePath: "images/TougenAnki/pdf/Chapitre 42.pdf" },
+    { number: 43, title: "Ça Avance", filePath: "images/TougenAnki/pdf/Chapitre 43.pdf" },
+    { number: 44, title: "Trouvés !", filePath: "images/TougenAnki/pdf/Chapitre 44.pdf" },
+    { number: 45, title: "Tête-à-Tête", filePath: "images/TougenAnki/pdf/Chapitre 45.pdf" },
+    { number: 46, title: "Ondées à profusion", filePath: "images/TougenAnki/pdf/Chapitre 46.pdf" },
+    { number: 47, title: "Le clair de lune sera témoin de ta mort", filePath: "images/TougenAnki/pdf/Chapitre 47.pdf" },
+    { number: 48, title: "C'est pas si mal", filePath: "images/TougenAnki/pdf/Chapitre 48.pdf" },
+    { number: 49, title: "Tout se déroule comme je l'espérais", filePath: "images/TougenAnki/pdf/Chapitre 49.pdf" },
+    { number: 50, title: "L'oni vengeur", filePath: "images/TougenAnki/pdf/Chapitre 50.pdf" },
+    { number: 51, title: "Doutes", filePath: "images/TougenAnki/pdf/Chapitre 51.pdf" },
+    { number: 52, title: "Le doute s'installe", filePath: "images/TougenAnki/pdf/Chapitre 52.pdf" },
+    { number: 53, title: "Peine", filePath: "images/TougenAnki/pdf/Chapitre 53.pdf" },
+    { number: 54, title: "La voix des faibles", filePath: "images/TougenAnki/pdf/Chapitre 54.pdf" },
+    { number: 55, title: "Tournant", filePath: "images/TougenAnki/pdf/Chapitre 55.pdf" },
+    { number: 56, title: "Bidonne-toi !", filePath: "images/TougenAnki/pdf/Chapitre 56.pdf" },
+    { number: 57, title: "Je m'occupe de tout !", filePath: "images/TougenAnki/pdf/Chapitre 57.pdf" },
+    { number: 58, title: "Colère VS Colère", filePath: "images/TougenAnki/pdf/Chapitre 58.pdf" },
+    { number: 59, title: "On va danser !", filePath: "images/TougenAnki/pdf/Chapitre 59.pdf" },
+    { number: 60, title: "La nuit est encore longue", filePath: "images/TougenAnki/pdf/Chapitre 60.pdf" },
+    { number: 61, title: "La perfection de la Divination", filePath: "images/TougenAnki/pdf/Chapitre 61.pdf" },
+    { number: 62, title: "Ils n'ont d'yeux que pour moi", filePath: "images/TougenAnki/pdf/Chapitre 62.pdf" },
+    { number: 63, title: "Une allure de Dieu", filePath: "images/TougenAnki/pdf/Chapitre 63.pdf" },
+    { number: 64, title: "C'est pas possible", filePath: "images/TougenAnki/pdf/Chapitre 64.pdf" },
+    { number: 65, title: "Combat stérile", filePath: "images/TougenAnki/pdf/Chapitre 65.pdf" },
+    { number: 66, title: "Mes limites", filePath: "images/TougenAnki/pdf/Chapitre 66.pdf" },
+    { number: 67, title: "Adieu", filePath: "images/TougenAnki/pdf/Chapitre 67.pdf" },
+    { number: 68, title: "Mon pote", filePath: "images/TougenAnki/pdf/Chapitre 68.pdf" },
+    { number: 69, title: "Pas si mal", filePath: "images/TougenAnki/pdf/Chapitre 69.pdf" },
+    { number: 70, title: "Démon", filePath: "images/TougenAnki/pdf/Chapitre 70.pdf" },
+    { number: 71, title: "Un imbécile", filePath: "images/TougenAnki/pdf/Chapitre 71.pdf" },
+    { number: 72, title: "Ne meurs pas !", filePath: "images/TougenAnki/pdf/Chapitre 72.pdf" },
+    { number: 73, title: "Ce que je peux faire", filePath: "images/TougenAnki/pdf/Chapitre 73.pdf" },
+    { number: 74, title: "Ce que je désirais", filePath: "images/TougenAnki/pdf/Chapitre 74.pdf" },
+    { number: 75, title: "Responsabilité", filePath: "images/TougenAnki/pdf/Chapitre 75.pdf" },
+    { number: 76, title: "Pour la prochaine fois", filePath: "images/TougenAnki/pdf/Chapitre 76.pdf" },
+    { number: 77, title: "À jamais inachevé", filePath: "images/TougenAnki/pdf/Chapitre 77.pdf" },
+    { number: 78, title: "Go ! Go ! La montagne enneigée !", filePath: "images/TougenAnki/pdf/Chapitre 78.pdf" },
+    { number: 79, title: "Innami", filePath: "images/TougenAnki/pdf/Chapitre 79.pdf" },
+    { number: 80, title: "Imprévu", filePath: "images/TougenAnki/pdf/Chapitre 80.pdf" },
+    { number: 81, title: "Comment devenir fort", filePath: "images/TougenAnki/pdf/Chapitre 81.pdf" },
+    { number: 82, title: "Persévérance", filePath: "images/TougenAnki/pdf/Chapitre 82.pdf" },
+    { number: 83, title: "Vivre, c'est grandir en permanence", filePath: "images/TougenAnki/pdf/Chapitre 83.pdf" },
+    { number: 84, title: "Cicatrice", filePath: "images/TougenAnki/pdf/Chapitre 84.pdf" },
+    { number: 85, title: "Assurance", filePath: "images/TougenAnki/pdf/Chapitre 85.pdf" },
+    { number: 86, title: "Impasse", filePath: "images/TougenAnki/pdf/Chapitre 86.pdf" },
+    { number: 87, title: "Coopération", filePath: "images/TougenAnki/pdf/Chapitre 87.pdf" },
+    { number: 88, title: "Poursuite", filePath: "images/TougenAnki/pdf/Chapitre 88.pdf" },
+    { number: 89, title: "L'auditoire", filePath: "images/TougenAnki/pdf/Chapitre 89.pdf" },
+    { number: 90, title: "Le vent est ma cape, la brise est ma dague", filePath: "images/TougenAnki/pdf/Chapitre 90.pdf" },
+    { number: 91, title: "Au Revoir", filePath: "images/TougenAnki/pdf/Chapitre 91.pdf" },
+    { number: 92, title: "Fils Prodigue", filePath: "images/TougenAnki/pdf/Chapitre 92.pdf" },
+    { number: 93, title: "Le sang frais", filePath: "images/TougenAnki/pdf/Chapitre 93.pdf" },
+    { number: 94, title: "Combat Nocturne", filePath: "images/TougenAnki/pdf/Chapitre 94.pdf" },
+    { number: 95, title: "En tant que Père", filePath: "images/TougenAnki/pdf/Chapitre 95.pdf" },
+    { number: 96, title: "Perte d'attention", filePath: "images/TougenAnki/pdf/Chapitre 96.pdf" },
+    { number: 97, title: "Ce n'est pas juste", filePath: "images/TougenAnki/pdf/Chapitre 97.pdf" },
+    { number: 98, title: "La décision de Todoroki", filePath: "images/TougenAnki/pdf/Chapitre 98.pdf" },
+    { number: 99, title: "Extermination Terminée", filePath: "images/TougenAnki/pdf/Chapitre 99.pdf" },
+    { number: 100, title: "Ne baisse pas ta garde ! Tiens bon !!", filePath: "images/TougenAnki/pdf/Chapitre 100.pdf" },
+    { number: 101, title: "Le retour du Capitaine !", filePath: "images/TougenAnki/pdf/Chapitre 101.pdf" },
+    { number: 102, title: "Les ailes tachées de sang", filePath: "images/TougenAnki/pdf/Chapitre 102.pdf" },
+    { number: 103, title: "Une telle douleur (dans le cul)", filePath: "images/TougenAnki/pdf/Chapitre 103.pdf" },
+    { number: 104, title: "L'arrivée", filePath: "images/TougenAnki/pdf/Chapitre 104.pdf" },
+    { number: 105, title: "Chacun son chemin", filePath: "images/TougenAnki/pdf/Chapitre 105.pdf" },
+    { number: 106, title: "Prends-moi avec toi !", filePath: "images/TougenAnki/pdf/Chapitre 106.pdf" },
+    { number: 107, title: "La légende des 100 meurtres", filePath: "images/TougenAnki/pdf/Chapitre 107.pdf" },
+    { number: 108, title: "Bruit", filePath: "images/TougenAnki/pdf/Chapitre 108.pdf" },
+    { number: 109, title: "Les sons de la musique", filePath: "images/TougenAnki/pdf/Chapitre 109.pdf" },
+    { number: 110, title: "Quelque chose d'invisible", filePath: "images/TougenAnki/pdf/Chapitre 110.pdf" },
+    { number: 111, title: "Ouverture", filePath: "images/TougenAnki/pdf/Chapitre 111.pdf" },
+    { number: 112, title: "Illuminé par les projecteurs", filePath: "images/TougenAnki/pdf/Chapitre 112.pdf" },
+    { number: 113, title: "La Mallette Transportable", filePath: "images/TougenAnki/pdf/Chapitre 113.pdf" },
+    { number: 114, title: "Destin", filePath: "images/TougenAnki/pdf/Chapitre 114.pdf" },
+    { number: 115, title: "Roméo et Juliette", filePath: "images/TougenAnki/pdf/Chapitre 115.pdf" },
+    { number: 116, title: "Trop Cool", filePath: "images/TougenAnki/pdf/Chapitre 116.pdf" },
+    { number: 117, title: "Je te protégerai !", filePath: "images/TougenAnki/pdf/Chapitre 117.pdf" },
+    { number: 118, title: "Future", filePath: "images/TougenAnki/pdf/Chapitre 118.pdf" },
+    { number: 119, title: "Un câlin écorché", filePath: "images/TougenAnki/pdf/Chapitre 119.pdf" },
+    { number: 120, title: "Flashback", filePath: "images/TougenAnki/pdf/Chapitre 120.pdf" },
+    { number: 121, title: "Recherche", filePath: "images/TougenAnki/pdf/Chapitre 121.pdf" },
+    { number: 122, title: "Stimulation", filePath: "images/TougenAnki/pdf/Chapitre 122.pdf" },
+    { number: 123, title: "Statues Dorées", filePath: "images/TougenAnki/pdf/Chapitre 123.pdf" },
+    { number: 124, title: "Les Elevator Boys", filePath: "images/TougenAnki/pdf/Chapitre 124.pdf" },
+    { number: 125, title: "Les capacités du pervers", filePath: "images/TougenAnki/pdf/Chapitre 125.pdf" },
+    { number: 126, title: "Ce pourquoi je suis née !!", filePath: "images/TougenAnki/pdf/Chapitre 126.pdf" },
+    { number: 127, title: "Mauvaise vie", filePath: "images/TougenAnki/pdf/Chapitre 127.pdf" },
+    { number: 128, title: "Tout est libre", filePath: "images/TougenAnki/pdf/Chapitre 128.pdf" },
+    { number: 129, title: "Bye Bye", filePath: "images/TougenAnki/pdf/Chapitre 129.pdf" },
+    { number: 130, title: "La racaille et le chercheur de merde", filePath: "images/TougenAnki/pdf/Chapitre 130.pdf" },
+    { number: 131, title: "Moustique", filePath: "images/TougenAnki/pdf/Chapitre 131.pdf" },
+    { number: 132, title: "Commencer à bouger", filePath: "images/TougenAnki/pdf/Chapitre 132.pdf" },
+    { number: 133, title: "Réunion", filePath: "images/TougenAnki/pdf/Chapitre 133.pdf" },
+    { number: 134, title: "Bons amis", filePath: "images/TougenAnki/pdf/Chapitre 134.pdf" },
+    { number: 135, title: "Mon ami", filePath: "images/TougenAnki/pdf/Chapitre 135.pdf" },
+    { number: 136, title: "Souvenirs", filePath: "images/TougenAnki/pdf/Chapitre 136.pdf" },
+    { number: 137, title: "Seul", filePath: "images/TougenAnki/pdf/Chapitre 137.pdf" },
+    { number: 138, title: "Amusant", filePath: "images/TougenAnki/pdf/Chapitre 138.pdf" },
+    { number: 139, title: "Renaissance", filePath: "images/TougenAnki/pdf/Chapitre 139.pdf" },
+    { number: 140, title: "Le devoir de chacun", filePath: "images/TougenAnki/pdf/Chapitre 140.pdf" },
+    { number: 141, title: "Un coeur enragé", filePath: "images/TougenAnki/pdf/Chapitre 141.pdf" },
+    { number: 142, title: "Ego", filePath: "images/TougenAnki/pdf/Chapitre 142.pdf" },
+    { number: 143, title: "L'unité kikoku", filePath: "images/TougenAnki/pdf/Chapitre 143.pdf" },
+    { number: 144, title: "Ne te retourne jamais", filePath: "images/TougenAnki/pdf/Chapitre 144.pdf" },
+    { number: 145, title: "Amis", filePath: "images/TougenAnki/pdf/Chapitre 145.pdf" },
+    { number: 146, title: "Ennemi Naturel", filePath: "images/TougenAnki/pdf/Chapitre 146.pdf" },
+    { number: 147, title: "Distorsion", filePath: "images/TougenAnki/pdf/Chapitre 147.pdf" },
+    { number: 148, title: "Vide Néant", filePath: "images/TougenAnki/pdf/Chapitre 148.pdf" },
+    { number: 149, title: "Traversée", filePath: "images/TougenAnki/pdf/Chapitre 149.pdf" },
+    { number: 150, title: "Je veux m'appuyer sur toi", filePath: "images/TougenAnki/pdf/Chapitre 150.pdf" },
+    { number: 151, title: "Tenma", filePath: "images/TougenAnki/pdf/Chapitre 151.pdf" },
+    { number: 152, title: "Tendresse", filePath: "images/TougenAnki/pdf/Chapitre 152.pdf" },
+    { number: 153, title: "Clef de la réussite", filePath: "images/TougenAnki/pdf/Chapitre 153.pdf" },
+    { number: 154, title: "Biplace", filePath: "images/TougenAnki/pdf/Chapitre 154.pdf" },
+    { number: 155, title: "Compte sur moi", filePath: "images/TougenAnki/pdf/Chapitre 155.pdf" },
+    { number: 156, title: "Mamagoto", filePath: "images/TougenAnki/pdf/Chapitre 156.pdf" },
+    { number: 157, title: "Une colère brûlante", filePath: "images/TougenAnki/pdf/Chapitre 157.pdf" },
+    { number: 158, title: "La chute du dirigeable", filePath: "images/TougenAnki/pdf/Chapitre 158.pdf" },
+    { number: 159, title: "Chute", filePath: "images/TougenAnki/pdf/Chapitre 159.pdf" },
+    { number: 160, title: "La première fois", filePath: "images/TougenAnki/pdf/Chapitre 160.pdf" },
+    { number: 161, title: "Nouveau Monde", filePath: "images/TougenAnki/pdf/Chapitre 161.pdf" },
+    { number: 162, title: "Changement et évolution", filePath: "images/TougenAnki/pdf/Chapitre 162.pdf" },
+    { number: 163, title: "Porter", filePath: "images/TougenAnki/pdf/Chapitre 163.pdf" },
+    { number: 164, title: "Plan", filePath: "images/TougenAnki/pdf/Chapitre 164.pdf" },
+    { number: 165, title: "Doute", filePath: "images/TougenAnki/pdf/Chapitre 165.pdf" },
+    { number: 166, title: "Punition", filePath: "images/TougenAnki/pdf/Chapitre 166.pdf" },
+    { number: 167, title: "Transmission", filePath: "images/TougenAnki/pdf/Chapitre 167.pdf" },
+    { number: 168, title: "Réflexions", filePath: "images/TougenAnki/pdf/Chapitre 168.pdf" },
+    { number: 169, title: "Assassinat", filePath: "images/TougenAnki/pdf/Chapitre 169.pdf" },
+    { number: 170, title: "Commencement", filePath: "images/TougenAnki/pdf/Chapitre 170.pdf" },
+    { number: 171, title: "La face cachée", filePath: "images/TougenAnki/pdf/Chapitre 171.pdf" },
+    { number: 172, title: "Rencontre", filePath: "images/TougenAnki/pdf/Chapitre 172.pdf" },
+    { number: 173, title: "La lune des cerisiers", filePath: "images/TougenAnki/pdf/Chapitre 173.pdf" },
+    { number: 174, title: "Ceux qui reculent et ceux qui ne reculent pas", filePath: "images/TougenAnki/pdf/Chapitre 174.pdf" },
+    { number: 175, title: "Eau", filePath: "images/TougenAnki/pdf/Chapitre 175.pdf" },
+    { number: 176, title: "Confusion", filePath: "images/TougenAnki/pdf/Chapitre 176.pdf" },
+    { number: 177, title: "Différents Chemins", filePath: "images/TougenAnki/pdf/Chapitre 177.pdf" },
+    { number: 178, title: "Nuit illusoire", filePath: "images/TougenAnki/pdf/Chapitre 178.pdf" },
+    { number: 179, title: "Complicité", filePath: "images/TougenAnki/pdf/Chapitre 179.pdf" },
+    { number: 180, title: "Ce qu'il faut éviter", filePath: "images/TougenAnki/pdf/Chapitre 180.pdf" },
+];
+
+// Affichage de la liste des chapitres
+showChaptersButton.addEventListener('click', () => {
+    chaptersOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    chapterList.innerHTML = chapters.map(chapter =>
+        `<div class="chapter-item">
+            <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+            <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+                Télécharger
+            </button>
+        </div>`
+    ).join('');
+});
+
+function closeChapters() {
+    chaptersOverlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Fonction de téléchargement du chapitre en PDF
+function downloadChapter(filePath, chapterNumber) {
+    const link = document.createElement('a');
+    link.href = filePath; // Chemin du fichier à télécharger
+    link.download = `Tougen Anki Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+    document.body.appendChild(link);
+    link.click(); // Simulation du clic pour télécharger le fichier
+    document.body.removeChild(link); // Suppression du lien après téléchargement
+    console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+}
+    </script>
+
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>

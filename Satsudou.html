@@ -13,6 +13,8 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="js/intro.js"></script>
+        <script src="js/Noël.js"></script>
     
         <!--SEO-->
         <meta property="og:title" content="Satsudou">
@@ -80,8 +82,6 @@
         </div>
     </main>
 
-    <script src="js/intro.js"></script>
-    <script src="js/Noël.js"></script>
     <script>
 const showChaptersButton = document.getElementById('show-chapters-button');
 const chaptersOverlay = document.getElementById('chapters-overlay');
@@ -99,7 +99,11 @@ const chapters = [
     { number: 8, title: "La technique du pied meurtrier", filePath: "images/SAT/pdf/Satsudou Chapitre 08.pdf" },
     { number: 9, title: "Un professeur honnête", filePath: "images/SAT/pdf/Satsudou Chapitre 09.pdf" },
     { number: 10, title: "Ouais, d'accord", filePath: "images/SAT/pdf/Satsudou Chapitre 10.pdf" },
-    { number: 11, title: "Aller là-bas et les battre !", filePath: "images/SAT/pdf/Satsudou Chapitre 11.pdf" }
+    { number: 11, title: "Aller là-bas et les battre !", filePath: "images/SAT/pdf/Satsudou Chapitre 11.pdf"},
+    { number: 12, title: "Une personne par jour", filePath: "images/SAT/pdf/Satsudou Chapitre 08.pdf" },
+    { number: 13, title: "Incompréhensions", filePath: "images/SAT/pdf/Satsudou Chapitre 09.pdf" },
+    { number: 14, title: "Prémonitions", filePath: "images/SAT/pdf/Satsudou Chapitre 10.pdf" },
+    { number: 15, title: "Les gens peuvent changer", filePath: "images/SAT/pdf/Satsudou Chapitre 11.pdf"}
 ];
 
 
@@ -133,7 +137,8 @@ link.click(); // Simulation du clic pour télécharger le fichier
 document.body.removeChild(link); // Suppression du lien après téléchargement
 console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
 }
-</script>
+    </script>
+
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>

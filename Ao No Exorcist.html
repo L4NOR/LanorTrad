@@ -13,6 +13,8 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="js/intro.js"></script>
+        <script src="js/Noël.js"></script>
     
         <!--SEO-->
         <meta property="og:title" content="Ao No Exorcist">
@@ -80,9 +82,207 @@
         </div>
     </main>
 
-    <script src="js/intro.js"></script>
-    <script src="js/AOE.js"></script>
-    <script src="js/Noël.js"></script>
+    <!--Partie Download Chapter-->
+    <script>
+const showChaptersButton = document.getElementById('show-chapters-button');
+const chaptersOverlay = document.getElementById('chapters-overlay');
+const chapterList = document.getElementById('chapter-list');
+
+// Liste des chapitres avec le chemin du fichier PDF
+const chapters = [
+{ number: 1, title: "Le rire Satanique", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 01.pdf" },
+  { number: 2, title: "Deux frères", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 02.pdf" },
+  { number: 3, title: "Le jardin d'Amahara", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 03.pdf" },
+  { number: 4, title: "L'enfant du temple maudit", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 04.pdf" },
+  { number: 5, title: "De nouveaux amis", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 05.pdf" },
+  { number: 6, title: "Il y avait un malade", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 06.pdf" },
+  { number: 7, title: "Trauma", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 07.pdf" },
+  { number: 8, title: "Le chat noir", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 08.pdf" },
+  { number: 9, title: "Démons en action", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 09.pdf" },
+  { number: 10, title: "La Preuve", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 10.pdf" },
+  { number: 11, title: "Une joyeuse excursion", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 11.pdf" },
+  { number: 12, title: "Piège à papillons", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 12.pdf" },
+  { number: 13, title: "Sympathie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 13.pdf" },
+  { number: 14, title: "Un Pari", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 14.pdf" },
+  { number: 15, title: "Pas un pour racheter l'autre", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 15.pdf" },
+  { number: 16, title: "Prélude", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 16.pdf" },
+  { number: 17, title: "Kyôto, nous voilà !", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 17.pdf" },
+  { number: 18, title: "Discorde", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 18.pdf" },
+  { number: 19, title: "Le fiston ivre", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 19.pdf" },
+  { number: 20, title: "Le traître", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 20.pdf" },
+  { number: 21, title: "Bouleversement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 21.pdf" },
+  { number: 22, title: "Ignition", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 22.pdf" },
+  { number: 23, title: "Confidence Paternelle", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 23.pdf" },
+  { number: 23.1, title: "Le train fantôme", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 23.1.pdf" },
+  { number: 23.2, title: "La fugue de Kuro", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 23.2.pdf" },
+  { number: 24, title: "Le sabre abandonné", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 24.pdf" },
+  { number: 25, title: "Le Fujô-ô", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 25.pdf" },
+  { number: 26, title: "Le feu intérieur", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 26.pdf" },
+  { number: 27, title: "La bataille du mont Kongô", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 27.pdf" },
+  { number: 28, title: "Feu Ardent", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 28.pdf" },
+  { number: 29, title: "L'incantation de la barrière", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 29.pdf" },
+  { number: 30, title: "Fatalité", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 30.pdf" },
+  { number: 31, title: "L'entrée dans le Nirvâna", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 31.pdf" },
+  { number: 32, title: "L'Abîme", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 32.pdf" },
+  { number: 33, title: "Dilacération", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 33.pdf" },
+  { number: 34, title: "Dénouement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 34.pdf" },
+  { number: 35, title: "L'immensité de l'océan", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 35.pdf" },
+  { number: 36, title: "La vague bleue", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 36.pdf" },
+  { number: 37, title: "La lune se couche, le soleil se lève", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 37.pdf" },
+  { number: 38, title: "Exorciste", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 38.pdf" },
+  { number: 39, title: "Règles de bienséance Démoniaque", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 39.pdf" },
+  { number: 40, title: "Les Sept mystères de l'Académie de la Croix-Vraie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 40.pdf" },
+  { number: 41, title: "L'antre du secret", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 41.pdf" },
+  { number: 41.5, title: "Kinzo et son groupe sans concession", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 41.5.pdf" },
+  { number: 42, title: "Un monde grouillant", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 42.pdf" },
+  { number: 43, title: "Amitié", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 43.pdf" },
+  { number: 44, title: "Les facéties de Méphisto", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 44.pdf" },
+  { number: 45, title: "Zombifiés", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 45.pdf" },
+  { number: 46, title: "Échecs et Sentiments", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 46.pdf" },
+  { number: 47, title: "Le Cross Festival Première partie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 47.pdf" },
+  { number: 48, title: "Le Cross Festival Deuxième partie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 48.pdf" },
+  { number: 49, title: "Le Cross Festival Troisième partie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 49.pdf" },
+  { number: 50, title: "L'être le plus cher", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 50.pdf" },
+  { number: 51, title: "Débile", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 51.pdf" },
+  { number: 52, title: "Personne sur qui compter", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 52.pdf" },
+  { number: 53, title: "La vraie moi", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 53.pdf" },
+  { number: 54, title: "Je coupe les ponts", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 54.pdf" },
+  { number: 55, title: "Comme des frères", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 55.pdf" },
+  { number: 56, title: "Interlude", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 56.pdf" },
+  { number: 57, title: "Entrée en matière", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 57.pdf" },
+  { number: 58, title: "Développement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 58.pdf" },
+  { number: 59, title: "Conclusion", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 59.pdf" },
+  { number: 60, title: "Ensemble", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 60.pdf" },
+  { number: 61, title: "Mon trésor", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 61.pdf" },
+  { number: 62, title: "Expurgation", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 62.pdf" },
+  { number: 63, title: "Au revoir", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 63.pdf" },
+  { number: 64, title: "À Bientôt", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 64.pdf" },
+  { number: 64.5, title: "Retrouvailles", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 64.5.pdf" },
+  { number: 65, title: "Pink Spider (1)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 65.pdf" },
+  { number: 66, title: "Pink Spider (2)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 66.pdf" },
+  { number: 67, title: "Pink Spider (3)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 67.pdf" },
+  { number: 68, title: "Tous à poil", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 68.pdf" },
+  { number: 69, title: "Réunion au sommet", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 69.pdf" },
+  { number: 70, title: "Motivation", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 70.pdf" },
+  { number: 71, title: "Flash", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 71.pdf" },
+  { number: 72, title: "Chacun sa route", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 72.pdf" },
+  { number: 73, title: "Is this love ?", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 73.pdf" },
+  { number: 74, title: "Hachinohe sous la neige", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 74.pdf" },
+  { number: 75, title: "Le serpent du froid", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 75.pdf" },
+  { number: 76, title: "Adieux", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 76.pdf" },
+  { number: 77, title: "Point de non-retour", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 77.pdf" },
+  { number: 78, title: "Les larmes aux yeux", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 78.pdf" },
+  { number: 79, title: "Adieu", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 79.pdf" },
+  { number: 80, title: "Aomori sous la neige", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 80.pdf" },
+  { number: 81, title: "Rhizome", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 81.pdf" },
+  { number: 82, title: "Le Jingzhe", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 82.pdf" },
+  { number: 83, title: "Bourgeonnement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 83.pdf" },
+  { number: 84, title: "Racines", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 84.pdf" },
+  { number: 85, title: "Hétérophyllie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 85.pdf" },
+  { number: 86, title: "L'éveil de la conscience", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 86.pdf" },
+  { number: 87, title: "Embryon", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 87.pdf" },
+  { number: 88, title: "Joyeux anniv-Noël !", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 88.pdf" },
+  { number: 89, title: "Joyeux anniv-Noël - Jour J", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 89.pdf" },
+  { number: 90, title: "Les noces Première partie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 90.pdf" },
+  { number: 91, title: "Les noces Deuxième partie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 91.pdf" },
+  { number: 92, title: "Sous la neige (1)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 92.pdf" },
+  { number: 93, title: "Sous la neige (2)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 93.pdf" },
+  { number: 94, title: "Sous la neige (3)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 94.pdf" },
+  { number: 95, title: "Sous la neige (4)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 95.pdf" },
+  { number: 96, title: "Sous la neige (5)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 96.pdf" },
+  { number: 97, title: "Sous la neige (6)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 97.pdf" },
+  { number: 98, title: "Sous la neige (7)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 98.pdf" },
+  { number: 99, title: "Sous la neige (8)", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 99.pdf" },
+  { number: 100, title: "SsC00:40", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 100.pdf" },
+  { number: 101, title: "SsC04:36", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 101.pdf" },
+  { number: 102, title: "SsC05:35", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 102.pdf" },
+  { number: 103, title: "SsC11:29", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 103.pdf" },
+  { number: 104, title: "SsC20:20", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 104.pdf" },
+  { number: 105, title: "SsC21:19", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 105.pdf" },
+  { number: 106, title: "SsC23:17A", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 106.pdf" },
+  { number: 107, title: "SsC23:17B", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 107.pdf" },
+  { number: 108, title: "SsC23:17C", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 108.pdf" },
+  { number: 109, title: "SsC23:17D", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 109.pdf" },
+  { number: 110, title: "SsC40:00A", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 110.pdf" },
+  { number: 111, title: "SsC40:00B", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 111.pdf" },
+  { number: 112, title: "SsC40:00C", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 112.pdf" },
+  { number: 113, title: "SsC40:00D", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 113.pdf" },
+  { number: 114, title: "SsC23:17E", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 114.pdf" },
+  { number: 115, title: "SsC23:17F", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 115.pdf" },
+  { number: 116, title: "SsC23:17G", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 116.pdf" },
+  { number: 117, title: "SsC23:17H", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 117.pdf" },
+  { number: 118, title: "SsC23:17I", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 118.pdf" },
+  { number: 119, title: "SsC24:16", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 119.pdf" },
+  { number: 120, title: "SsC40:00E", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 120.pdf" },
+  { number: 121, title: "Face-à-Face - Prélude", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 121.pdf" },
+  { number: 122, title: "Face-à-Face - Ignition", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 122.pdf" },
+  { number: 123, title: "Face-à-Face - Déchaînement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 123.pdf" },
+  { number: 124, title: "Face-à-Face - Embrasement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 124.pdf" },
+  { number: 125, title: "Face-à-Face - Zizanie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 125.pdf" },
+  { number: 126, title: "Face-à-Face - Rupture", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 126.pdf" },
+  { number: 127, title: "Face-à-Face - Fusion", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 127.pdf" },
+  { number: 128, title: "Face-à-Face - Éblouissement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 128.pdf" },
+  { number: 129, title: "Face-à-Face - Congratulations", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 129.pdf" },
+  { number: 130, title: "Face-à-Face - Flamboiement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 130.pdf" },
+  { number: 131, title: "Face-à-Face - Clarification", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 131.pdf" },
+  { number: 132, title: "Face-à-Face - Éruption", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 132.pdf" },
+  { number: 133, title: "Face-à-Face - Tourbillon", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 133.pdf" },
+  { number: 134, title: "Face-à-Face - Illumination", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 134.pdf" },
+  { number: 135, title: "Face-à-Face - Éveil", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 135.pdf" },
+  { number: 136, title: "D'un seul tissu - Coupure", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 136.pdf" },
+  { number: 137, title: "D'un seul tissu - Affligence", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 137.pdf" },
+  { number: 138, title: "D'un seul tissu - Destruction", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 138.pdf" },
+  { number: 138.5, title: "Prendre soin de Kuro Chapitre Bonus", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 138.5.pdf" },
+  { number: 139, title: "D'un seul tissu - À partir de maintenant Partie 1", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 139.pdf" },
+  { number: 140, title: "D'un seul tissu - À partir de maintenant Partie 2", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 140.pdf" },
+  { number: 141, title: "La représentation d'un seul tissu", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 141.pdf" },
+  { number: 142, title: "D'un seul tenant - Rassembler et Combattre", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 142.pdf" },
+  { number: 143, title: "D'un seul signe", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 143.pdf" },
+  { number: 144, title: "D'un seul signe, Partie 2", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 144.pdf" },
+  { number: 145, title: "D'un seul signe - Affrontement", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 145.pdf" },
+  { number: 146, title: "D'un même tissu - Avoir une audience", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 146.pdf" },
+  { number: 147, title: "Le sens incomparable de la vie", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 147.pdf" },
+  { number: 148, title: "Une compétence de combat", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 148.pdf" },
+  { number: 149, title: "Perdurer", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 149.pdf" },
+  { number: 150, title: "Une mort soudaine", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 150.pdf" },
+  { number: 151, title: "La mort", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 151.pdf" },
+  { number: 152, title: "Partout", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 152.pdf" },
+  { number: 153, title: "Peur", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 153.pdf" },
+  { number: 154, title: "Entaille", filePath: "images/AOE/pdf/AoNoExorcist Chapitre 154.pdf" }
+];
+
+// Affichage de la liste des chapitres
+showChaptersButton.addEventListener('click', () => {
+    chaptersOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    chapterList.innerHTML = chapters.map(chapter =>
+        `<div class="chapter-item">
+            <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+            <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+                Télécharger
+            </button>
+        </div>`
+    ).join('');
+});
+
+function closeChapters() {
+    chaptersOverlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Fonction de téléchargement du chapitre en PDF
+function downloadChapter(filePath, chapterNumber) {
+    const link = document.createElement('a');
+    link.href = filePath; // Chemin du fichier à télécharger
+    link.download = `Ao No Exorcist Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+    document.body.appendChild(link);
+    link.click(); // Simulation du clic pour télécharger le fichier
+    document.body.removeChild(link); // Suppression du lien après téléchargement
+    console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+}
+    </script>
+
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>

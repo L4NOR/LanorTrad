@@ -14,6 +14,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="js/intro.js"></script>
+        <script src="js/Noël.js"></script>
+
         <!--SEO-->
         <meta property="og:title" content="Wild Strawberry">
         <meta property="og:description" content="Les plantes ont évolué. Elles peuvent désormais se nourrir d'humains et devenir de terribles monstres connus sous le nom de Jinka. Kingo et Kayano font de leur mieux pour survivre dans un Tokyo envahi par les plantes, mais lorsque Kayano devient une Jinka, Kingo fera tout ce qu'il peut pour la récupérer !">
@@ -80,51 +83,56 @@
         </div>
     </main>
 
-    <script src="js/intro.js"></script>
-    <script src="js/dl.js"></script>
-    <script src="js/Noël.js"></script>
+    <!--Partie Download Chapter-->
     <script>
-            const showChaptersButton = document.getElementById('show-chapters-button');
-const chaptersOverlay = document.getElementById('chapters-overlay');
-const chapterList = document.getElementById('chapter-list');
+    const showChaptersButton = document.getElementById('show-chapters-button');
+    const chaptersOverlay = document.getElementById('chapters-overlay');
+    const chapterList = document.getElementById('chapter-list');
 
-// Liste des chapitres avec le chemin du fichier PDF
-const chapters = [
-    { number: 1, title: "Jinka", filePath: "images/WILD/pdf/Wild Strawberry Chapitre 01.pdf" }
-    // Ajoutez d'autres chapitres ici avec le chemin du fichier PDF
-];
+    // Liste des chapitres avec le chemin du fichier PDF
+    const chapters = [
+        { number: 1, title: "Jinka", filePath: "images/WILD/pdf/Wild Strawberry Chapitre 01.pdf" },
+        { number: 2, title: "Raté", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 02.pdf" },
+        { number: 3, title: "Et donc ?", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 03.pdf" },
+        { number: 4, title: "Vu", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 04.pdf" },
+        { number: 5, title: "Preuve", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 05.pdf" },
+        { number: 6, title: "Force et Technique", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 06.pdf" },
+        { number: 7, title: "Doux-amer", filePath: "images/TU/pdf/Tokyo Underworld Chapitre 07.pdf" }
+        // Ajoutez d'autres chapitres ici avec le chemin du fichier PDF
+    ];
 
-// Affichage de la liste des chapitres
-showChaptersButton.addEventListener('click', () => {
-    chaptersOverlay.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    // Affichage de la liste des chapitres
+    showChaptersButton.addEventListener('click', () => {
+        chaptersOverlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
 
-    chapterList.innerHTML = chapters.map(chapter =>
-        `<div class="chapter-item">
-            <span>Chapitre ${chapter.number} : ${chapter.title}</span>
-            <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
-                Télécharger
-            </button>
-        </div>`
-    ).join('');
-});
+        chapterList.innerHTML = chapters.map(chapter =>
+            `<div class="chapter-item">
+                <span>Chapitre ${chapter.number} : ${chapter.title}</span>
+                <button class="download-button" onclick="downloadChapter('${chapter.filePath}', ${chapter.number})">
+                    Télécharger
+                </button>
+            </div>`
+        ).join('');
+    });
 
-function closeChapters() {
-    chaptersOverlay.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
+    function closeChapters() {
+        chaptersOverlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 
-// Fonction de téléchargement du chapitre en PDF
-function downloadChapter(filePath, chapterNumber) {
-    const link = document.createElement('a');
-    link.href = filePath; // Chemin du fichier à télécharger
-    link.download = `Wild Strawberry Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
-    document.body.appendChild(link);
-    link.click(); // Simulation du clic pour télécharger le fichier
-    document.body.removeChild(link); // Suppression du lien après téléchargement
-    console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
-}
+    // Fonction de téléchargement du chapitre en PDF
+    function downloadChapter(filePath, chapterNumber) {
+        const link = document.createElement('a');
+        link.href = filePath; // Chemin du fichier à télécharger
+        link.download = `Wild Strawberry Chapitre ${chapterNumber}.pdf`; // Nom du fichier à sauvegarder
+        document.body.appendChild(link);
+        link.click(); // Simulation du clic pour télécharger le fichier
+        document.body.removeChild(link); // Suppression du lien après téléchargement
+        console.log(`Téléchargement du chapitre ${chapterNumber} depuis ${filePath}`);
+    }
     </script>
+
     <footer>
         <p>&copy; 2024 LanorTrad. Tous droits réservés.</p>
     </footer>
