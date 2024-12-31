@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Notifications - LanorTrad</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="min-h-screen bg-gray-900 text-white">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                            LanorTrad Admin
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-32 max-w-4xl mx-auto px-4">
+        <div class="bg-gray-800/50 rounded-xl p-6 shadow-lg border border-gray-700">
+            <h1 class="text-2xl font-bold mb-6">Envoi de Notification</h1>
+            
+            <form id="notificationForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Titre de la notification</label>
+                    <input type="text" 
+                           id="notifTitle" 
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                           placeholder="Ex: Nouveau chapitre disponible"
+                           value="LanorTrad - Nouvelle mise à jour">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">Message</label>
+                    <textarea id="notifMessage" 
+                            class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 h-32"
+                            placeholder="Votre message..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">Lien (optionnel)</label>
+                    <input type="url" 
+                           id="notifLink" 
+                           class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                           placeholder="https://lanortrad.com/page">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button type="submit" 
+                            class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-medium transition-colors">
+                        Envoyer la notification
+                    </button>
+                    
+                    <button type="button" 
+                            id="testButton"
+                            class="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg font-medium transition-colors">
+                        Tester
+                    </button>
+                </div>
+            </form>
+
+            <!-- Templates de messages -->
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold mb-4">Templates rapides</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Notifications de contenu -->
+                    <button onclick="useTemplate('nouveau-chapitre')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Nouveau Chapitre</h3>
+                        <p class="text-sm text-gray-300">🎉 Un nouveau chapitre est disponible sur LanorTrad !</p>
+                    </button>
+
+                    <button onclick="useTemplate('nouvelle-serie')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Nouvelle Série</h3>
+                        <p class="text-sm text-gray-300">📚 Une nouvelle série rejoint le catalogue LanorTrad !</p>
+                    </button>
+
+                    <button onclick="useTemplate('mise-a-jour-importante')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Mise à jour Importante</h3>
+                        <p class="text-sm text-gray-300">📢 Une mise à jour majeure est disponible. Consultez les nouveautés !</p>
+                    </button>
+
+                    <!-- Notifications techniques -->
+                    <button onclick="useTemplate('maintenance')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Maintenance</h3>
+                        <p class="text-sm text-gray-300">🔧 Le site sera en maintenance pendant quelques minutes.</p>
+                    </button>
+
+                    <button onclick="useTemplate('resolution-bug')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Résolution de Bug</h3>
+                        <p class="text-sm text-gray-300">🐛 Un problème technique a été résolu. Merci de votre patience !</p>
+                    </button>
+
+                    <!-- Notifications communautaires -->
+                    <button onclick="useTemplate('sondage')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Sondage</h3>
+                        <p class="text-sm text-gray-300">📊 Donnez votre avis ! Un nouveau sondage est disponible.</p>
+                    </button>
+
+                    <button onclick="useTemplate('event-special')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Événement Spécial</h3>
+                        <p class="text-sm text-gray-300">🎮 Un événement spécial commence ! Venez participer.</p>
+                    </button>
+
+                    <button onclick="useTemplate('recrute')" 
+                            class="p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-left">
+                        <h3 class="font-medium mb-2">Recrutement</h3>
+                        <p class="text-sm text-gray-300">👥 LanorTrad recrute ! Rejoignez notre équipe de traduction.</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <script>
+        document.getElementById('notificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendNotification(false);
+        });
+
+        // Bouton de test
+        document.getElementById('testButton').addEventListener('click', function() {
+            sendNotification(true);
+        });
+
+        // Fonction d'envoi de notification
+        function sendNotification(isTest) {
+            const title = document.getElementById('notifTitle').value;
+            const message = document.getElementById('notifMessage').value;
+            const userLink = document.getElementById('notifLink').value;
+
+            if (!title || !message) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+
+            if (Notification.permission !== 'granted') {
+                alert('Les permissions de notification ne sont pas accordées');
+                return;
+            }
+
+            try {
+                const notification = new Notification(title, {
+                    body: message,
+                    icon: '../images/Lanor/Logo.jpg',
+                    badge: '../images/Lanor/Logo.jpg',
+                    data: { url: userLink || '' }, // Stocke le lien utilisateur s'il existe
+                    requireInteraction: true
+                });
+
+                notification.onclick = function(event) {
+                    event.preventDefault();
+                    if (this.data.url) {
+                        window.open(this.data.url, '_blank');
+                    }
+                    notification.close();
+                }
+
+                if (!isTest) {
+                    document.getElementById('notifMessage').value = '';
+                    document.getElementById('notifLink').value = '';
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi de la notification:', error);
+                alert('Une erreur est survenue lors de l\'envoi de la notification');
+            }
+        }
+
+        // Templates de messages
+        const templates = {
+            'nouveau-chapitre': {
+                title: 'LanorTrad - Nouveau Chapitre',
+                message: '🎉 Un nouveau chapitre est disponible sur LanorTrad !',
+                defaultLink: 'https://lanortrad.com/nouveautes'
+            },
+            'nouvelle-serie': {
+                title: 'LanorTrad - Nouvelle Série',
+                message: '📚 Une nouvelle série rejoint le catalogue LanorTrad ! Venez découvrir cette nouvelle aventure.',
+                defaultLink: 'https://lanortrad.com/catalogue'
+            },
+            'mise-a-jour-importante': {
+                title: 'LanorTrad - Mise à jour Majeure',
+                message: '📢 Une mise à jour importante est disponible ! Découvrez les nouvelles fonctionnalités sur notre site.',
+                defaultLink: 'https://lanortrad.com'
+            },
+            'maintenance': {
+                title: 'LanorTrad - Maintenance',
+                message: '🔧 Le site sera en maintenance pendant quelques minutes. Nous travaillons à améliorer votre expérience.',
+                defaultLink: 'https://lanortrad.com'
+            },
+            'resolution-bug': {
+                title: 'LanorTrad - Mise à jour Technique',
+                message: '🐛 Un problème technique a été résolu. Le site fonctionne maintenant normalement. Merci de votre patience !',
+                defaultLink: 'https://lanortrad.com'
+            },
+            'sondage': {
+                title: 'LanorTrad - Votre Avis Compte',
+                message: '📊 Un nouveau sondage est disponible ! Participez et aidez-nous à améliorer LanorTrad.',
+                defaultLink: 'https://lanortrad.com/sondage'
+            },
+            'event-special': {
+                title: 'LanorTrad - Événement Spécial',
+                message: '🎮 Un événement spécial commence sur LanorTrad ! Venez participer et gagner des récompenses exclusives.',
+                defaultLink: 'https://lanortrad.com/events'
+            },
+            'recrute': {
+                title: 'LanorTrad - Recrutement',
+                message: '👥 LanorTrad recrute ! Nous recherchons des traducteurs passionnés. Postulez maintenant sur notre Discord.',
+                defaultLink: 'https://discord.com/invite/md37S7nhkZ'
+            }
+        };
+
+        function useTemplate(templateId) {
+            const template = templates[templateId];
+            if (template) {
+                document.getElementById('notifTitle').value = template.title;
+                document.getElementById('notifMessage').value = template.message;
+                const currentLink = document.getElementById('notifLink').value;
+                
+                // Ne remplace le lien que s'il n'y a pas déjà un lien personnalisé
+                if (!currentLink) {
+                    document.getElementById('notifLink').value = template.defaultLink;
+                }
+            }
+        }
+
+        // Vérifier les permissions au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+</body>
+</html>
