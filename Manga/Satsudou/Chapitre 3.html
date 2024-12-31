@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satsudou - Chapitre 3 - LanorTrad</title>
+    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+
+    <!-- MetaTags pour Satsudou-->
+    <meta name="description" content="Lisez Satsudou - Chapitre 3 en français grâce à LanorTrad. Akamori Mitsuo continue de dévoiler son sombre talent de meurtrier dans ce nouveau chapitre.">
+    <meta name="keywords" content="Satsudou Chapitre 3, manga, scantrad, action, comédie, arts martiaux, LanorTrad, Yukinaga Chicchi, Nadai Nishi, Akamori Mitsuo">
+    <meta name="author" content="LanorTrad">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+
+    <!-- Open Graph (Facebook, Discord) -->
+    <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:title" content="Satsudou - Chapitre 3 Traduit par LanorTrad">
+    <meta property="og:description" content="Lisez Satsudou - Chapitre 3 en français grâce à LanorTrad. Akamori Mitsuo continue de dévoiler son sombre talent de meurtrier dans ce nouveau chapitre.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:image" content="../../images/cover/Satsudou.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/Manga/Satsudou/Chapitre%201.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@LanorTrad">
+    <meta name="twitter:title" content="Satsudou - Chapitre 3 - Découvrez le manga sur LanorTrad">
+    <meta name="twitter:description" content="Lisez Satsudou - Chapitre 3 en français grâce à LanorTrad. Akamori Mitsuo continue de dévoiler son sombre talent de meurtrier dans ce nouveau chapitre.">
+    <meta name="twitter:image" content="../../images/cover/Satsudou.jpg">
+
+    <!-- Autres balises -->
+    <meta name="theme-color" content="#6B46C1">
+    <link rel="alternate" type="application/json+oembed" href="https://discord.gg/md37S7nhkZ">
+
+    <!--Styles-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="../../css/chapitres.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/intros.css">
+
+    <!--Scripts-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2MZGH30P4J');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
+    <div id="gift-notification-root"></div>
+    <script type="module"></script>
+    <script src="../../js/manga/Satsudou.js"></script>
+    <script src="../../js/manga/chapitres.js"></script>
+    <script src="../../js/utile/search.js"></script>
+    <script src="../../js/utile/navbar.js"></script>
+    <script src="js/ChapterSelect.js"></script>
+</head>
+
+<div class="loading-container">
+    <div class="background-animation">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <div class="loading-content">
+      <div class="logo">LanorTrad</div>
+      <div class="loading-bar"></div>
+      <div class="loading-text">Chargement du chapitre...</div>
+    </div>
+</div>
+
+<body class="min-h-screen">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="../../index.html" class="flex items-center space-x-3">
+                        <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                            LanorTrad
+                        </span>
+                    </a>
+                </div>
+    
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" type="button" class="text-gray-300 hover:text-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Ouvrir le menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+    
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../../Nouveautés.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Nouveautés</a>
+                    <a href="../../Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
+                    <a href="../../Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
+                    <div class="relative">
+                        <input type="search" placeholder="Rechercher un manga..." 
+                               class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
+                    </div>
+                    <a href="https://discord.com/invite/md37S7nhkZ">
+                        <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            Rejoindre
+                        </button>
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Mobile menu, show/hide based on menu state -->
+            <div id="mobile-menu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="../../Nouveautés.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Nouveautés</a>
+                    <a href="../../Catalogue.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Catalogue</a>
+                    <a href="../../Équipe.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Équipe</a>
+                    <div class="px-3 py-2">
+                        <input type="search" placeholder="Rechercher un manga..." 
+                               class="w-full px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
+                    </div>
+                    <div class="px-3 py-2">
+                        <a href="https://discord.com/invite/md37S7nhkZ" class="block">
+                            <button class="w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                                Rejoindre
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Reader Controls -->
+    <div class="fixed top-20 left-0 right-0 z-40 bg-gray-900/80 backdrop-blur border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+            <div class="flex justify-between items-center">
+                <select id="chapterSelect" class="px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm text-gray-300">
+
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+    <!-- Reader Container -->
+    <div class="pt-36 pb-20 px-4">
+        <div id="readerContainer" class="max-w-4xl mx-auto">
+            <!-- Les images seront chargées ici par le JavaScript -->
+        </div>
+    </div>
+
+    <!-- Contrôles du lecteur -->
+    <div class="reader-controls">
+        <div class="flex items-center gap-4">
+            <button onclick="changeChapter(-1)" class="control-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Précédent</span>
+            </button>
+
+            <button onclick="scrollToTop()" class="control-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+
+            <button onclick="downloadChapter()" class="control-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+            </button>
+        
+            <button onclick="changeChapter(1)" class="control-button">
+                <span>Suivant</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900/50 mt-20 py-12 border-t border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-2">
+                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                        LanorTrad
+                    </span>
+                    <p class="mt-4 text-gray-400">
+                        Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Liens rapides</h3>
+                    <ul class="space-y-2">
+                        <li><a href="../../Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="../../équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
+                        <li><a href="../../Contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Réseaux sociaux</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://discord.com/invite/md37S7nhkZ" class="text-gray-400 hover:text-white transition-colors">Discord</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Twitter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">LanorMusic</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-400">
+                <p>© 2024 LanorTrad. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function generateImages() {
+            const container = document.getElementById('readerContainer');
+            
+            for (let i = 1; i <= 30
+            
+            ; i++) {
+                let num = i.toString().padStart(2, '0'); 
+                let imgElement = document.createElement('img'); 
+                imgElement.src = `Chapitres/Chapitre 03/${num}.jpg`; 
+                imgElement.alt = `Satsudou Chapitre 3 Page ${num}`; 
+                container.appendChild(imgElement); 
+            }
+        }
+    
+        generateImages();
+    </script>
+    <script src="../../js/manga/myutaku.js"></script>
+</body>
+</html>
