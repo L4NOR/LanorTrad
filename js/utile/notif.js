@@ -1,78 +1,63 @@
-// Vérification du support des notifications
-function checkNotificationSupport() {
-    if (!('Notification' in window)) {
-        alert('Votre navigateur ne supporte pas les notifications');
-        return false;
-    }
-    return true;
-}
+// Remplacez les XXX par vos informations Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDscyIPMdiBVYl795ScrjdHeqTTvwJVA9I",
+    authDomain: "lanortrad-88faf.firebaseapp.com",
+    projectId: "lanortrad-88faf",
+    storageBucket: "lanortrad-88faf.firebasestorage.app",
+    messagingSenderId: "1065105299857",
+    appId: "1:1065105299857:web:55c69231d7b4944472a230"
+};
 
-// Demande de permission pour les notifications
+// Initialisation de Firebase
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+// Fonction pour demander la permission et configurer les notifications
 async function requestNotificationPermission() {
-    if (!checkNotificationSupport()) return;
-    
     try {
         const permission = await Notification.requestPermission();
-        updateButtonState(permission);
-        return permission;
+        
+        if (permission === 'granted') {
+            // Obtention du token Firebase
+            const token = await messaging.getToken();
+            console.log('Token Firebase:', token);
+            
+            // Mise à jour du bouton
+            const button = document.getElementById('notifButton');
+            button.textContent = 'Notifications activées';
+            button.classList.add('bg-green-600');
+            button.classList.remove('bg-indigo-600');
+            
+            // Stockage du statut
+            localStorage.setItem('notificationsEnabled', 'true');
+        }
     } catch (error) {
-        console.error('Erreur lors de la demande de permission:', error);
-        alert('Une erreur est survenue lors de la demande de permission');
-        return 'denied';
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de l\'activation des notifications');
     }
 }
 
-// Mise à jour de l'état du bouton
-function updateButtonState(permission) {
-    const button = document.getElementById('notifButton');
-    if (!button) return;
-    
-    if (permission === 'granted') {
-        button.textContent = 'Notifications activées';
-        button.classList.add('bg-green-600');
-        button.classList.remove('bg-indigo-600');
-        localStorage.setItem('notificationsEnabled', 'true');
-    } else {
-        button.textContent = 'Activer les notifications';
-        button.classList.remove('bg-green-600');
-        button.classList.add('bg-indigo-600');
-        localStorage.removeItem('notificationsEnabled');
-    }
-}
-
-// Fonction d'envoi de notification
-function sendCustomNotification(title, message) {
-    if (!checkNotificationSupport()) return;
-    
-    if (Notification.permission !== 'granted') {
-        alert('Les notifications ne sont pas autorisées');
-        return;
-    }
-    
-    try {
-        new Notification(title, {
-            body: message,
-            icon: '/images/Lanor/Logo.jpg',
-            badge: '/images/Lanor/Logo.jpg'
-        });
-    } catch (error) {
-        console.error('Erreur lors de l\'envoi de la notification:', error);
-        alert('Une erreur est survenue lors de l\'envoi de la notification');
-    }
-}
+// Gestion des notifications quand le site est ouvert
+messaging.onMessage((payload) => {
+    const notification = new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: '/images/Lanor/Logo.jpg',
+        badge: '/images/Lanor/Logo.jpg',
+        requireInteraction: true
+    });
+});
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
     const notifButton = document.getElementById('notifButton');
-    
     if (notifButton) {
-        updateButtonState(Notification.permission);
         notifButton.addEventListener('click', requestNotificationPermission);
+        
+        // Restauration de l'état des notifications
+        if (localStorage.getItem('notificationsEnabled') === 'true') {
+            notifButton.textContent = 'Notifications activées';
+            notifButton.classList.add('bg-green-600');
+            notifButton.classList.remove('bg-indigo-600');
+        }
     }
 });
-
-// Exposition des fonctions pour l'admin
-window.LanorNotifications = {
-    send: sendCustomNotification,
-    request: requestNotificationPermission
-};
