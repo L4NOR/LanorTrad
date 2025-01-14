@@ -55,9 +55,6 @@ class ReleasesManager {
                             <div>
                                 <h3 class="text-xl font-bold text-white">${release.title}</h3>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm">
-                                ${this.formatRelativeTime(release.timestamp)}
-                            </span>
                         </div>
                         <p class="text-gray-400 text-sm mb-4">${release.description}</p>
                         <div class="flex justify-between items-center">

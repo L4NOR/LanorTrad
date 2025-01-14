@@ -1,8 +1,8 @@
 const CONFIG = {
-    maxChapters: 154,
+    maxChapters: 155,
     currentManga: "Ao No Exorcist",
     chapterPrefix: "Chapitre",
-    baseDate: new Date(2025, 0, 1)
+    baseDate: new Date(2025, 0, 1) // 1er janvier 2025
 };
 
 // Bonus chapters definition
@@ -20,7 +20,7 @@ const regularChapters = Array.from({ length: CONFIG.maxChapters }, (_, index) =>
     const number = CONFIG.maxChapters - index;
     return {
         number,
-        date: CONFIG.baseDate,
+        date: number === 155 ? new Date() : CONFIG.baseDate, // Date actuelle pour 155, baseDate pour les autres
         link: `${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${number}.html`
     };
 });
@@ -157,10 +157,6 @@ Tout manquement à ces règles entraînera des sanctions.
 LanorTrad`;
 
     try {
-        // Download status UI and logic implementation remains the same
-        // (Previous implementation copied here)
-        // ...
-        
         const downloadStatus = document.createElement('div');
         downloadStatus.className = 'fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50';
         downloadStatus.style.cssText = `
