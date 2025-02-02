@@ -28,7 +28,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
         coverImage: 'images/cover/TougenAnki.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 181,
+        chapters: 183,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
     },
     {
