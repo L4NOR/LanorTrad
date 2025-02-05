@@ -29,7 +29,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/satsudou'
     },
     'Ao No Exorcist': {
-        currentChapter: 155,
+        currentChapter: 156,
         description: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...',
         genres: ['Action', 'Aventure', 'Fantaisie'],
         image: 'images/affiche/AoNoExorcist.jpg',

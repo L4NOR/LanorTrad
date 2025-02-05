@@ -1,8 +1,7 @@
 const CONFIG = {
-    maxChapters: 155,
+    maxChapters: 156,
     currentManga: "Ao No Exorcist",
-    chapterPrefix: "Chapitre",
-    baseDate: new Date(2025, 0, 1) // 1er janvier 2025
+    chapterPrefix: "Chapitre"
 };
 
 // Bonus chapters definition
@@ -11,7 +10,6 @@ const bonusChapters = [
     { number: 23.6 }, { number: 23.5 }
 ].map(ch => ({
     ...ch,
-    date: CONFIG.baseDate,
     link: `${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${ch.number}.html`
 }));
 
@@ -20,7 +18,6 @@ const regularChapters = Array.from({ length: CONFIG.maxChapters }, (_, index) =>
     const number = CONFIG.maxChapters - index;
     return {
         number,
-        date: number === 155 ? new Date() : CONFIG.baseDate, // Date actuelle pour 155, baseDate pour les autres
         link: `${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${number}.html`
     };
 });
@@ -64,7 +61,6 @@ function createChapterHTML(chapter) {
         <div class="card rounded-xl p-4 flex items-center justify-between">
             <div>
                 <h3 class="text-lg font-medium">${CONFIG.chapterPrefix} ${chapter.number}</h3>
-                <p class="text-gray-400 text-sm">Ajouté le ${formatDate(chapter.date)}</p>
             </div>
             <div class="flex gap-4">
                 <a href="${chapter.link}" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors">

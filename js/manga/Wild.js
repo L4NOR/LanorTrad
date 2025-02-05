@@ -60,7 +60,6 @@ function createChapterHTML(chapter) {
         <div class="card rounded-xl p-4 flex items-center justify-between">
             <div>
                 <h3 class="text-lg font-medium">${CONFIG.chapterPrefix} ${chapter.number}</h3>
-                <p class="text-gray-400 text-sm">Ajouté le ${formatDate(chapter.date)}</p>
             </div>
             <div class="flex gap-4">
                 <a href="${chapter.link}" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors">

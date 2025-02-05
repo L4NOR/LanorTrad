@@ -5,7 +5,7 @@ const mangas = [
         title: "Ao No Exorcist",
         genres: ["Action", "Aventure", "Fantasy"],
         status: "En cours",
-        chapters: 155,
+        chapters: 156,
         description: "Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...",
         image: "images/cover/AoNoExorcist.jpg"
     },
@@ -32,7 +32,7 @@ const mangas = [
         title: "Tougen Anki",
         genres: ["Action", "Drame", "Fantasy"],
         status: "En cours",
-        chapters: 181,
+        chapters: 183,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     },
