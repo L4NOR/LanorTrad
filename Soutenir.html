@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode AFK - LanorTrad</title>
+    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+
+    <!-- MetaTags pour la page AFK -->
+    <meta name="monetag" content="fc460e4f9414f6b44fed923ed5037fda">
+    <meta name="description" content="Système AFK de LanorTrad - Générez des revenus publicitaires automatiquement pendant votre absence. Une solution innovante pour optimiser votre temps sur notre plateforme.">
+    <meta name="keywords" content="LanorTrad AFK, revenus publicitaires, génération automatique, système AFK, mode AFK">
+    <meta name="author" content="LanorTrad">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+
+    <!-- Open Graph (Facebook, Discord) -->
+    <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:title" content="LanorTrad AFK - Système de Génération Automatique">
+    <meta property="og:description" content="Découvrez notre système AFK qui vous permet de générer des revenus publicitaires automatiquement. Une fonction exclusive LanorTrad.">
+    <meta property="og:type" content="website"> 
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:image" content="images/Lanor/Banner.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/AFK.html">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@LanorTrad">
+    <meta name="twitter:title" content="Mode AFK - LanorTrad">
+    <meta name="twitter:description" content="Générez des revenus automatiquement avec le système AFK de LanorTrad. Une solution intelligente pour optimiser votre temps.">
+    <meta name="twitter:image" content="../../images/Lanor/Banner.jpg">
+
+    <!-- Autres balises-->
+    <meta name="theme-color" content="#1E293B">
+    <link rel="alternate" type="application/json+oembed" href="https://discord.gg/md37S7nhkZ">
+
+    <!--Styles-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/afk.css">
+    <link rel="stylesheet" href="css/intros.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--Scripts-->
+    <script src="https://kulroakonsu.net/88/tag.min.js" data-zone="132032" async data-cfasync="false"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2MZGH30P4J');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1999829370171408" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@oauth2/discord@1.0.0/dist/index.umd.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
+</head>
+<body>
+    <!-- Écran de chargement -->
+    <div class="loading-container" id="loadingScreen">
+        <div class="background-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="loading-content">
+            <div class="logo">LanorTrad</div>
+            <div class="loading-bar"></div>
+            <div class="loading-text">Mode AFK en cours d'activation...</div>
+        </div>
+    </div>
+
+    <body class="min-h-screen">
+        <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                            LanorTrad
+                        </span>
+                    </a>
+                </div>
+    
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" type="button" class="text-gray-300 hover:text-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Ouvrir le menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+    
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Nouveautés.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Nouveautés</a>
+                    <a href="Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
+                    <a href="Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
+                    <div class="relative">
+                        <input type="search" placeholder="Rechercher un manga..." 
+                               class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
+                    </div>
+                    <a href="https://discord.com/invite/md37S7nhkZ">
+                        <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            Rejoindre
+                        </button>
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Mobile menu, show/hide based on menu state -->
+            <div id="mobile-menu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="Nouveautés.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Nouveautés</a>
+                    <a href="Catalogue.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Catalogue</a>
+                    <a href="Équipe.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Équipe</a>
+                    <div class="px-3 py-2">
+                        <input type="search" placeholder="Rechercher un manga..." 
+                               class="w-full px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
+                    </div>
+                    <div class="px-3 py-2">
+                        <a href="https://discord.com/invite/md37S7nhkZ" class="block">
+                            <button class="w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                                Rejoindre
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <br><br><br>
+
+    <div class="hero-gradient min-h-screen py-20 px-4">
+        <main class="container mx-auto max-w-6xl">
+            <!-- En-tête animé -->
+            <div class="text-center mb-20 animate-float">
+                <h1 class="text-6xl font-bold mb-8 glow-text">Soutenez LanorTrad</h1>
+                <p class="text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                    Participez à l'aventure en soutenant notre mission. 
+                    Chaque interaction compte dans notre développement.
+                </p>
+            </div>
+
+            <!-- Grille de publicités repensée -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+                <!-- Espace Premium -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-300">Espace Cliquable</h3>
+                        <div class="ad-space mb-6">
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-1999829370171408"
+                                 data-ad-slot="premium-slot"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                        </div>
+                        <p class="text-slate-400">Zone publicitaire uniquement cliquable</p>
+                    </div>
+                </div>
+
+                <!-- Espace Découverte -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-300">Espace Visualité</h3>
+                        <div class="ad-space mb-6">
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-1999829370171408"
+                                 data-ad-slot="discovery-slot"
+                                 data-ad-format="auto"
+                                 data-full-width-responsive="true"></ins>
+                        </div>
+                        <p class="text-slate-400">Zone publicitaire uniquement avec visibilité</p>
+                    </div>
+                </div>
+
+                <!-- Message de gratitude -->
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-300">Merci !</h3>
+                        <div class="space-y-6">
+                            <p class="text-slate-300 leading-relaxed">
+                                Votre soutien nous permet de continuer à innover et 
+                                à vous offrir le meilleur service possible.
+                            </p>
+                            <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-xl p-6 text-white text-center font-medium animate-float">
+                                💜 Votre soutien fait la différence
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistiques stylisées -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-3">100%</div>
+                    <div class="text-lg text-slate-300">Réinvestissement dans le projet</div>
+                </div>
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 mb-3">24/7</div>
+                    <div class="text-lg text-slate-300">Disponibilité continue</div>
+                </div>
+                <div class="stats-card">
+                    <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-3">Merci</div>
+                    <div class="text-lg text-slate-300">À nos fidèles soutiens</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    </body>
+</html>
