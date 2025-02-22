@@ -1,4 +1,4 @@
-const totalChapters = 183; // Nombre total de chapitres (modifie selon ton besoin)
+const totalChapters = 186; // Nombre total de chapitres (modifie selon ton besoin)
 
 // Récupère le chapitre actuel depuis l'URL ou le titre de la page
 let currentChapter = window.location.href.match(/Chapitre (\d+\.?\d*)/)?.[1] || 
