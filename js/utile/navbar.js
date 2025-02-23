@@ -38,3 +38,14 @@ function updateDiscordLinks() {
 
 // Exécute la mise à jour une fois que le DOM est chargé
 document.addEventListener('DOMContentLoaded', updateDiscordLinks);
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Sélectionner tous les liens contenant "Nouveautés" dans le menu desktop et mobile
+  const nouveautesLinks = document.querySelectorAll('a[href="Nouveautés.html"]');
+  
+  // Mettre à jour chaque lien
+  nouveautesLinks.forEach(link => {
+      link.textContent = 'Planning';
+      link.href = 'Planning.html';
+  });
+});
