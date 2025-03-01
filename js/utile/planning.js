@@ -3,32 +3,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Simulation des données de sorties
     const releases = {
         "2025-03-01": [
-            { title: "Catenaccio", chapter: "9", time: "16:00", type: "Manga"},
-            { title: "Tougen Anki", chapter: "187 & 188", time: "17:00", type: "Manga"}
+            { title: "Catenaccio", chapter: "9", type: "Manga"},
+            { title: "Tougen Anki", chapter: "187 & 188", type: "Manga"}
         ],
         "2025-03-03": [
-            { title: "Tokyo Underworld", chapter: "29 & 29.5", time: "18:00", type: "Manga"}
+            { title: "Tokyo Underworld", chapter: "29 & 29.5", type: "Manga"}
         ],
         "2025-03-05": [
-            { title: "Wild Strawberry", chapter: "9", time: "16:00", type: "Manga"},
-            { title: "Satsudou", chapter: "17", time: "17:30", type: "Manga"}
+            { title: "Wild Strawberry", chapter: "9", type: "Manga"},
+            { title: "Satsudou", chapter: "17", type: "Manga"}
         ],
         "2025-03-07": [
-            { title: "Tokyo Underworld", chapter: "30", time: "18:00", type: "Manga"}
+            { title: "Tokyo Underworld", chapter: "30", type: "Manga"}
         ],
         "2025-03-08": [
-            { title: "Catenaccio", chapter: "10", time: "16:00", type: "Manga"},
-            { title: "Tougen Anki", chapter: "189", time: "17:00", type: "Manga"}
+            { title: "Catenaccio", chapter: "10", type: "Manga"},
+            { title: "Tougen Anki", chapter: "189", type: "Manga"}
         ],
         "2025-03-10": [
-            { title: "Tokyo Underworld", chapter: "31", time: "18:00", type: "Manga"}
+            { title: "Tokyo Underworld", chapter: "31", type: "Manga"}
         ],
         "2025-03-12": [
-            { title: "Wild Strawberry", chapter: "10", time: "16:00", type: "Manga"},
-            { title: "Satsudou", chapter: "18", time: "17:30", type: "Manga"}
+            { title: "Wild Strawberry", chapter: "10", type: "Manga"},
+            { title: "Satsudou", chapter: "18", type: "Manga"}
         ],
         "2025-03-14": [
-            { title: "Tokyo Underworld", chapter: "32", time: "18:00", type: "Manga"}
+            { title: "Tokyo Underworld", chapter: "32", type: "Manga"}
         ],
     };
 
@@ -109,16 +109,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="release-card">
                 <div class="release-card-header">
                     <h3 class="release-title">${release.title}</h3>
-                    <span class="release-type">${release.type}</span>
                 </div>
                 <div class="release-info">
                     <span>Chapitre ${release.chapter}</span>
-                    <div class="release-time">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        ${release.time}
-                    </div>
                 </div>
             </div>
         `).join('');
