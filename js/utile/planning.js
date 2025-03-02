@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "2025-03-07": [
             { title: "Tokyo Underworld", chapter: "30", type: "Manga"}
         ],
-        "2025-03-08": [
-            { title: "Tougen Anki", chapter: "189", type: "Manga"}
+        "2025-03-09": [
+            { title: "Tougen Anki", chapter: "189 & 190", type: "Manga"}
         ],
         "2025-03-10": [
             { title: "Tokyo Underworld", chapter: "31", type: "Manga"}
