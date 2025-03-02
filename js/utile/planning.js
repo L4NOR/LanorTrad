@@ -2,14 +2,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Simulation des données de sorties
     const releases = {
-        "2025-03-01": [
-            { title: "Catenaccio", chapter: "9", type: "Manga"},
+        "2025-03-02": [
             { title: "Tougen Anki", chapter: "187 & 188", type: "Manga"}
         ],
         "2025-03-03": [
             { title: "Tokyo Underworld", chapter: "29 & 29.5", type: "Manga"}
         ],
         "2025-03-05": [
+            { title: "Ao No Exorcist", chapter: "157", type: "Manga"},
             { title: "Wild Strawberry", chapter: "9", type: "Manga"},
             { title: "Satsudou", chapter: "17", type: "Manga"}
         ],
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
             { title: "Tokyo Underworld", chapter: "30", type: "Manga"}
         ],
         "2025-03-08": [
-            { title: "Catenaccio", chapter: "10", type: "Manga"},
             { title: "Tougen Anki", chapter: "189", type: "Manga"}
         ],
         "2025-03-10": [
