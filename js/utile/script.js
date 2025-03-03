@@ -8,7 +8,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/wild-strawberry'
     },
     'Tokyo Underworld': {
-        currentChapter: 28,
+        currentChapter: 29.5,
         description: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...',
         genres: ['Horreur', 'Mystérieux'],
         image: 'images/affiche/TokyoUnderworld.png',

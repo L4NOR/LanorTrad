@@ -37,6 +37,14 @@ body {
     backdrop-filter: blur(12px);
 }
 
+nav {
+    transition: transform 0.3s ease-in-out;
+}
+
+.fixed.top-20 {
+    transition: transform 0.3s ease-in-out;
+}
+
 .chapter-tag {
     background: linear-gradient(45deg, var(--primary), var(--accent));
 }

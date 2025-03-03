@@ -102,3 +102,70 @@ window.addEventListener('scroll', () => {
       }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const navbar = document.querySelector('nav');
+  const readerControls = document.querySelector('.fixed.top-20'); // Sélectionne les contrôles du lecteur
+  const footer = document.querySelector('footer');
+  
+  let lastScrollTop = 0;
+  let ticking = false;
+  
+  // Fonction pour déterminer si l'utilisateur est près du footer
+  function isNearFooter() {
+      if (!footer) return false;
+      
+      const footerRect = footer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Si le haut du footer est visible ou proche d'être visible
+      return footerRect.top < windowHeight + 200; // 200px avant d'atteindre le footer
+  }
+  
+  // Gestion du défilement
+  function handleScroll() {
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Détermine la direction du défilement
+      const isScrollingDown = currentScrollTop > lastScrollTop;
+      // Vérifie si l'utilisateur est près du footer
+      const nearFooter = isNearFooter();
+      
+      // Cache la navbar lors du défilement vers le bas et montre-la près du footer ou en défilant vers le haut
+      if (isScrollingDown && !nearFooter && currentScrollTop > 100) {
+          // Cacher la navbar et les contrôles du lecteur
+          navbar.style.transform = 'translateY(-100%)';
+          if (readerControls) {
+              readerControls.style.transform = 'translateY(-100%)';
+          }
+      } else {
+          // Montrer la navbar et les contrôles du lecteur
+          navbar.style.transform = 'translateY(0)';
+          if (readerControls) {
+              readerControls.style.transform = 'translateY(0)';
+          }
+      }
+      
+      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+      ticking = false;
+  }
+  
+  // Écoute l'événement de défilement avec throttling pour de meilleures performances
+  window.addEventListener('scroll', function() {
+      if (!ticking) {
+          window.requestAnimationFrame(function() {
+              handleScroll();
+              ticking = false;
+          });
+          ticking = true;
+      }
+  });
+  
+  // Ajout des styles de transition pour la navbar
+  if (navbar) {
+      navbar.style.transition = 'transform 0.3s ease-in-out';
+  }
+  if (readerControls) {
+      readerControls.style.transition = 'transform 0.3s ease-in-out';
+  }
+});

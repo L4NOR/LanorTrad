@@ -1,20 +1,20 @@
 const CONFIG = {
-    maxChapters: 28,
+    maxChapters: 29,  // Changé de 29.5 à 29 pour les chapitres réguliers
     currentManga: "Tokyo Underworld",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1)
 };
 
-// Bonus chapters definition
+// Définition correcte des chapitres bonus
 const bonusChapters = [
-    { number: 24.5 }, { number: 26.5 }
+    { number: 24.5 }, { number: 26.5 }, { number: 29.5 }
 ].map(ch => ({
     ...ch,
     date: CONFIG.baseDate,
     link: `${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${ch.number}.html`
 }));
 
-// Generate regular chapters
+// Génération des chapitres réguliers (sans .5)
 const regularChapters = Array.from({ length: CONFIG.maxChapters }, (_, index) => {
     const number = CONFIG.maxChapters - index;
     return {
@@ -24,7 +24,7 @@ const regularChapters = Array.from({ length: CONFIG.maxChapters }, (_, index) =>
     };
 });
 
-// Combine and sort all chapters
+// Combinaison et tri de tous les chapitres
 const chapters = [...regularChapters, ...bonusChapters].sort((a, b) => b.number - a.number);
 
 let displayCount = 5;
@@ -50,7 +50,7 @@ function getCurrentChapterFromURL() {
         const match = path.match(pattern);
         if (match && match[1]) {
             const chapter = parseFloat(match[1]);
-            if (chapter >= 1 && chapter <= CONFIG.maxChapters) {
+            if (chapter >= 1 && chapter <= CONFIG.maxChapters || bonusChapters.some(bc => bc.number === chapter)) {
                 return chapter;
             }
         }
@@ -155,10 +155,6 @@ Tout manquement à ces règles entraînera des sanctions.
 LanorTrad`;
 
     try {
-        // Download status UI and logic implementation remains the same
-        // (Previous implementation copied here)
-        // ...
-        
         const downloadStatus = document.createElement('div');
         downloadStatus.className = 'fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50';
         downloadStatus.style.cssText = `
