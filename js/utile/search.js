@@ -4,7 +4,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Ao%20No%20Exorcist',
         coverImage: 'images/cover/AoNoExorcist.jpg',
         genres: ['Action', 'Aventure', 'Fantaisie'],
-        chapters: 156,
+        chapters: 157,
         synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
     },
     {
@@ -12,7 +12,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/manga/Satsudou',
         coverImage: 'images/cover/Satsudou.jpg',
         genres: ['Action', 'Comédie', 'Arts Martiaux'],
-        chapters: 16,
+        chapters: 17,
         synopsis: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...'
     },
     {

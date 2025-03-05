@@ -29,7 +29,7 @@ function changeChapter(direction) {
         alert("Il n'y a pas de chapitre précédent.");
         return;
     } else if (newIndex >= availableChapters.length) {
-        alert("Il n'y a pas de chapitre suivant actuellement. Revenez plus tard pour de nouveaux chapitres !");
+        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 7 Mars !");
         return;
     }
     

@@ -1,7 +1,7 @@
 // Données des mangas
 const mangaData = {
     'Wild Strawberry': {
-        currentChapter: 8,
+        currentChapter: 9,
         description: 'Les plantes ont évolué. Elles peuvent désormais se nourrir d\'humains et devenir de terribles monstres connus sous le nom de Jinka...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/WildStrawberry.png',
@@ -15,21 +15,21 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/tokyo-underworld'
     },
     'Tougen Anki': {
-        currentChapter: 186,
+        currentChapter: 188,
         description: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/TougenAnki.jpg',
         link: 'https://lanortrad.netlify.app/tougen-anki'
     },
     'Satsudou': {
-        currentChapter: 16,
+        currentChapter: 17,
         description: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...',
         genres: ['Action', 'Comédie', 'Arts Martiaux'],
         image: 'images/affiche/Satsudou.png',
         link: 'https://lanortrad.netlify.app/satsudou'
     },
     'Ao No Exorcist': {
-        currentChapter: 156,
+        currentChapter: 157,
         description: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...',
         genres: ['Action', 'Aventure', 'Fantaisie'],
         image: 'images/affiche/AoNoExorcist.jpg',
@@ -40,7 +40,7 @@ const mangaData = {
 // Stats initiales
 const stats = {
     monthlyReaders: '8,5K',
-    translatedChapters: 191,
+    translatedChapters: 197,
     ongoingSeries: 5
 };
 

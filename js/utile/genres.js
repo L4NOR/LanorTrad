@@ -5,7 +5,7 @@ const mangas = [
         title: "Ao No Exorcist",
         genres: ["Action", "Aventure", "Fantasy"],
         status: "En cours",
-        chapters: 156,
+        chapters: 157,
         description: "Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...",
         image: "images/cover/AoNoExorcist.jpg"
     },
@@ -14,7 +14,7 @@ const mangas = [
         title: "Satsudou",
         genres: ["Aventure", "Comédie", "Arts Martiaux"],
         status: "En cours",
-        chapters: 16,
+        chapters: 17,
         description: "Akamori Mitsuo veut être un salarié ordinaire mais... C'est un meurtrier de génie né dans une famille qui pratique l'art ancien de tuer...",
         image: "images/cover/Satsudou.jpg"
     },

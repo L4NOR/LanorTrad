@@ -1,4 +1,4 @@
-const totalChapters = 16; // Nombre total de chapitres (modifie selon ton besoin)
+const totalChapters = 17; // Nombre total de chapitres (modifie selon ton besoin)
 
 // Récupère le chapitre actuel depuis l'URL ou le titre de la page
 let currentChapter = parseInt(window.location.href.match(/Chapitre (\d+)/)?.[1]) || 
@@ -12,7 +12,7 @@ function changeChapter(direction) {
         alert("Il n'y a pas de chapitre précédent.");
         return;
     } else if (newChapter > totalChapters) {
-        alert("Il n'y a pas de chapitre suivant actuellement. Revenez plus tard pour de nouveaux chapitres !");
+        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 12 Mars !");
         return;
     }
 

@@ -12,7 +12,7 @@ function changeChapter(direction) {
         alert("Il n'y a pas de chapitre précédent.");
         return;
     } else if (newChapter > totalChapters) {
-        alert("Il n'y a pas de chapitre suivant actuellement. Revenez plus tard pour de nouveaux chapitres !");
+        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 12 Mars !");
         return;
     }
 

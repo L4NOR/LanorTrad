@@ -1,6 +1,6 @@
 // Configuration globale
 const CONFIG = {
-    maxChapters: 16,
+    maxChapters: 17,
     currentManga: "Satsudou",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1) // 1er janvier 2025
