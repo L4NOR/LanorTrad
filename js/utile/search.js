@@ -36,7 +36,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Wild%20Strawberry',
         coverImage: 'images/cover/WildStrawberry.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 8,
+        chapters: 9,
         synopsis: 'Les plantes ont évolué. Elles peuvent désormais se nourrir d\'humains et devenir de terribles monstres connus sous le nom de Jinka...'
     }
 ];

@@ -40,7 +40,7 @@ const mangaData = {
 // Stats initiales
 const stats = {
     monthlyReaders: '8,5K',
-    translatedChapters: 197,
+    translatedChapters: 200,
     ongoingSeries: 5
 };
 

@@ -1,6 +1,6 @@
 // Configuration globale
 const CONFIG = {
-    maxChapters: 8,
+    maxChapters: 9, 
     currentManga: "Wild Strawberry",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1) // 1er janvier 2025

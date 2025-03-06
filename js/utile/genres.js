@@ -41,7 +41,7 @@ const mangas = [
         title: "Wild Strawberry",
         genres: ["Action", "Drame", "Fantasy"],
         status: "En cours",
-        chapters: 8,
+        chapters: 9,
         description: "Les plantes ont évolué. Elles peuvent désormais se nourrir d'humains et devenir de terribles monstres connus sous le nom de Jinka...",
         image: "images/cover/WildStrawberry.jpg"
     }
