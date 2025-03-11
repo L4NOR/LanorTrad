@@ -8,14 +8,14 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/wild-strawberry'
     },
     'Tokyo Underworld': {
-        currentChapter: 29.5,
+        currentChapter: 30,
         description: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...',
         genres: ['Horreur', 'Mystérieux'],
         image: 'images/affiche/TokyoUnderworld.png',
         link: 'https://lanortrad.netlify.app/tokyo-underworld'
     },
     'Tougen Anki': {
-        currentChapter: 188,
+        currentChapter: 189,
         description: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/TougenAnki.jpg',
