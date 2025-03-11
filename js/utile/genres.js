@@ -23,7 +23,7 @@ const mangas = [
         title: "Tokyo Underworld",
         genres: ["Horreur", "Mystérieux"],
         status: "En cours",
-        chapters: 29.5,
+        chapters: 30,
         description: "Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et...",
         image: "images/cover/TokyoUnderworld.jpg"
     },
@@ -32,7 +32,7 @@ const mangas = [
         title: "Tougen Anki",
         genres: ["Action", "Drame", "Fantasy"],
         status: "En cours",
-        chapters: 188,
+        chapters: 189,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     },

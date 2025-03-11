@@ -1,5 +1,5 @@
 // Mettre à jour le nombre total de chapitres pour inclure les décimaux
-const totalChapters = 29.5; // Nombre total de chapitres
+const totalChapters = 30; // Nombre total de chapitres
 
 // Récupérer le chapitre actuel depuis l'URL ou le titre de la page en supportant les décimaux
 let currentChapter = parseFloat(window.location.href.match(/Chapitre (\d+\.?\d*)/)?.[1]) || 
@@ -29,7 +29,7 @@ function changeChapter(direction) {
         alert("Il n'y a pas de chapitre précédent.");
         return;
     } else if (newIndex >= availableChapters.length) {
-        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 7 Mars !");
+        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 14 Mars !");
         return;
     }
     

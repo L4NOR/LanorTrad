@@ -20,7 +20,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tokyo%20Underworld',
         coverImage: 'images/cover/TokyoUnderworld.jpg',
         genres: ['Horreur', 'Mystérieux'],
-        chapters: 29.5,
+        chapters: 30,
         synopsis: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...'
     },
     {
@@ -28,7 +28,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
         coverImage: 'images/cover/TougenAnki.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 188,
+        chapters: 189,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
     },
     {

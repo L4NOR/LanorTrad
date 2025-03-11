@@ -13,22 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
             { title: "Wild Strawberry", chapter: "9", type: "Manga"},
             { title: "Satsudou", chapter: "17", type: "Manga"}
         ],
-        "2025-03-07": [
-            { title: "Tokyo Underworld", chapter: "30", type: "Manga"}
+        "2025-03-11": [
+            { title: "Tokyo Underworld", chapter: "30", type: "Manga"},
+            { title: "Tougen Anki", chapter: "189", type: "Manga"}
         ],
-        "2025-03-09": [
-            { title: "Tougen Anki", chapter: "189 & 190", type: "Manga"}
-        ],
-        "2025-03-10": [
+        "2025-03-14": [
             { title: "Tokyo Underworld", chapter: "31", type: "Manga"}
         ],
         "2025-03-12": [
-            { title: "Wild Strawberry", chapter: "10", type: "Manga"},
-            { title: "Satsudou", chapter: "18", type: "Manga"}
-        ],
-        "2025-03-14": [
-            { title: "Tokyo Underworld", chapter: "32", type: "Manga"}
-        ],
+            { title: "Wild Strawberry", chapter: "10", type: "Manga"}
+        ]
     };
 
     // Éléments DOM
