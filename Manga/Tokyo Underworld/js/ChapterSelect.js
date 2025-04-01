@@ -1,5 +1,5 @@
 // Mettre à jour le nombre total de chapitres pour inclure les décimaux
-const totalChapters = 31; // Nombre total de chapitres
+const totalChapters = 32.5; // Nombre total de chapitres
 
 // Récupérer le chapitre actuel depuis l'URL ou le titre de la page en supportant les décimaux
 let currentChapter = parseFloat(window.location.href.match(/Chapitre (\d+\.?\d*)/)?.[1]) || 
@@ -11,7 +11,7 @@ function changeChapter(direction) {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
         11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
         21, 22, 23, 24, 24.5, 25, 26, 26.5, 27, 28, 29, 29.5,
-        30, 31
+        30, 31, 32, 32.5
     ];
     
     // Trouver l'index du chapitre actuel
