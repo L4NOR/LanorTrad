@@ -35,15 +35,6 @@ const mangas = [
         chapters: 189,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
-    },
-    {
-        id: "Wild Strawberry",
-        title: "Wild Strawberry",
-        genres: ["Action", "Drame", "Fantasy"],
-        status: "En cours",
-        chapters: 9,
-        description: "Les plantes ont évolué. Elles peuvent désormais se nourrir d'humains et devenir de terribles monstres connus sous le nom de Jinka...",
-        image: "images/cover/WildStrawberry.jpg"
     }
 ];
 

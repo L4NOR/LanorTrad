@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         "2025-03-05": [
             { title: "Ao No Exorcist", chapter: "157", type: "Manga"},
-            { title: "Wild Strawberry", chapter: "9", type: "Manga"},
             { title: "Satsudou", chapter: "17", type: "Manga"}
         ],
         "2025-03-12": [

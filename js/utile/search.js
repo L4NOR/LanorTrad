@@ -30,14 +30,6 @@ const availableMangas = [
         genres: ['Action', 'Drame', 'Fantaisie'],
         chapters: 189,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
-    },
-    {
-        title: 'Wild Strawberry',
-        url: 'https://lanortrad.netlify.app/Manga/Wild%20Strawberry',
-        coverImage: 'images/cover/WildStrawberry.jpg',
-        genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 9,
-        synopsis: 'Les plantes ont évolué. Elles peuvent désormais se nourrir d\'humains et devenir de terribles monstres connus sous le nom de Jinka...'
     }
 ];
 
