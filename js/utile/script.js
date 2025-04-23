@@ -1,7 +1,7 @@
 // Données des mangas
 const mangaData = {
     'Tokyo Underworld': {
-        currentChapter: 33,
+        currentChapter: 34,
         description: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...',
         genres: ['Horreur', 'Mystérieux'],
         image: 'images/affiche/TokyoUnderworld.png',
@@ -33,7 +33,7 @@ const mangaData = {
 // Stats initiales
 const stats = {
     monthlyReaders: '8,5K',
-    translatedChapters: 213,
+    translatedChapters: 214,
     ongoingSeries: 5
 };
 

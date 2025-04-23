@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 33,  // Changé de 29.5 à 29 pour les chapitres réguliers
+    maxChapters: 34,  // Changé de 29.5 à 29 pour les chapitres réguliers
     currentManga: "Tokyo Underworld",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1)
