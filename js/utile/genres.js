@@ -14,7 +14,7 @@ const mangas = [
         title: "Satsudou",
         genres: ["Aventure", "Comédie", "Arts Martiaux"],
         status: "En cours",
-        chapters: 17,
+        chapters: 18,
         description: "Akamori Mitsuo veut être un salarié ordinaire mais... C'est un meurtrier de génie né dans une famille qui pratique l'art ancien de tuer...",
         image: "images/cover/Satsudou.jpg"
     },

@@ -15,7 +15,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/tougen-anki'
     },
     'Satsudou': {
-        currentChapter: 17,
+        currentChapter: 18,
         description: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...',
         genres: ['Action', 'Comédie', 'Arts Martiaux'],
         image: 'images/affiche/Satsudou.png',
