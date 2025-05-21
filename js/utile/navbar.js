@@ -3,12 +3,6 @@ function initializeNavbar() {
   // 1. Gestion du menu mobile
   setupMobileMenu();
   
-  // 2. Mise à jour des liens Discord
-  updateDiscordLinks();
-  
-  // 3. Changement des liens "Nouveautés" en "Planning"
-  updateNouveautesLinks();
-  
   console.log("Initialisation de la navbar terminée");
 }
 
@@ -27,53 +21,6 @@ function setupMobileMenu() {
   } else {
       console.warn("Éléments du menu mobile non trouvés");
   }
-}
-
-// Fonction pour mettre à jour les liens Discord
-function updateDiscordLinks() {
-  // Nouveau code d'invitation Discord
-  const newInviteCode = 'KKsp4AG8BV';
-  
-  // Base des URLs Discord
-  const discordInviteUrl = 'https://discord.com/invite/';
-  const discordGGUrl = 'https://discord.gg/';
-  
-  // Recherche tous les éléments qui contiennent un lien Discord (les deux formats)
-  const discordElements = document.querySelectorAll(`a[href*="${discordInviteUrl}"], a[href*="${discordGGUrl}"]`);
-  
-  // Met à jour chaque lien
-  let updatedCount = 0;
-  discordElements.forEach(element => {
-      element.href = discordGGUrl + newInviteCode;
-      updatedCount++;
-  });
-  
-  // Met également à jour le lien dans la meta tag oembed si elle existe
-  const oembedLink = document.querySelector('link[rel="alternate"][type="application/json+oembed"]');
-  if (oembedLink) {
-      oembedLink.href = discordGGUrl + newInviteCode;
-      updatedCount++;
-  }
-  
-  console.log(`Liens Discord mis à jour (${updatedCount}): ${discordGGUrl}${newInviteCode}`);
-}
-
-// Fonction pour mettre à jour les liens Nouveautés vers Planning
-function updateNouveautesLinks() {
-  // Sélectionner tous les liens contenant "Nouveautés" dans leur href, en tenant compte des chemins relatifs
-  const nouveautesLinks = document.querySelectorAll('a[href*="Nouveautés.html"]');
-  
-  let updatedCount = 0;
-  // Mettre à jour chaque lien
-  nouveautesLinks.forEach(link => {
-      // Conserver le chemin relatif tout en remplaçant le nom du fichier
-      const newHref = link.getAttribute('href').replace('Nouveautés.html', 'Planning.html');
-      link.textContent = 'Planning';
-      link.setAttribute('href', newHref);
-      updatedCount++;
-  });
-  
-  console.log(`Liens Nouveautés mis à jour vers Planning (${updatedCount})`);
 }
 
 // Initialisation de la navbar selon l'état du chargement du document
