@@ -1,0 +1,68 @@
+
+
+    .shop-container {
+        max-width: 1000px;
+        margin: 4rem auto;
+        padding: 2rem;
+    }
+
+    .shop-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: var(--accent);
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .shop-card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+        background: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: 0.3s ease;
+        position: relative;
+    }
+
+    .shop-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-color: var(--accent);
+        box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+    }
+
+    .shop-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+    }
+
+    .shop-card p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .shop-card .price {
+        margin-top: 1rem;
+        font-weight: bold;
+        color: var(--accent);
+    }
+
+    .shop-card .buy-btn {
+        margin-top: 1rem;
+        display: inline-block;
+        background-color: var(--primary);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+    }
+
+    .shop-card .buy-btn:hover {
+        background-color: #3730a3;
+    }

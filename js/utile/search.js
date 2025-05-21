@@ -8,6 +8,14 @@ const availableMangas = [
         synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
     },
     {
+        title: 'Catenaccio',
+        url: 'https://lanortrad.netlify.app/manga/Catenaccio',
+        coverImage: 'images/cover/Catenaccio.png',
+        genres: ['Sports', 'Vie Scolaire', 'Collaboration'],
+        chapters: 18,
+        synopsis: 'Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...'
+    },
+    {
         title: 'Satsudou',
         url: 'https://lanortrad.netlify.app/manga/Satsudou',
         coverImage: 'images/cover/Satsudou.jpg',

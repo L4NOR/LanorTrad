@@ -13,7 +13,7 @@ body {
 
 .hero-gradient {
     background: radial-gradient(circle at top right, #4f46e5 0%, transparent 60%),
-                radial-gradient(circle at bottom left, #818cf8 0%, transparent 50%);
+        radial-gradient(circle at bottom left, #818cf8 0%, transparent 50%);
 }
 
 .glow {
@@ -61,21 +61,24 @@ nav {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(
-        to bottom right,
-        transparent,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent,
-        transparent
-    );
+    background: linear-gradient(to bottom right,
+            transparent,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent,
+            transparent);
     transform: rotate(45deg);
     animation: shine 3s infinite;
 }
 
 @keyframes shine {
-    0% { transform: translateX(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) rotate(45deg); }
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
 }
 
 .nav-link {
@@ -116,7 +119,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 input[type="search"]:focus {
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2),
-                0 4px 15px rgba(79, 70, 229, 0.15);
+        0 4px 15px rgba(79, 70, 229, 0.15);
 }
 
 input[type="search"]:hover {
@@ -124,27 +127,45 @@ input[type="search"]:hover {
 }
 
 select {
-    background-color: var(--card-bg); 
+    background-color: var(--card-bg);
     border-color: var(--primary);
     color: #e5e7eb;
-    border-radius: 8px; 
-    padding: 0.5rem 1rem; 
-    font-size: 0.875rem; 
-    transition: all 0.3s ease; 
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
 }
 
 select:hover {
-    background-color: var(--card-bg); 
-    border-color: var(--primary); 
+    background-color: var(--card-bg);
+    border-color: var(--primary);
 }
 
 select:focus {
-    border-color: var(--primary); 
-    outline: none; 
-    background-color: var(--card-bg); 
+    border-color: var(--primary);
+    outline: none;
+    background-color: var(--card-bg);
 }
 
 select option {
-    background-color: var(--card-bg); 
-    color: #e5e7eb; 
+    background-color: var(--card-bg);
+    color: #e5e7eb;
+}
+
+.animate-marquee {
+    animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(230%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+a.no-underline {
+    text-decoration: none;
 }
