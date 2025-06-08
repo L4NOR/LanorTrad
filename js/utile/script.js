@@ -8,14 +8,14 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/tokyo-underworld'
     },
     'Tougen Anki': {
-        currentChapter: 195,
+        currentChapter: 196,
         description: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/TougenAnki.jpg',
         link: 'https://lanortrad.netlify.app/tougen-anki'
     },
     'Satsudou': {
-        currentChapter: 20,
+        currentChapter: 18,
         description: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...',
         genres: ['Action', 'Comédie', 'Arts Martiaux'],
         image: 'images/affiche/Satsudou.png',
