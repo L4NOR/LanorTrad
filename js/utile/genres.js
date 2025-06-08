@@ -5,7 +5,7 @@ const mangas = [
         title: "Ao No Exorcist",
         genres: ["Action", "Aventure", "Fantasy", "LanorTrad"],
         status: "En cours",
-        chapters: 157,
+        chapters: 158,
         description: "Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...",
         image: "images/cover/AoNoExorcist.jpg"
     },
