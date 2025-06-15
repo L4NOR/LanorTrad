@@ -7,7 +7,8 @@ const CONFIG = {
 
 // Bonus chapters definition
 const bonusChapters = [
-    { number: 182.5 }
+    { number: 181.5},
+    { number: 181.6}
 ].map(ch => ({
     ...ch,
     date: CONFIG.baseDate,
