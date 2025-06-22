@@ -12,7 +12,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/manga/Catenaccio',
         coverImage: 'images/cover/Catenaccio.png',
         genres: ['Sports', 'Vie Scolaire', 'Collaboration'],
-        chapters: 20,
+        chapters: 21,
         synopsis: 'Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...'
     },
     {
