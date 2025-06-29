@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 21,
+    maxChapters: 22,
     currentManga: "Catenaccio",
     chapterPrefix: "Chapitre"
 };
