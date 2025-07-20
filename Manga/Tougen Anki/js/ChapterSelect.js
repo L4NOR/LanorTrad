@@ -1,4 +1,4 @@
-const totalChapters = 196; // Nombre total de chapitres
+const totalChapters = 198; // Nombre total de chapitres
 
 // Liste complète des chapitres, avec bonus
 const chaptersList = [
@@ -30,7 +30,7 @@ function changeChapter(direction) {
         alert("Il n'y a pas de chapitre précédent.");
         return;
     } else if (newIndex >= chaptersList.length) {
-        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre pour le 15 ou 16 Mars !");
+        alert("Il n'y a pas de chapitre suivant actuellement.");
         return;
     }
 
