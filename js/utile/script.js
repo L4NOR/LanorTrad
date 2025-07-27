@@ -8,7 +8,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/tokyo-underworld'
     },
     'Tougen Anki': {
-        currentChapter: 198,
+        currentChapter: 200,
         description: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/TougenAnki.jpg',
@@ -33,7 +33,7 @@ const mangaData = {
 // Stats initiales
 const stats = {
     monthlyReaders: '8,5K',
-    translatedChapters: 220,
+    translatedChapters: 232,
     ongoingSeries: 5
 };
 

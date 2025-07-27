@@ -1,4 +1,4 @@
-const totalChapters = 198; // Nombre total de chapitres
+const totalChapters = 200; // Nombre total de chapitres
 
 // Liste complète des chapitres, avec bonus
 const chaptersList = [
@@ -11,7 +11,7 @@ const chaptersList = [
     181.6,
 
     // Chapitres suivants jusqu'à 196
-    ...Array.from({ length: 196 - 181 }, (_, i) => i + 182)
+    ...Array.from({ length: 237 - 181 }, (_, i) => i + 182)
 ];
 
 // Récupère le chapitre actuel depuis l'URL ou le titre de la page
