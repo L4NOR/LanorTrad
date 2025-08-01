@@ -134,13 +134,6 @@
                 <p class="text-lg text-gray-300 mb-10">
                     Découvrez notre sélection de mangas soigneusement traduits par notre équipe de passionnés.
                 </p>
-                <div class="flex justify-center">
-                    <a href="#" id="boutique-btn">
-                        <button class="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg transition-colors shadow-lg">
-                            🎁 Boutique Discord
-                        </button>
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -371,22 +364,5 @@
         </div>
     </footer>
 
-<div id="notification" class="notification" style="display: none;">
-    🚧 La boutique est en cours de développement
-</div>
-
-<script>
-document.getElementById('boutique-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    const notification = document.getElementById('notification');
-    notification.style.display = 'block';
-    setTimeout(() => notification.classList.add('show'), 10);
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.style.display = 'none', 300);
-    }, 3000);
-});
-</script>
 </body>
 </html>
