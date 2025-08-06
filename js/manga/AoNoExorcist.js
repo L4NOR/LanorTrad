@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 159,
+    maxChapters: 160,
     currentManga: "Ao No Exorcist",
     chapterPrefix: "Chapitre"
 };
