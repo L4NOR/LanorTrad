@@ -1,0 +1,5 @@
+[build]
+publish = "."  # Le dossier racine contient tes fichiers HTML
+
+[build.environment]
+IMAGE_VERSION = "jammy"  # Pour éviter l'image "Focal" dépréciée
