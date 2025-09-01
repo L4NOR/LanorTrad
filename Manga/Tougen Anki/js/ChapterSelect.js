@@ -1,4 +1,4 @@
-const totalChapters = 204; // Nombre total de chapitres
+const totalChapters = 205; // Nombre total de chapitres
 
 // Liste complète des chapitres, avec bonus
 const chaptersList = [
