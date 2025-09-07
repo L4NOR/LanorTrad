@@ -4,7 +4,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Ao%20No%20Exorcist',
         coverImage: 'images/cover/AoNoExorcist.jpg',
         genres: ['Action', 'Aventure', 'Fantaisie'],
-        chapters: 160,
+        chapters: 161,
         synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
     },
     {
