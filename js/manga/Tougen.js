@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 205,
+    maxChapters: 207,
     currentManga: "Tougen Anki",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1)
