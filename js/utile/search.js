@@ -2,15 +2,15 @@ const availableMangas = [
     {
         title: 'Ao No Exorcist',
         url: 'https://lanortrad.netlify.app/Manga/Ao%20No%20Exorcist',
-        coverImage: 'images/cover/AoNoExorcist.jpg',
+        coverImage: 'https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg',
         genres: ['Action', 'Aventure', 'Fantaisie'],
-        chapters: 161,
+        chapters: 162,
         synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
     },
     {
         title: 'Catenaccio',
         url: 'https://lanortrad.netlify.app/manga/Catenaccio',
-        coverImage: 'images/cover/Catenaccio.png',
+        coverImage: 'https://i.postimg.cc/5Nq64t37/Catenaccio.png',
         genres: ['Sports', 'Vie Scolaire', 'Collaboration'],
         chapters: 26,
         synopsis: 'Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...'
@@ -18,7 +18,7 @@ const availableMangas = [
     {
         title: 'Satsudou',
         url: 'https://lanortrad.netlify.app/manga/Satsudou',
-        coverImage: 'images/cover/Satsudou.jpg',
+        coverImage: 'https://i.postimg.cc/Hs4VYLzH/Satsudou.jpg',
         genres: ['Action', 'Comédie', 'Arts Martiaux'],
         chapters: 18,
         synopsis: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...'
@@ -26,7 +26,7 @@ const availableMangas = [
     {
         title: 'Tokyo Underworld',
         url: 'https://lanortrad.netlify.app/Manga/Tokyo%20Underworld',
-        coverImage: 'images/cover/TokyoUnderworld.jpg',
+        coverImage: 'https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg',
         genres: ['Horreur', 'Mystérieux'],
         chapters: 34,
         synopsis: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...'
@@ -34,7 +34,7 @@ const availableMangas = [
     {
         title: 'Tougen Anki',
         url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
-        coverImage: 'images/cover/TougenAnki.jpg',
+        coverImage: 'https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
         chapters: 207,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
