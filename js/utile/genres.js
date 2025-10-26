@@ -14,7 +14,7 @@ const mangas = [
         title: "Catenaccio",
         genres: ["Sports", "Vie Scolaire", "Collaboration"],
         status: "En cours",
-        chapters: 26,
+        chapters: 36,
         description: "Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...",
         image: "images/cover/Catenaccio.png"
     },
