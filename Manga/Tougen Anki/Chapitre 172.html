@@ -225,16 +225,28 @@
     <script>
         function generateImages() {
             const container = document.getElementById('readerContainer');
-            
-            for (let i = 1; i <= 19
-            
-            ; i++) {
-                let num = i.toString().padStart(3, '0'); 
-                let imgElement = document.createElement('img'); 
-                imgElement.src = `Chapitres/Chapitre 172/${num}.jpg`; 
-                imgElement.alt = `Tougen Anki Chapitre 172 Page ${num}`; 
-                container.appendChild(imgElement); 
+
+            // Ajoute l'affiche en première position
+            let firstImg = document.createElement('img');
+            firstImg.src = '../../images/Affiche/Affiche Tougen Anki.png';
+            firstImg.alt = 'Affiche Tougen Anki';
+            firstImg.style.marginBottom = '5px';
+            container.appendChild(firstImg);
+
+            for (let i = 1; i <= 19; i++) {
+                let num = i.toString().padStart(3, '0');
+                let imgElement = document.createElement('img');
+                imgElement.src = `Chapitres/Chapitre 172/${num}.jpg`;
+                imgElement.alt = `Tougen Anki Chapitre 172 Page ${num}`;
+                container.appendChild(imgElement);
             }
+
+            // Ajoute l'image de recrutement en dernière position
+            let lastImg = document.createElement('img');
+            lastImg.src = '../../images/Affiche/recrutement lanortrad.png';
+            lastImg.alt = 'Recrutement LanorTrad';
+            lastImg.style.marginTop = '5px';
+            container.appendChild(lastImg);
         }
     
         generateImages();
