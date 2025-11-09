@@ -8,7 +8,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/tokyo-underworld'
     },
     'Tougen Anki': {
-        currentChapter: 210,
+        currentChapter: 212,
         description: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...',
         genres: ['Action', 'Drame', 'Fantaisie'],
         image: 'images/affiche/TougenAnki.jpg',
@@ -22,7 +22,7 @@ const mangaData = {
         link: 'https://lanortrad.netlify.app/satsudou'
     },
     'Ao No Exorcist': {
-        currentChapter: 162,
+        currentChapter: 163,
         description: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...',
         genres: ['Action', 'Aventure', 'Fantaisie'],
         image: 'images/affiche/AoNoExorcist.jpg',

@@ -4,7 +4,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Ao%20No%20Exorcist',
         coverImage: 'https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg',
         genres: ['Action', 'Aventure', 'Fantaisie'],
-        chapters: 162,
+        chapters: 163,
         synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
     },
     {
@@ -36,7 +36,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
         coverImage: 'https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 210,
+        chapters: 212,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
     }
 ];
