@@ -41,7 +41,7 @@ const mangas = [
         title: "Tougen Anki",
         genres: ["Action", "Drame", "Fantasy", "LanorTrad"],
         status: "En cours",
-        chapters: 215,
+        chapters: 218,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     }
