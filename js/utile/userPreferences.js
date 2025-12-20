@@ -164,4 +164,4 @@ class UserPreferences {
 }
 
 // Initialiser
-const userPrefs = new UserPreferences();
+const userPrefs = new UserPreferences();window.userPrefs = userPrefs;

@@ -313,7 +313,13 @@
         }
 
         function loadFavorites() {
-            const favorites = userPrefs.favorites;
+            // Vérifier que userPrefs est disponible
+            if (!window.userPrefs) {
+                console.error('userPrefs n\'est pas chargé');
+                return;
+            }
+
+            const favorites = window.userPrefs.favorites || [];
             const container = document.getElementById('favoritesList');
             const empty = document.getElementById('emptyFavorites');
             
@@ -349,7 +355,13 @@
         }
 
         function loadHistory() {
-            const history = userPrefs.history;
+            // Vérifier que userPrefs est disponible
+            if (!window.userPrefs) {
+                console.error('userPrefs n\'est pas chargé');
+                return;
+            }
+
+            const history = window.userPrefs.history || [];
             const container = document.getElementById('historyList');
             const empty = document.getElementById('emptyHistory');
             
@@ -469,17 +481,25 @@
         }
 
         function removeFavorite(mangaId) {
-            userPrefs.toggleFavorite(mangaId, {});
+            if (!window.userPrefs) return;
+            
+            window.userPrefs.toggleFavorite(mangaId, {});
             loadFavorites();
-            window.toast.info('Retiré des favoris');
+            if (window.toast) {
+                window.toast.info('Retiré des favoris');
+            }
         }
 
         function clearHistory() {
+            if (!window.userPrefs) return;
+            
             if (confirm('Êtes-vous sûr de vouloir effacer tout votre historique ?')) {
-                userPrefs.history = [];
-                userPrefs.saveHistory();
+                window.userPrefs.history = [];
+                window.userPrefs.saveHistory();
                 loadHistory();
-                window.toast.success('Historique effacé');
+                if (window.toast) {
+                    window.toast.success('Historique effacé');
+                }
             }
         }
 
@@ -494,11 +514,29 @@
             return new Date(timestamp).toLocaleDateString('fr-FR');
         }
 
+        // Initialisation améliorée
+        function initializeBibliotheque() {
+            if (window.userPrefs) {
+                loadFavorites();
+                loadHistory();
+            } else {
+                console.warn('userPrefs n\'est pas encore disponible, nouvelle tentative...');
+                setTimeout(() => {
+                    if (window.userPrefs) {
+                        loadFavorites();
+                        loadHistory();
+                    } else {
+                        console.error('userPrefs n\'a pas pu être chargé');
+                    }
+                }, 100);
+            }
+        }
+
         // Load on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadFavorites();
-            loadHistory();
-        });
+        document.addEventListener('DOMContentLoaded', initializeBibliotheque);
+        if (document.readyState !== 'loading') {
+            initializeBibliotheque();
+        }
     </script>
 
     <style>

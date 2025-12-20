@@ -34,6 +34,35 @@
     <meta name="theme-color" content="#1B75BC">
     <link rel="alternate" type="application/json+oembed" href="https://discord.gg/md37S7nhkZ">
 
+    <!--Styles Btn Favoris-->
+    <style>
+        .favorite-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .favorite-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .favorite-btn:active {
+            transform: translateY(0);
+        }
+
+        .favorite-btn.is-favorite {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .favorite-btn.is-favorite:hover {
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        }
+    </style>
+
     <!--Styles-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
@@ -54,11 +83,11 @@
     <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs" />
     <div id="gift-notification-root"></div>
     <script type="module"></script>
+    <script src="../js/utile/toast.js"></script>
+    <script src="../js/utile/userPreferences.js"></script>
     <script src="../js/manga/Catenaccio.js"></script>
     <script src="../js/utile/search.js"></script>
     <script src="../js/utile/navbar.js"></script>
-    <script src="../js/utile/toast.js"></script>
-    <script src="../js/utile/userPreferences.js"></script>
 </head>
 
 <div class="loading-container">
@@ -170,6 +199,14 @@
                         </span>
                     </div>
                     <div class="text-xl text-gray-400 mb-4">Catenaccio</div>
+
+                    <!-- Bouton Favoris -->
+                    <div class="mb-6">
+                        <button id="favoriteBtn" class="favorite-btn px-6 py-3 rounded-lg font-bold transition-all duration-300 flex items-center gap-2" onclick="toggleMangaFavorite()">
+                            <span id="favoriteIcon">💜</span>
+                            <span id="favoriteText">Ajouter aux favoris</span>
+                        </button>
+                    </div>
 
                     <!-- Manga Details -->
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
@@ -288,6 +325,75 @@
             </div>
         </div>
     </footer>
+
+    <!-- Script pour le bouton favoris -->
+    <script>
+        // Configuration du manga
+        const mangaData = {
+            id: 'Catenaccio',
+            title: 'Catenaccio',
+            image: '../images/Cover/Catenaccio.png'
+        };
+
+        // Toggle favori
+        function toggleMangaFavorite() {
+            if (!window.userPrefs) {
+                console.error('userPrefs non disponible');
+                alert('Erreur: Système de favoris non disponible');
+                return;
+            }
+
+            const isFavorite = checkIfFavorite();
+            window.userPrefs.toggleFavorite(mangaData.id, mangaData);
+            updateFavoriteButton();
+        }
+
+        // Vérifier si c'est un favori
+        function checkIfFavorite() {
+            if (!window.userPrefs) return false;
+            const favorites = window.userPrefs.favorites || [];
+            return favorites.some(fav => fav.id === mangaData.id);
+        }
+
+        // Mettre à jour le bouton
+        function updateFavoriteButton() {
+            const btn = document.getElementById('favoriteBtn');
+            const icon = document.getElementById('favoriteIcon');
+            const text = document.getElementById('favoriteText');
+            
+            if (!btn || !icon || !text) return;
+            
+            const isFavorite = checkIfFavorite();
+            
+            if (isFavorite) {
+                icon.textContent = '❤️';
+                text.textContent = 'Dans vos favoris';
+                btn.classList.add('is-favorite');
+            } else {
+                icon.textContent = '💜';
+                text.textContent = 'Ajouter aux favoris';
+                btn.classList.remove('is-favorite');
+            }
+        }
+
+        // Initialiser au chargement
+        function initFavoriteButton() {
+            if (window.userPrefs) {
+                updateFavoriteButton();
+            } else {
+                setTimeout(() => {
+                    if (window.userPrefs) {
+                        updateFavoriteButton();
+                    }
+                }, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initFavoriteButton);
+        if (document.readyState !== 'loading') {
+            initFavoriteButton();
+        }
+    </script>
 </body>
 
 </html>
