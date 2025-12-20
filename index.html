@@ -3,366 +3,405 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LanorTrad</title>
+    <title>Maintenance - LanorTrad</title>
     <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
-
-    <!-- MetaTags pour l'embed -->
-    <meta property="og:title" content="LanorTrad - Team de scantrad Française">
-    <meta property="og:description" content="Rejoins LanorTrad, une team passionnée de scantrad français spécialisée dans les mangas.">
-    <meta property="og:image" content="https://i.postimg.cc/XYgQL8Qv/Logo.jpg">
-    <meta property="og:url" content="https://lanortrad.netlify.app">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="LanorTrad">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LanorTrad - Team de scantrad Française">
-    <meta name="twitter:description" content="Rejoins LanorTrad, une team passionnée de scantrad français spécialisée dans les mangas.">
-    <meta name="twitter:image" content="https://i.postimg.cc/XYgQL8Qv/Logo.jpg">
-    <meta name="twitter:site" content="@LanorTrad">
-
-    <!--Styles-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/intros.css">
     
-    <!--Scripts-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-2MZGH30P4J');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
-    <div id="gift-notification-root"></div>
-    <script type="module"></script>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="js/utile/script.js"></script>
-    <script src="js/utile/navbar.js"></script>
-    <script src="js/utile/search.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
+    <meta name="description" content="LanorTrad est actuellement en maintenance. Nous revenons très bientôt avec des améliorations !">
+    <meta property="og:title" content="Maintenance - LanorTrad">
+    <meta property="og:description" content="Site en maintenance. Retour imminent !">
+    <meta name="theme-color" content="#6B46C1">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #030712;
+            color: #e5e7eb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Animation */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4f46e5, #818cf8);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .circle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(20px, 30px) scale(1.05);
+                opacity: 0.35;
+            }
+        }
+
+        /* Main Container */
+        .maintenance-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Icon */
+        .maintenance-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .gear {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: #4f46e5;
+            stroke-width: 2;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Text */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #e0e7ff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: #9ca3af;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 999px;
+            padding: 4px;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #4f46e5, #818cf8);
+            border-radius: 999px;
+            animation: progress 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
+            }
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 12px;
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(79, 70, 229, 0.2);
+            border-color: rgba(79, 70, 229, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: #a5b4fc;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4f46e5;
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .maintenance-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #4f46e5;
+            border-radius: 50%;
+            animation: particleFloat 10s infinite ease-in-out;
+            opacity: 0.4;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
-
-<div class="loading-container">
+<body>
+    <!-- Background Animation -->
     <div class="background-animation">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
     </div>
-    <div class="loading-content">
-      <div class="logo">LanorTrad</div>
-      <div class="loading-bar"></div>
-      <div class="loading-text">Chargement du site...</div>
-    </div>
-</div>
 
-<body class="min-h-screen">
-    <!-- Navbar -->
-<nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-20">
-            <!-- Logo -->
-            <div class="flex items-center">
-                <a href="index.html" class="flex items-center space-x-3">
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-                        LanorTrad
-                    </span>
-                </a>
-            </div>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
 
-            <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button id="mobile-menu-button" type="button" class="text-gray-300 hover:text-white" aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Ouvrir le menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
+    <!-- Main Content -->
+    <div class="maintenance-container">
+        <div class="logo">LanorTrad</div>
 
-            <!-- Desktop menu -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="Planning.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Planning</a>
-                <a href="Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
-                <a href="Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
-                <div class="relative">
-                    <input type="search" placeholder="Rechercher un manga..." 
-                           class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
-                </div>
-                <a href="https://discord.com/invite/md37S7nhkZ">
-                    <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                        Rejoindre
-                    </button>
-                </a>
-            </div>
+        <!-- Maintenance Icon -->
+        <div class="maintenance-icon">
+            <svg class="gear" viewBox="0 0 100 100">
+                <path d="M50,15 L55,25 L65,25 L70,15 L75,20 L75,30 L85,35 L85,45 L95,50 L85,55 L85,65 L75,70 L75,80 L70,85 L65,75 L55,75 L50,85 L45,75 L35,75 L30,85 L25,80 L25,70 L15,65 L15,55 L5,50 L15,45 L15,35 L25,30 L25,20 L30,15 L35,25 L45,25 Z" 
+                      stroke="#4f46e5" stroke-width="2" fill="none"/>
+                <circle cx="50" cy="50" r="15" stroke="#818cf8" stroke-width="2" fill="none"/>
+            </svg>
         </div>
 
-        <!-- Mobile menu, show/hide based on menu state -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="Planning.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Planning</a>
-                <a href="Catalogue.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Catalogue</a>
-                <a href="Équipe.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Équipe</a>
-                <div class="px-3 py-2">
-                    <input type="search" placeholder="Rechercher un manga..." 
-                           class="w-full px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
-                </div>
-                <div class="px-3 py-2">
-                    <a href="https://discord.com/invite/md37S7nhkZ" class="block">
-                        <button class="w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                            Rejoindre
-                        </button>
-                    </a>
-                </div>
-            </div>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            <span>Maintenance en cours</span>
+        </div>
+
+        <h1>Site en Maintenance</h1>
+        
+        <p>
+            Nous effectuons actuellement des améliorations pour vous offrir une meilleure expérience. 
+            Le site sera de retour très bientôt !
+        </p>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: #6b7280;">
+            Merci pour votre patience 🙏
+        </p>
+
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://discord.com/invite/Dafg53Dx39" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                <span>Discord</span>
+            </a>
+            <a href="https://x.com/LanorTrad" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <span>Twitter</span>
+            </a>
         </div>
     </div>
-</nav>
 
-    <!-- Hero Section -->
-    <section class="hero-gradient pt-32 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto">
-                <br><br>
-                <h1 class="text-5xl font-black mb-6 bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white">
-                    Des mangas traduits avec passion.
-                </h1>
-                <p class="text-lg text-gray-300 mb-10">
-                    Découvrez notre sélection de mangas soigneusement traduits par notre équipe de passionnés.
-                </p>
-            </div>
-        </div>
-    </section>
-
-        <!-- Dernières sorties -->
-        <section class="py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center mb-12">
-                    <h2 class="text-3xl font-bold">Dernières sorties</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project Cards -->
-
-                    <div class="card rounded-xl overflow-hidden glow">
-                        <div class="relative">
-                            <img src="images/affiche/TougenAnki.jpg" alt="Cover" class="w-full h-64 object-cover">
-                            <div class="absolute top-4 right-4 flex items-center space-x-2">
-                                <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                    Nouveau chapitre
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Tougen Anki</h3>
-                                <span class="text-sm font-medium text-indigo-400">Ch. 220</span>
-                            </div>
-                            <p class="text-gray-400 text-sm mb-4">
-                                Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center space-x-2">
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Action</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Drame</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Fantaisie</span>
-                                </div>
-                                <a href="/Manga/Tougen Anki/Chapitre 220.html">
-                                    <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                        Lire →
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-xl overflow-hidden glow">
-                        <div class="relative">
-                            <img src="images/affiche/AoNoExorcist.jpg" alt="Cover" class="w-full h-64 object-cover">
-                            <div class="absolute top-4 right-4 flex items-center space-x-2">
-                                <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                    Nouveau chapitre
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Ao No Exorcist</h3>
-                                <span class="text-sm font-medium text-indigo-400">Ch. 164</span>
-                            </div>
-                            <p class="text-gray-400 text-sm mb-4">
-                                Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center space-x-2">
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Action</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Aventure</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Fantaisie</span>
-                                </div>
-                                <a href="/Manga/Ao No Exorcist/Chapitre 164.html">
-                                    <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                        Lire →
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-xl overflow-hidden glow">
-                        <div class="relative">
-                            <img src="images/affiche/Catenaccio.jfif" alt="Cover" class="w-full h-64 object-cover">
-                            <div class="absolute top-4 right-4 flex items-center space-x-2">
-                                <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                    Nouveau chapitre
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Catenaccio</h3>
-                                <span class="text-sm font-medium text-indigo-400">Ch. 36</span>
-                            </div>
-                            <p class="text-gray-400 text-sm mb-4">
-                                Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center space-x-2">
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Sports</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Vie Scolaire</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Collaboration</span>
-                                </div>
-                                <a href="../Manga/Catenaccio/Chapitre 36.html">
-                                    <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                        Lire →
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-xl overflow-hidden glow">
-                        <div class="relative">
-                            <img src="images/affiche/Satsudou.png" alt="Cover" class="w-full h-64 object-cover">
-                            <div class="absolute top-4 right-4 flex items-center space-x-2">
-                                <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                    Nouveau chapitre
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Satsudou</h3>
-                                <span class="text-sm font-medium text-indigo-400">Ch. 18</span>
-                            </div>
-                            <p class="text-gray-400 text-sm mb-4">
-                                Akamori Mitsuo veut être un salarié ordinaire mais... C'est un meurtrier de génie né dans une famille qui pratique l'art ancien de tuer...
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center space-x-2">
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Action</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Comédie</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Arts Martiaux</span>
-                                </div>
-                                <a href="/Manga/Satsudou/Chapitre 18.html">
-                                    <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                        Lire →
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card rounded-xl overflow-hidden glow">
-                        <div class="relative">
-                            <img src="images/affiche/TokyoUnderworld.png" alt="Cover" class="w-full h-64 object-cover">
-                            <div class="absolute top-4 right-4 flex items-center space-x-2">
-                                <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                    Nouveau chapitre
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Tokyo Underworld</h3>
-                                <span class="text-sm font-medium text-indigo-400">Ch. 34</span>
-                            </div>
-                            <p class="text-gray-400 text-sm mb-4">
-                                Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et...
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center space-x-2">
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Horreur</span>
-                                    <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Mystérieux</span>
-                                </div>
-                                <a href="/Manga/Tokyo Underworld/Chapitre 34.html">
-                                    <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                        Lire →
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-    <!-- Stats Section -->
-    <section class="py-16 bg-gradient-to-b from-gray-900/50 to-transparent">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-white mb-2" data-stat="readers">8,5k</div>
-                    <div class="text-gray-400">Lecteurs mensuels</div>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-white mb-2" data-stat="chapters">177</div>
-                    <div class="text-gray-400">Chapitres traduits</div>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-4xl font-bold text-white mb-2" data-stat="series">5</div>
-                    <div class="text-gray-400">Séries en cours</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900/50 mt-20 py-12 border-t border-gray-800/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-2">
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-                        LanorTrad
-                    </span>
-                    <p class="mt-4 text-gray-400">
-                        Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Liens rapides</h3>
-                    <ul class="space-y-2">
-                        <li><a href="Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
-                        <li><a href="équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
-                        <li><a href="Planning.html" class="text-gray-400 hover:text-white transition-colors">Planning</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Réseaux sociaux</h3>
-                    <ul class="space-y-2">
-                        <li><a href="https://discord.gg/invite/Dafg53Dx39" class="text-gray-400 hover:text-white transition-colors">Discord</a></li>
-                        <li><a href="https://x.com/LanorTrad" class="text-gray-400 hover:text-white transition-colors">Twitter</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-400">
-                <p>© 2024 LanorTrad. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
+    <script>
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>

@@ -7,7 +7,7 @@ const CONFIG = {
 // Bonus chapters definition
 const bonusChapters = [
     { number: 138.5 }, { number: 64.5 }, { number: 41.5 },
-    { number: 23.6 }, { number: 23.5 }
+    { number: 23.5 }, { number: 23.6 }
 ].map(ch => ({
     ...ch,
     link: `${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${ch.number}.html`
