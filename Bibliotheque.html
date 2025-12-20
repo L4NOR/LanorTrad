@@ -51,7 +51,9 @@
     <script type="module"></script>
     <script src="js/utile/navbar.js"></script>
     <script src="js/utile/search.js"></script>
+    <script src="js/utile/toast.js"></script>
     <script src="js/utile/userPreferences.js"></script>
+    <script src="js/utile/analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
 </head>
@@ -156,6 +158,9 @@
                 <button onclick="switchTab('history')" id="histTab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
                     📖 Historique (<span id="histCount">0</span>)
                 </button>
+                <button onclick="switchTab('stats')" id="statsTab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                    📊 Statistiques
+                </button>
             </div>
         </div>
     </section>
@@ -195,6 +200,56 @@
                 <div class="text-6xl mb-4">📭</div>
                 <h3 class="text-2xl font-bold mb-2">Historique vide</h3>
                 <p class="text-gray-400">Vos lectures apparaîtront ici</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Content -->
+    <section id="statsContent" class="py-12 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="card rounded-xl p-6 text-center">
+                    <div class="text-5xl mb-3">📚</div>
+                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Chapitres lus</h3>
+                    <p id="total-chapters" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0</p>
+                </div>
+                <div class="card rounded-xl p-6 text-center">
+                    <div class="text-5xl mb-3">⏱️</div>
+                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Temps de lecture</h3>
+                    <p id="total-time" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0h 0m</p>
+                </div>
+                <div class="card rounded-xl p-6 text-center">
+                    <div class="text-5xl mb-3">🔥</div>
+                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Série de lecture</h3>
+                    <p id="streak" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0 jours</p>
+                </div>
+            </div>
+
+            <!-- Per Manga Stats -->
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold mb-6">📖 Statistiques par manga</h2>
+                <div id="manga-stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Sera rempli dynamiquement -->
+                </div>
+                <div id="emptyMangaStats" class="hidden text-center py-20">
+                    <div class="text-6xl mb-4">📊</div>
+                    <h3 class="text-2xl font-bold mb-2">Aucune statistique</h3>
+                    <p class="text-gray-400">Commencez à lire pour voir vos stats !</p>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div>
+                <h2 class="text-2xl font-bold mb-6">🏆 Succès débloqués</h2>
+                <div id="achievements-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Sera rempli dynamiquement -->
+                </div>
+                <div id="emptyAchievements" class="hidden text-center py-20">
+                    <div class="text-6xl mb-4">🏅</div>
+                    <h3 class="text-2xl font-bold mb-2">Aucun succès débloqué</h3>
+                    <p class="text-gray-400">Continuez à lire pour débloquer des succès !</p>
+                </div>
             </div>
         </div>
     </section>
@@ -244,10 +299,17 @@
             // Update buttons
             document.getElementById('favTab').classList.toggle('active', tab === 'favorites');
             document.getElementById('histTab').classList.toggle('active', tab === 'history');
+            document.getElementById('statsTab').classList.toggle('active', tab === 'stats');
             
             // Update content
             document.getElementById('favoritesContent').classList.toggle('hidden', tab !== 'favorites');
             document.getElementById('historyContent').classList.toggle('hidden', tab !== 'history');
+            document.getElementById('statsContent').classList.toggle('hidden', tab !== 'stats');
+            
+            // Load stats if stats tab is selected
+            if (tab === 'stats') {
+                loadStatistics();
+            }
         }
 
         function loadFavorites() {
@@ -320,6 +382,90 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function loadStatistics() {
+            if (!window.readingAnalytics) {
+                console.error('Analytics non disponible');
+                return;
+            }
+
+            const stats = window.readingAnalytics.getStats();
+            
+            // Global stats
+            document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
+            
+            const hours = Math.floor(stats.totalReadingTime / 60);
+            const minutes = stats.totalReadingTime % 60;
+            document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
+            
+            document.getElementById('streak').textContent = `${stats.readingStreak} jours`;
+            
+            // Per manga stats
+            const mangaStatsContainer = document.getElementById('manga-stats');
+            const emptyMangaStats = document.getElementById('emptyMangaStats');
+            const mangaStatsArray = Object.entries(stats.mangaStats);
+            
+            if (mangaStatsArray.length === 0) {
+                mangaStatsContainer.classList.add('hidden');
+                emptyMangaStats.classList.remove('hidden');
+            } else {
+                mangaStatsContainer.classList.remove('hidden');
+                emptyMangaStats.classList.add('hidden');
+                
+                mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
+                    const avgTime = mangaData.chaptersRead > 0 
+                        ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
+                        : 0;
+                    
+                    return `
+                        <div class="card rounded-xl p-6">
+                            <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Chapitres lus:</span>
+                                    <span class="font-semibold text-indigo-400">${mangaData.chaptersRead}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Temps total:</span>
+                                    <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Temps moyen:</span>
+                                    <span class="font-semibold text-indigo-400">${avgTime} min</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Dernière lecture:</span>
+                                    <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Achievements
+            const achievementsContainer = document.getElementById('achievements-list');
+            const emptyAchievements = document.getElementById('emptyAchievements');
+            
+            if (stats.achievements.length === 0) {
+                achievementsContainer.classList.add('hidden');
+                emptyAchievements.classList.remove('hidden');
+            } else {
+                achievementsContainer.classList.remove('hidden');
+                emptyAchievements.classList.add('hidden');
+                
+                achievementsContainer.innerHTML = stats.achievements.map(achievement => `
+                    <div class="card rounded-xl p-6 flex items-center gap-4">
+                        <div class="text-5xl">${achievement.icon}</div>
+                        <div class="flex-grow">
+                            <h4 class="text-lg font-bold mb-1">${achievement.title}</h4>
+                            <p class="text-sm text-gray-400">${achievement.description}</p>
+                            <p class="text-xs text-indigo-400 mt-2">Débloqué le ${new Date(achievement.unlockedAt).toLocaleDateString('fr-FR')}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
 
         function removeFavorite(mangaId) {
