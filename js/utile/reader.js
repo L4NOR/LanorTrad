@@ -1,9 +1,3 @@
-/**
- * LanorTrad Reader System v2.0
- * Modes de lecture améliorés sans miniatures (anti-spoil)
- * Progression et raccourcis clavier
- */
-
 class MangaReader {
     constructor() {
         this.currentMode = localStorage.getItem('readerMode') || 'scroll';
