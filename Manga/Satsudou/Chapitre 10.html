@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="../../css/chapitres.css">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/intros-chapitre.css">
+    <link rel="stylesheet" href="../../css/reader.css">
 
     <!--Scripts-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
@@ -55,10 +56,13 @@
     <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
     <div id="gift-notification-root"></div>
     <script type="module"></script>
+    <script src="../../js/utile/toast.js"></script>
+    <script src="../../js/utile/analytics.js"></script>
     <script src="../../js/manga/Satsudou.js"></script>
     <script src="../../js/manga/chapitres.js"></script>
     <script src="../../js/utile/search.js"></script>
     <script src="../../js/utile/navbar.js"></script>
+    <script src="../../js/utile/reader.js"></script>
     <script src="js/ChapterSelect.js"></script>
 </head>
 
@@ -101,7 +105,7 @@
     
                 <!-- Desktop menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="../../Planning.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Planning</a>
+                    <a href="../../Bibliotheque.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Bibliotheque</a>
                     <a href="../../Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
                     <a href="../../Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
                     <div class="relative">
@@ -119,7 +123,7 @@
             <!-- Mobile menu, show/hide based on menu state -->
             <div id="mobile-menu" class="hidden md:hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="../../Planning.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Planning</a>
+                    <a href="../../Bibliotheque.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Bibliotheque</a>
                     <a href="../../Catalogue.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Catalogue</a>
                     <a href="../../Équipe.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Équipe</a>
                     <div class="px-3 py-2">
@@ -203,7 +207,7 @@
                     <ul class="space-y-2">
                         <li><a href="../../Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
                         <li><a href="../../équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
-                        <li><a href="../../Planning.html" class="text-gray-400 hover:text-white transition-colors">Planning</a></li>
+                        <li><a href="../../Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliotheque</a></li>
                         
                     </ul>
                 </div>
