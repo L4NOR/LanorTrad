@@ -52,9 +52,9 @@ function createMangaCard(manga) {
     const mangaLink = manga.id === "Satsudou" ? `/Manga/${manga.id}.html` : `/Manga/${manga.title}.html`;
     
     return `
-        <div class="card rounded-xl overflow-hidden glow">
+        <div class="card rounded-xl overflow-hidden glow" data-manga-id="${manga.id}">
             <div class="relative">
-                <img src="${manga.image}" alt="${manga.title}" class="w-full h-64 object-cover">
+                <img src="${manga.image}" alt="${manga.title}" loading="lazy" class="w-full h-64 object-cover">
                 <div class="absolute top-4 right-4">
                     <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
                         ${manga.status}
