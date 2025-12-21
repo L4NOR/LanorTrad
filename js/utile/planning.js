@@ -1,80 +1,53 @@
 class PlanningManager {
     constructor() {
         this.currentView = localStorage.getItem('planningView') || 'calendar';
-        this.currentDate = new Date(2025, 2); // Mars 2025
+        // Utiliser la date actuelle au lieu d'une date fixe
+        this.currentDate = new Date();
         this.selectedManga = localStorage.getItem('selectedManga') || 'all';
         this.notifications = JSON.parse(localStorage.getItem('planningNotifications') || '{}');
         
-        this.releases = {
-            "2025-03-02": [
+        // Sorties dynamiques - sera mis à jour automatiquement
+        this.releases = this.generateReleases();
+        
+        this.init();
+    }
+
+    generateReleases() {
+        // Génération des sorties pour le mois en cours et les suivants
+        const releases = {};
+        
+        // Sorties pour décembre 2025
+        const december2025Releases = {
+            "2025-12-24": [
                 { 
-                    title: "Tougen Anki", 
-                    chapter: "187 & 188", 
-                    type: "Manga",
-                    time: "14:00",
-                    cover: "images/cover/TougenAnki.jpg",
-                    url: "/Manga/Tougen Anki.html"
-                }
-            ],
-            "2025-03-03": [
-                { 
-                    title: "Tokyo Underworld", 
-                    chapter: "29 & 29.5", 
-                    type: "Manga",
-                    time: "16:00",
-                    cover: "images/cover/TokyoUnderworld.jpg",
-                    url: "/Manga/Tokyo Underworld.html"
-                }
-            ],
-            "2025-03-05": [
-                { 
-                    title: "Ao No Exorcist", 
-                    chapter: "157", 
-                    type: "Manga",
-                    time: "15:00",
-                    cover: "images/cover/AoNoExorcist.jpg",
-                    url: "/Manga/Ao No Exorcist.html"
-                },
-                { 
-                    title: "Satsudou", 
-                    chapter: "17", 
-                    type: "Manga",
+                    title: "Cadeau de Noël", 
+                    chapter: "Spécial", 
+                    type: "Oneshot",
                     time: "18:00",
-                    cover: "images/cover/Satsudou.jpg",
-                    url: "/Manga/Satsudou.html"
-                }
-            ],
-            "2025-03-12": [
-                { 
-                    title: "Tokyo Underworld", 
-                    chapter: "30", 
-                    type: "Manga",
-                    time: "16:00",
-                    cover: "images/cover/TokyoUnderworld.jpg",
-                    url: "/Manga/Tokyo Underworld.html"
-                },
-                { 
-                    title: "Tougen Anki", 
-                    chapter: "189", 
-                    type: "Manga",
-                    time: "14:00",
-                    cover: "images/cover/TougenAnki.jpg",
-                    url: "/Manga/Tougen Anki.html"
-                }
-            ],
-            "2025-03-17": [
-                { 
-                    title: "Tokyo Underworld", 
-                    chapter: "31", 
-                    type: "Manga",
-                    time: "16:00",
-                    cover: "images/cover/TokyoUnderworld.jpg",
-                    url: "/Manga/Tokyo Underworld.html"
+                    cover: "https://i.pinimg.com/736x/f7/11/52/f7115221e8bb3f92f681561a2270b4e3.jpg",
+                    url: ""
                 }
             ]
         };
 
-        this.init();
+        // Sorties pour janvier 2026
+        const january2026Releases = {
+            "2026-01-09": [
+                { 
+                    title: "Ao No Exorcist", 
+                    chapter: "165", 
+                    type: "Manga",
+                    time: "15:00",
+                    cover: "images/cover/AoNoExorcist.jpg",
+                    url: "/Manga/Ao No Exorcist.html"
+                }
+            ]
+        };
+
+        // Fusionner toutes les sorties
+        Object.assign(releases, december2025Releases, january2026Releases);
+
+        return releases;
     }
 
     init() {
@@ -183,6 +156,7 @@ class PlanningManager {
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+        // Mettre à jour le titre du mois
         this.elements.currentMonth.textContent = new Intl.DateTimeFormat('fr-FR', {
             month: 'long',
             year: 'numeric'
