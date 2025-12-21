@@ -11,7 +11,11 @@ class ReadingAnalytics {
             readingStreak: 0,
             lastReadDate: null,
             achievements: [],
-            readingDates: []
+            readingDates: [],
+            nightReadingCount: 0,
+            weekendReadingCount: 0,
+            marathonSessions: 0,
+            diverseReadingCount: 0
         }));
     }
 
@@ -41,6 +45,22 @@ class ReadingAnalytics {
         if (!this.stats.readingDates.includes(today)) {
             this.stats.readingDates.push(today);
         }
+
+        // Tracker lecture nocturne (22h - 6h)
+        const hour = new Date().getHours();
+        if (hour >= 22 || hour < 6) {
+            this.stats.nightReadingCount = (this.stats.nightReadingCount || 0) + 1;
+        }
+
+        // Tracker lecture weekend
+        const day = new Date().getDay();
+        if (day === 0 || day === 6) {
+            this.stats.weekendReadingCount = (this.stats.weekendReadingCount || 0) + 1;
+        }
+
+        // Tracker diversité de lecture
+        const uniqueMangas = Object.keys(this.stats.mangaStats).length;
+        this.stats.diverseReadingCount = uniqueMangas;
         
         this.updateStreak();
         this.checkAchievements();
@@ -71,6 +91,7 @@ class ReadingAnalytics {
 
     checkAchievements() {
         const achievements = [
+            // Succès basiques
             {
                 id: 'first_chapter',
                 title: 'Premier pas',
@@ -79,18 +100,32 @@ class ReadingAnalytics {
                 icon: '🎯'
             },
             {
+                id: 'chapter_5',
+                title: 'Prise en main',
+                description: 'Lire 5 chapitres',
+                condition: () => this.stats.totalChaptersRead >= 5,
+                icon: '📖'
+            },
+            {
                 id: 'chapter_10',
                 title: 'Lecteur assidu',
                 description: 'Lire 10 chapitres',
                 condition: () => this.stats.totalChaptersRead >= 10,
-                icon: '📖'
+                icon: '📚'
+            },
+            {
+                id: 'chapter_25',
+                title: 'Collectionneur',
+                description: 'Lire 25 chapitres',
+                condition: () => this.stats.totalChaptersRead >= 25,
+                icon: '📕'
             },
             {
                 id: 'chapter_50',
                 title: 'Dévoreur de mangas',
                 description: 'Lire 50 chapitres',
                 condition: () => this.stats.totalChaptersRead >= 50,
-                icon: '📚'
+                icon: '📗'
             },
             {
                 id: 'chapter_100',
@@ -99,6 +134,22 @@ class ReadingAnalytics {
                 condition: () => this.stats.totalChaptersRead >= 100,
                 icon: '🏆'
             },
+            {
+                id: 'chapter_200',
+                title: 'Maître lecteur',
+                description: 'Lire 200 chapitres',
+                condition: () => this.stats.totalChaptersRead >= 200,
+                icon: '👑'
+            },
+            {
+                id: 'chapter_500',
+                title: 'Légende vivante',
+                description: 'Lire 500 chapitres',
+                condition: () => this.stats.totalChaptersRead >= 500,
+                icon: '⭐'
+            },
+
+            // Succès de série (streak)
             {
                 id: 'streak_3',
                 title: 'Régularité',
@@ -114,11 +165,34 @@ class ReadingAnalytics {
                 icon: '💪'
             },
             {
+                id: 'streak_14',
+                title: 'Deux semaines !',
+                description: 'Lire pendant 14 jours consécutifs',
+                condition: () => this.stats.readingStreak >= 14,
+                icon: '🎖️'
+            },
+            {
                 id: 'streak_30',
                 title: 'Lecteur quotidien',
                 description: 'Lire pendant 30 jours consécutifs',
                 condition: () => this.stats.readingStreak >= 30,
-                icon: '⭐'
+                icon: '🌟'
+            },
+            {
+                id: 'streak_100',
+                title: 'Centurion',
+                description: 'Lire pendant 100 jours consécutifs',
+                condition: () => this.stats.readingStreak >= 100,
+                icon: '💎'
+            },
+
+            // Succès de temps
+            {
+                id: 'time_30',
+                title: 'Demi-heure',
+                description: 'Cumuler 30 minutes de lecture',
+                condition: () => this.stats.totalReadingTime >= 30,
+                icon: '⏱️'
             },
             {
                 id: 'time_60',
@@ -128,11 +202,148 @@ class ReadingAnalytics {
                 icon: '⏰'
             },
             {
+                id: 'time_180',
+                title: 'Après-midi lecture',
+                description: 'Cumuler 3 heures de lecture',
+                condition: () => this.stats.totalReadingTime >= 180,
+                icon: '☀️'
+            },
+            {
                 id: 'time_300',
                 title: 'Marathon de lecture',
                 description: 'Cumuler 5 heures de lecture',
                 condition: () => this.stats.totalReadingTime >= 300,
                 icon: '🏃'
+            },
+            {
+                id: 'time_600',
+                title: 'Demi-journée',
+                description: 'Cumuler 10 heures de lecture',
+                condition: () => this.stats.totalReadingTime >= 600,
+                icon: '🌙'
+            },
+            {
+                id: 'time_1440',
+                title: 'Journée entière',
+                description: 'Cumuler 24 heures de lecture',
+                condition: () => this.stats.totalReadingTime >= 1440,
+                icon: '🌍'
+            },
+
+            // Succès de diversité
+            {
+                id: 'diverse_2',
+                title: 'Explorateur',
+                description: 'Lire 2 mangas différents',
+                condition: () => this.stats.diverseReadingCount >= 2,
+                icon: '🧭'
+            },
+            {
+                id: 'diverse_3',
+                title: 'Curieux',
+                description: 'Lire 3 mangas différents',
+                condition: () => this.stats.diverseReadingCount >= 3,
+                icon: '🔍'
+            },
+            {
+                id: 'diverse_5',
+                title: 'Polyvalent',
+                description: 'Lire 5 mangas différents',
+                condition: () => this.stats.diverseReadingCount >= 5,
+                icon: '🎨'
+            },
+
+            // Succès spéciaux
+            {
+                id: 'night_owl_10',
+                title: 'Oiseau de nuit',
+                description: 'Lire 10 chapitres entre 22h et 6h',
+                condition: () => (this.stats.nightReadingCount || 0) >= 10,
+                icon: '🦉'
+            },
+            {
+                id: 'night_owl_25',
+                title: 'Vampire',
+                description: 'Lire 25 chapitres entre 22h et 6h',
+                condition: () => (this.stats.nightReadingCount || 0) >= 25,
+                icon: '🧛'
+            },
+            {
+                id: 'weekend_10',
+                title: 'Weekend warrior',
+                description: 'Lire 10 chapitres le weekend',
+                condition: () => (this.stats.weekendReadingCount || 0) >= 10,
+                icon: '🎮'
+            },
+            {
+                id: 'weekend_25',
+                title: 'Roi du weekend',
+                description: 'Lire 25 chapitres le weekend',
+                condition: () => (this.stats.weekendReadingCount || 0) >= 25,
+                icon: '👑'
+            },
+
+            // Succès par manga spécifique
+            {
+                id: 'manga_complete_10',
+                title: 'Fan dévoué',
+                description: 'Lire 10 chapitres d\'un même manga',
+                condition: () => {
+                    return Object.values(this.stats.mangaStats).some(
+                        manga => manga.chaptersRead >= 10
+                    );
+                },
+                icon: '❤️'
+            },
+            {
+                id: 'manga_complete_50',
+                title: 'Super fan',
+                description: 'Lire 50 chapitres d\'un même manga',
+                condition: () => {
+                    return Object.values(this.stats.mangaStats).some(
+                        manga => manga.chaptersRead >= 50
+                    );
+                },
+                icon: '💖'
+            },
+            {
+                id: 'manga_complete_100',
+                title: 'Ultra fan',
+                description: 'Lire 100 chapitres d\'un même manga',
+                condition: () => {
+                    return Object.values(this.stats.mangaStats).some(
+                        manga => manga.chaptersRead >= 100
+                    );
+                },
+                icon: '💝'
+            },
+
+            // Succès de vitesse
+            {
+                id: 'speed_reader',
+                title: 'Lecteur rapide',
+                description: 'Lire 5 chapitres en une journée',
+                condition: () => {
+                    const today = new Date().toDateString();
+                    return this.stats.lastReadDate === today && 
+                           this.stats.totalChaptersRead >= 5;
+                },
+                icon: '⚡'
+            },
+
+            // Succès nostalgique
+            {
+                id: 'comeback',
+                title: 'De retour !',
+                description: 'Revenir après une pause',
+                condition: () => {
+                    if (!this.stats.lastReadDate) return false;
+                    const daysSinceLastRead = Math.floor(
+                        (Date.now() - new Date(this.stats.lastReadDate).getTime()) / 86400000
+                    );
+                    return daysSinceLastRead >= 7 && this.stats.totalChaptersRead > 5;
+                },
+                icon: '🔄'
             }
         ];
 
@@ -166,7 +377,10 @@ class ReadingAnalytics {
             totalReadingTime: this.stats.totalReadingTime,
             mangaStats: this.stats.mangaStats,
             readingStreak: this.stats.readingStreak,
-            achievements: this.stats.achievements
+            achievements: this.stats.achievements,
+            nightReadingCount: this.stats.nightReadingCount || 0,
+            weekendReadingCount: this.stats.weekendReadingCount || 0,
+            diverseReadingCount: this.stats.diverseReadingCount || 0
         };
     }
 
