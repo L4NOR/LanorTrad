@@ -223,12 +223,13 @@
 
 .page-display img {
     width: 100%;
+    max-width: 900px;
     height: auto;
-    max-height: 80vh;
     object-fit: contain;
     display: block;
     border-radius: 4px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
 }
 
 /* Loader de page */
