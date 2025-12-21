@@ -74,14 +74,14 @@ class UserPreferences {
         // Détecter automatiquement la lecture
         const currentPath = window.location.pathname;
         const chapterMatch = currentPath.match(/\/Manga\/([^\/]+)\/Chapitre\s*(\d+(?:\.\d+)?)/i);
-        
+    
         if (chapterMatch) {
             const mangaId = chapterMatch[1];
             const chapterNumber = chapterMatch[2];
-            
+        
             // Récupérer les infos du manga depuis le titre de la page
             const pageTitle = document.title.split('-')[0].trim();
-            
+        
             this.addToHistory(mangaId, chapterNumber, {
                 title: pageTitle,
                 image: this.getMangaImage(mangaId)

@@ -30,6 +30,26 @@
     <meta name="theme-color" content="#6B46C1">
     <link rel="alternate" type="application/json+oembed" href="https://discord.gg/md37S7nhkZ">
 
+    <!--Styles Btn-->
+    <style>
+        .tab-btn {
+            background: rgba(17, 24, 39, 0.5);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            color: #9CA3AF;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: rgba(79, 70, 229, 0.4);
+            color: white;
+        }
+    </style>
 
     <!--Styles-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
@@ -291,272 +311,252 @@
     </footer>
 
     <script>
-        let currentTab = 'favorites';
+    let currentTab = 'favorites';
 
-        function switchTab(tab) {
-            currentTab = tab;
-            
-            // Update buttons
-            document.getElementById('favTab').classList.toggle('active', tab === 'favorites');
-            document.getElementById('histTab').classList.toggle('active', tab === 'history');
-            document.getElementById('statsTab').classList.toggle('active', tab === 'stats');
-            
-            // Update content
-            document.getElementById('favoritesContent').classList.toggle('hidden', tab !== 'favorites');
-            document.getElementById('historyContent').classList.toggle('hidden', tab !== 'history');
-            document.getElementById('statsContent').classList.toggle('hidden', tab !== 'stats');
-            
-            // Load stats if stats tab is selected
-            if (tab === 'stats') {
-                loadStatistics();
-            }
+    function switchTab(tab) {
+        currentTab = tab;
+        
+        // Update buttons
+        document.getElementById('favTab').classList.toggle('active', tab === 'favorites');
+        document.getElementById('histTab').classList.toggle('active', tab === 'history');
+        document.getElementById('statsTab').classList.toggle('active', tab === 'stats');
+        
+        // Update content
+        document.getElementById('favoritesContent').classList.toggle('hidden', tab !== 'favorites');
+        document.getElementById('historyContent').classList.toggle('hidden', tab !== 'history');
+        document.getElementById('statsContent').classList.toggle('hidden', tab !== 'stats');
+        
+        // Load content based on tab
+        if (tab === 'favorites') {
+            loadFavorites();
+        } else if (tab === 'history') {
+            loadHistory();
+        } else if (tab === 'stats') {
+            loadStatistics();
+        }
+    }
+
+    function loadFavorites() {
+        if (!window.userPrefs) {
+            console.error('userPrefs n\'est pas chargé');
+            return;
         }
 
-        function loadFavorites() {
-            // Vérifier que userPrefs est disponible
-            if (!window.userPrefs) {
-                console.error('userPrefs n\'est pas chargé');
-                return;
-            }
-
-            const favorites = window.userPrefs.favorites || [];
-            const container = document.getElementById('favoritesList');
-            const empty = document.getElementById('emptyFavorites');
-            
-            document.getElementById('favCount').textContent = favorites.length;
-            
-            if (favorites.length === 0) {
-                container.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-            
-            container.classList.remove('hidden');
-            empty.classList.add('hidden');
-            
-            container.innerHTML = favorites.map(fav => `
-                <div class="card rounded-xl overflow-hidden glow">
-                    <div class="relative">
-                        <img src="${fav.image}" alt="${fav.title}" class="w-full h-64 object-cover">
-                        <button onclick="removeFavorite('${fav.id}')" class="absolute top-4 right-4 p-2 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors">
-                            ❌
-                        </button>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-4">${fav.title}</h3>
-                        <a href="/Manga/${fav.id}.html">
-                            <button class="w-full py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                                Lire →
-                            </button>
-                        </a>
-                    </div>
+        const favorites = window.userPrefs.favorites || [];
+        const container = document.getElementById('favoritesList');
+        const empty = document.getElementById('emptyFavorites');
+        
+        document.getElementById('favCount').textContent = favorites.length;
+        
+        if (favorites.length === 0) {
+            container.classList.add('hidden');
+            empty.classList.remove('hidden');
+            return;
+        }
+        
+        container.classList.remove('hidden');
+        empty.classList.add('hidden');
+        
+        container.innerHTML = favorites.map(fav => `
+            <div class="card rounded-xl overflow-hidden glow">
+                <div class="relative">
+                    <img src="${fav.image}" alt="${fav.title}" class="w-full h-64 object-cover">
+                    <button onclick="removeFavorite('${fav.id}')" class="absolute top-4 right-4 p-2 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors">
+                        ❌
+                    </button>
                 </div>
-            `).join('');
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-4">${fav.title}</h3>
+                    <a href="/Manga/${fav.id}.html">
+                        <button class="w-full py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            Lire →
+                        </button>
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function loadHistory() {
+        if (!window.userPrefs) {
+            console.error('userPrefs n\'est pas chargé');
+            return;
         }
 
-        function loadHistory() {
-            // Vérifier que userPrefs est disponible
-            if (!window.userPrefs) {
-                console.error('userPrefs n\'est pas chargé');
-                return;
-            }
+        const history = window.userPrefs.history || [];
+        const container = document.getElementById('historyList');
+        const empty = document.getElementById('emptyHistory');
+        
+        document.getElementById('histCount').textContent = history.length;
+        
+        if (history.length === 0) {
+            container.classList.add('hidden');
+            empty.classList.remove('hidden');
+            return;
+        }
+        
+        container.classList.remove('hidden');
+        empty.classList.add('hidden');
+        
+        container.innerHTML = history.map(item => {
+            const timeAgo = formatTimeAgo(item.readAt);
+            return `
+                <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
+                    <img src="${item.image}" alt="${item.title}" class="w-20 h-28 object-cover rounded-lg">
+                    <div class="flex-grow">
+                        <h3 class="font-bold text-white">${item.title}</h3>
+                        <p class="text-indigo-400">Chapitre ${item.chapter}</p>
+                        <p class="text-sm text-gray-400">${timeAgo}</p>
+                    </div>
+                    <a href="/Manga/${item.mangaId}/Chapitre ${item.chapter}.html">
+                        <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            Reprendre
+                        </button>
+                    </a>
+                </div>
+            `;
+        }).join('');
+    }
 
-            const history = window.userPrefs.history || [];
-            const container = document.getElementById('historyList');
-            const empty = document.getElementById('emptyHistory');
+    function loadStatistics() {
+        if (!window.readingAnalytics) {
+            console.error('Analytics non disponible');
+            return;
+        }
+
+        const stats = window.readingAnalytics.getStats();
+        
+        // Global stats
+        document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
+        
+        const hours = Math.floor(stats.totalReadingTime / 60);
+        const minutes = stats.totalReadingTime % 60;
+        document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
+        
+        document.getElementById('streak').textContent = `${stats.readingStreak} jour${stats.readingStreak > 1 ? 's' : ''}`;
+        
+        // Per manga stats
+        const mangaStatsContainer = document.getElementById('manga-stats');
+        const emptyMangaStats = document.getElementById('emptyMangaStats');
+        const mangaStatsArray = Object.entries(stats.mangaStats);
+        
+        if (mangaStatsArray.length === 0) {
+            mangaStatsContainer.classList.add('hidden');
+            emptyMangaStats.classList.remove('hidden');
+        } else {
+            mangaStatsContainer.classList.remove('hidden');
+            emptyMangaStats.classList.add('hidden');
             
-            document.getElementById('histCount').textContent = history.length;
-            
-            if (history.length === 0) {
-                container.classList.add('hidden');
-                empty.classList.remove('hidden');
-                return;
-            }
-            
-            container.classList.remove('hidden');
-            empty.classList.add('hidden');
-            
-            container.innerHTML = history.map(item => {
-                const timeAgo = formatTimeAgo(item.readAt);
+            mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
+                const avgTime = mangaData.chaptersRead > 0 
+                    ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
+                    : 0;
+                
                 return `
-                    <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
-                        <img src="${item.image}" alt="${item.title}" class="w-20 h-28 object-cover rounded-lg">
-                        <div class="flex-grow">
-                            <h3 class="font-bold text-white">${item.title}</h3>
-                            <p class="text-indigo-400">Chapitre ${item.chapter}</p>
-                            <p class="text-sm text-gray-400">${timeAgo}</p>
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Chapitres lus:</span>
+                                <span class="font-semibold text-indigo-400">${mangaData.chaptersRead}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Temps total:</span>
+                                <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Temps moyen:</span>
+                                <span class="font-semibold text-indigo-400">${avgTime} min</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Dernière lecture:</span>
+                                <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>
+                            </div>
                         </div>
-                        <a href="/Manga/${item.mangaId}/Chapitre ${item.chapter}.html">
-                            <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                                Reprendre
-                            </button>
-                        </a>
                     </div>
                 `;
             }).join('');
         }
-
-        function loadStatistics() {
-            if (!window.readingAnalytics) {
-                console.error('Analytics non disponible');
-                return;
-            }
-
-            const stats = window.readingAnalytics.getStats();
+        
+        // Achievements
+        const achievementsContainer = document.getElementById('achievements-list');
+        const emptyAchievements = document.getElementById('emptyAchievements');
+        
+        if (stats.achievements.length === 0) {
+            achievementsContainer.classList.add('hidden');
+            emptyAchievements.classList.remove('hidden');
+        } else {
+            achievementsContainer.classList.remove('hidden');
+            emptyAchievements.classList.add('hidden');
             
-            // Global stats
-            document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
-            
-            const hours = Math.floor(stats.totalReadingTime / 60);
-            const minutes = stats.totalReadingTime % 60;
-            document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
-            
-            document.getElementById('streak').textContent = `${stats.readingStreak} jours`;
-            
-            // Per manga stats
-            const mangaStatsContainer = document.getElementById('manga-stats');
-            const emptyMangaStats = document.getElementById('emptyMangaStats');
-            const mangaStatsArray = Object.entries(stats.mangaStats);
-            
-            if (mangaStatsArray.length === 0) {
-                mangaStatsContainer.classList.add('hidden');
-                emptyMangaStats.classList.remove('hidden');
-            } else {
-                mangaStatsContainer.classList.remove('hidden');
-                emptyMangaStats.classList.add('hidden');
-                
-                mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
-                    const avgTime = mangaData.chaptersRead > 0 
-                        ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
-                        : 0;
-                    
-                    return `
-                        <div class="card rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span class="text-gray-400">Chapitres lus:</span>
-                                    <span class="font-semibold text-indigo-400">${mangaData.chaptersRead}</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-400">Temps total:</span>
-                                    <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-400">Temps moyen:</span>
-                                    <span class="font-semibold text-indigo-400">${avgTime} min</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-gray-400">Dernière lecture:</span>
-                                    <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-            
-            // Achievements
-            const achievementsContainer = document.getElementById('achievements-list');
-            const emptyAchievements = document.getElementById('emptyAchievements');
-            
-            if (stats.achievements.length === 0) {
-                achievementsContainer.classList.add('hidden');
-                emptyAchievements.classList.remove('hidden');
-            } else {
-                achievementsContainer.classList.remove('hidden');
-                emptyAchievements.classList.add('hidden');
-                
-                achievementsContainer.innerHTML = stats.achievements.map(achievement => `
-                    <div class="card rounded-xl p-6 flex items-center gap-4">
-                        <div class="text-5xl">${achievement.icon}</div>
-                        <div class="flex-grow">
-                            <h4 class="text-lg font-bold mb-1">${achievement.title}</h4>
-                            <p class="text-sm text-gray-400">${achievement.description}</p>
-                            <p class="text-xs text-indigo-400 mt-2">Débloqué le ${new Date(achievement.unlockedAt).toLocaleDateString('fr-FR')}</p>
-                        </div>
+            achievementsContainer.innerHTML = stats.achievements.map(achievement => `
+                <div class="card rounded-xl p-6 flex items-center gap-4">
+                    <div class="text-5xl">${achievement.icon}</div>
+                    <div class="flex-grow">
+                        <h4 class="text-lg font-bold mb-1">${achievement.title}</h4>
+                        <p class="text-sm text-gray-400">${achievement.description}</p>
+                        <p class="text-xs text-indigo-400 mt-2">Débloqué le ${new Date(achievement.unlockedAt).toLocaleDateString('fr-FR')}</p>
                     </div>
-                `).join('');
-            }
+                </div>
+            `).join('');
         }
+    }
 
-        function removeFavorite(mangaId) {
-            if (!window.userPrefs) return;
-            
-            window.userPrefs.toggleFavorite(mangaId, {});
-            loadFavorites();
+    function removeFavorite(mangaId) {
+        if (!window.userPrefs) return;
+        
+        window.userPrefs.toggleFavorite(mangaId, {});
+        loadFavorites();
+        if (window.toast) {
+            window.toast.info('Retiré des favoris');
+        }
+    }
+
+    function clearHistory() {
+        if (!window.userPrefs) return;
+        
+        if (confirm('Êtes-vous sûr de vouloir effacer tout votre historique ?')) {
+            window.userPrefs.history = [];
+            window.userPrefs.saveHistory();
+            loadHistory();
             if (window.toast) {
-                window.toast.info('Retiré des favoris');
+                window.toast.success('Historique effacé');
             }
         }
+    }
 
-        function clearHistory() {
-            if (!window.userPrefs) return;
-            
-            if (confirm('Êtes-vous sûr de vouloir effacer tout votre historique ?')) {
-                window.userPrefs.history = [];
-                window.userPrefs.saveHistory();
-                loadHistory();
-                if (window.toast) {
-                    window.toast.success('Historique effacé');
+    function formatTimeAgo(timestamp) {
+        const seconds = Math.floor((Date.now() - timestamp) / 1000);
+        
+        if (seconds < 60) return 'À l\'instant';
+        if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
+        if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
+        if (seconds < 604800) return `Il y a ${Math.floor(seconds / 86400)} jour${Math.floor(seconds / 86400) > 1 ? 's' : ''}`;
+        
+        return new Date(timestamp).toLocaleDateString('fr-FR');
+    }
+
+    // Initialisation
+    function initializeBibliotheque() {
+        if (window.userPrefs && window.readingAnalytics) {
+            loadFavorites();
+        } else {
+            console.warn('En attente du chargement complet...');
+            setTimeout(() => {
+                if (window.userPrefs && window.readingAnalytics) {
+                    loadFavorites();
+                } else {
+                    console.error('Erreur de chargement des modules');
                 }
-            }
+            }, 200);
         }
+    }
 
-        function formatTimeAgo(timestamp) {
-            const seconds = Math.floor((Date.now() - timestamp) / 1000);
-            
-            if (seconds < 60) return 'À l\'instant';
-            if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
-            if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
-            if (seconds < 604800) return `Il y a ${Math.floor(seconds / 86400)} jours`;
-            
-            return new Date(timestamp).toLocaleDateString('fr-FR');
-        }
-
-        // Initialisation améliorée
-        function initializeBibliotheque() {
-            if (window.userPrefs) {
-                loadFavorites();
-                loadHistory();
-            } else {
-                console.warn('userPrefs n\'est pas encore disponible, nouvelle tentative...');
-                setTimeout(() => {
-                    if (window.userPrefs) {
-                        loadFavorites();
-                        loadHistory();
-                    } else {
-                        console.error('userPrefs n\'a pas pu être chargé');
-                    }
-                }, 100);
-            }
-        }
-
-        // Load on page load
-        document.addEventListener('DOMContentLoaded', initializeBibliotheque);
-        if (document.readyState !== 'loading') {
-            initializeBibliotheque();
-        }
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', initializeBibliotheque);
+    if (document.readyState !== 'loading') {
+        initializeBibliotheque();
+    }
     </script>
-
-    <style>
-        .tab-btn {
-            background: rgba(17, 24, 39, 0.5);
-            border: 1px solid rgba(79, 70, 229, 0.2);
-            color: #9CA3AF;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
-        }
-
-        .tab-btn:hover:not(.active) {
-            border-color: rgba(79, 70, 229, 0.4);
-            color: white;
-        }
-    </style>
 </body>
 </html>

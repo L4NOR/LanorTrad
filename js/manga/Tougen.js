@@ -262,3 +262,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeChapterSelect();
     displayChapters();
 });
+
+// Tracker la lecture du chapitre
+function trackChapterReading() {
+    if (!window.readingAnalytics) return;
+    
+    const currentChapter = getCurrentChapterFromURL();
+    const mangaId = CONFIG.currentManga;
+    
+    // Temps de lecture estimé : 5 minutes par chapitre
+    const readingTime = 5;
+    
+    // Tracker uniquement si pas déjà tracké dans cette session
+    const sessionKey = `tracked_${mangaId}_${currentChapter}`;
+    if (!sessionStorage.getItem(sessionKey)) {
+        window.readingAnalytics.trackChapterRead(mangaId, currentChapter, readingTime);
+        sessionStorage.setItem(sessionKey, 'true');
+        console.log(`📊 Chapitre ${currentChapter} de ${mangaId} tracké`);
+    }
+}
+
+// Appeler après un court délai pour s'assurer que l'utilisateur lit vraiment
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(trackChapterReading, 3000); // Après 3 secondes
+});
