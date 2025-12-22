@@ -27,6 +27,10 @@ const chapters = [...regularChapters, ...bonusChapters].sort((a, b) => b.number 
 
 let displayCount = 5;
 
+// ============================================
+// FONCTIONS UTILITAIRES
+// ============================================
+
 function formatDate(date) {
     return new Intl.DateTimeFormat('fr-FR', {
         day: 'numeric',
@@ -35,6 +39,10 @@ function formatDate(date) {
     }).format(date);
 }
 
+/**
+ * Récupère le numéro de chapitre depuis l'URL
+ * Supporte les chapitres réguliers ET bonus (avec décimales)
+ */
 function getCurrentChapterFromURL() {
     const path = decodeURIComponent(window.location.pathname);
     const patterns = [
@@ -48,13 +56,101 @@ function getCurrentChapterFromURL() {
         const match = path.match(pattern);
         if (match && match[1]) {
             const chapter = parseFloat(match[1]);
-            if (chapter >= 1 && chapter <= CONFIG.maxChapters) {
+            
+            // Vérifier si le chapitre existe dans notre liste
+            const allChapters = [...regularChapters, ...bonusChapters];
+            const exists = allChapters.some(ch => ch.number === chapter);
+            
+            if (exists || (chapter >= 1 && chapter <= CONFIG.maxChapters)) {
                 return chapter;
             }
         }
     }
     return 1;
 }
+
+// ============================================
+// NAVIGATION DES CHAPITRES - VERSION CORRIGÉE
+// ============================================
+
+/**
+ * Change de chapitre (suivant/précédent)
+ * @param {number} delta - Direction: 1 pour suivant, -1 pour précédent
+ */
+window.changeChapter = function(delta) {
+    console.log('🔄 Changement de chapitre demandé:', delta > 0 ? 'Suivant' : 'Précédent');
+    
+    // Récupérer le chapitre actuel
+    const currentChapter = getCurrentChapterFromURL();
+    console.log('📖 Chapitre actuel:', currentChapter);
+    
+    // Récupérer tous les chapitres (réguliers + bonus)
+    const allChapters = [...regularChapters, ...bonusChapters];
+    
+    // Trier par ordre croissant
+    const sortedChapters = allChapters
+        .sort((a, b) => a.number - b.number)
+        .map(ch => ch.number);
+    
+    console.log('📚 Total chapitres disponibles:', sortedChapters.length);
+    
+    // Trouver l'index du chapitre actuel
+    const currentIndex = sortedChapters.indexOf(currentChapter);
+    console.log('📍 Position actuelle:', currentIndex + 1, '/', sortedChapters.length);
+    
+    if (currentIndex === -1) {
+        console.error('❌ Chapitre actuel introuvable:', currentChapter);
+        alert('Erreur: Impossible de déterminer le chapitre actuel.');
+        return;
+    }
+    
+    // Calculer le nouvel index
+    const newIndex = currentIndex + delta;
+    console.log('🎯 Nouvelle position:', newIndex + 1, '/', sortedChapters.length);
+    
+    // Vérifier les limites
+    if (newIndex < 0) {
+        console.log('⚠️ Début de la série atteint');
+        alert("Il n'y a pas de chapitre précédent.");
+        return;
+    }
+    
+    if (newIndex >= sortedChapters.length) {
+        console.log('⚠️ Fin de la série atteinte');
+        alert("Il n'y a pas de chapitre suivant actuellement. Prochain chapitre bientôt !");
+        return;
+    }
+    
+    // Récupérer le nouveau numéro de chapitre
+    const newChapterNumber = sortedChapters[newIndex];
+    console.log('✅ Navigation vers le chapitre:', newChapterNumber);
+    
+    // Construire la nouvelle URL
+    const currentPath = window.location.pathname;
+    const lastSlashIndex = currentPath.lastIndexOf('/');
+    const basePath = currentPath.substring(0, lastSlashIndex + 1);
+    
+    // Formater le numéro (garder les décimales si c'est un bonus)
+    const formattedChapter = Number.isInteger(newChapterNumber) 
+        ? newChapterNumber 
+        : newChapterNumber.toFixed(1);
+    
+    const newUrl = `${basePath}${CONFIG.chapterPrefix} ${formattedChapter}.html`;
+    console.log('🔗 Nouvelle URL:', newUrl);
+    
+    // Arrêter le tracking avant de naviguer
+    if (window.readingAnalytics) {
+        console.log('📊 Arrêt du tracking');
+        window.readingAnalytics.endReading();
+    }
+    
+    // Naviguer vers le nouveau chapitre
+    window.location.href = newUrl;
+};
+
+// ============================================
+// AFFICHAGE DES CHAPITRES
+// ============================================
 
 function createChapterHTML(chapter) {
     return `
@@ -89,6 +185,10 @@ function loadMore() {
     displayChapters();
 }
 
+// ============================================
+// SÉLECTEUR DE CHAPITRES
+// ============================================
+
 function initializeChapterSelect() {
     const select = document.getElementById('chapterSelect');
     if (!select) return;
@@ -116,20 +216,9 @@ function navigateToChapter(chapterNumber) {
     window.location.href = newUrl;
 }
 
-function changeChapter(delta) {
-    const currentChapter = getCurrentChapterFromURL();
-    const sortedChapters = [...regularChapters, ...bonusChapters]
-        .sort((a, b) => a.number - b.number)
-        .map(ch => ch.number);
-    
-    const currentIndex = sortedChapters.indexOf(currentChapter);
-    if (currentIndex === -1) return;
-    
-    const newIndex = currentIndex + delta;
-    if (newIndex >= 0 && newIndex < sortedChapters.length) {
-        navigateToChapter(sortedChapters[newIndex]);
-    }
-}
+// ============================================
+// TÉLÉCHARGEMENT DE CHAPITRE
+// ============================================
 
 async function downloadChapter() {
     const currentChapter = getCurrentChapterFromURL();
@@ -155,10 +244,7 @@ LanorTrad`;
     try {
         const downloadStatus = document.createElement('div');
         downloadStatus.className = 'fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50';
-        downloadStatus.style.cssText = `
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        `;
+        downloadStatus.style.cssText = `opacity: 0; transition: opacity 0.3s ease-in-out;`;
         downloadStatus.innerHTML = `
             <div class="bg-gray-900 text-white p-6 rounded-lg shadow-xl text-center" 
                  style="transform: translateY(-20px); transition: transform 0.3s ease-out;">
@@ -251,22 +337,17 @@ function getCurrentChapterImages() {
         .map(img => img.src);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initializeChapterSelect();
-    displayChapters();
-});
+// ============================================
+// TRACKING DE LECTURE
+// ============================================
 
-// Tracker la lecture du chapitre
 function trackChapterReading() {
     if (!window.readingAnalytics) return;
     
     const currentChapter = getCurrentChapterFromURL();
     const mangaId = CONFIG.currentManga;
-    
-    // Temps de lecture estimé : 5 minutes par chapitre
     const readingTime = 5;
     
-    // Tracker uniquement si pas déjà tracké dans cette session
     const sessionKey = `tracked_${mangaId}_${currentChapter}`;
     if (!sessionStorage.getItem(sessionKey)) {
         window.readingAnalytics.trackChapterRead(mangaId, currentChapter, readingTime);
@@ -275,7 +356,25 @@ function trackChapterReading() {
     }
 }
 
-// Appeler après un court délai pour s'assurer que l'utilisateur lit vraiment
+// ============================================
+// INITIALISATION
+// ============================================
+
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(trackChapterReading, 3000); // Après 3 secondes
+    console.log('✅ Initialisation du manga:', CONFIG.currentManga);
+    console.log('📖 Chapitre actuel:', getCurrentChapterFromURL());
+    console.log('📚 Total chapitres disponibles:', chapters.length);
+    
+    initializeChapterSelect();
+    displayChapters();
+    
+    // Tracker après 3 secondes
+    setTimeout(trackChapterReading, 3000);
+    
+    // Vérifier que changeChapter est disponible
+    if (typeof window.changeChapter === 'function') {
+        console.log('✅ Navigation des chapitres opérationnelle');
+    } else {
+        console.error('❌ Fonction changeChapter non disponible !');
+    }
 });
