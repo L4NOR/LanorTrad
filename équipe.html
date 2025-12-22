@@ -34,6 +34,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/intros.css">
+    <link rel="stylesheet" href="css/équipe.css">
 
     <!--Scripts-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
@@ -132,13 +133,16 @@
     </nav>
 
     <!-- Header Section -->
-    <section class="hero-gradient pt-32 pb-16">
+    <section class="hero-gradient pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto">
-                <h1 class="text-4xl font-black mb-4 bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white">
+            <div class="text-center max-w-3xl mx-auto relative z-10">
+                <div class="inline-block mb-6 float-animation">
+                    <span style="font-size: 4rem;">👥</span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-black mb-6 bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white" style="-webkit-background-clip: text; background-clip: text; color: transparent;">
                     Notre Équipe
                 </h1>
-                <p class="text-lg text-gray-300">
+                <p class="text-xl text-gray-300 leading-relaxed">
                     Découvrez les passionnés qui donnent vie à vos mangas préférés en français
                 </p>
             </div>
@@ -146,98 +150,111 @@
     </section>
 
     <!-- Team Stats -->
-    <section class="py-12 border-b border-gray-800/50">
+    <section class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center p-6 card rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-2">3</div>
-                    <div class="text-gray-400">Membres actifs</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-3">👨‍💻</div>
+                    <div class="stat-number text-5xl mb-3">3</div>
+                    <div class="text-gray-400 font-medium">Membres actifs</div>
                 </div>
-                <div class="text-center p-6 card rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-2">4</div>
-                    <div class="text-gray-400">Séries en cours</div>
+                <div class="stat-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-3">📚</div>
+                    <div class="stat-number text-5xl mb-3">4</div>
+                    <div class="text-gray-400 font-medium">Séries en cours</div>
                 </div>
-                <div class="text-center p-6 card rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-2">214</div>
-                    <div class="text-gray-400">Chapitres traduits</div>
+                <div class="stat-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-3">📖</div>
+                    <div class="stat-number text-5xl mb-3">214</div>
+                    <div class="text-gray-400 font-medium">Chapitres traduits</div>
                 </div>
-                <div class="text-center p-6 card rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-2">2</div>
-                    <div class="text-gray-400">Années d'expérience</div>
+                <div class="stat-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-3">🎉</div>
+                    <div class="stat-number text-5xl mb-3">2</div>
+                    <div class="text-gray-400 font-medium">Années d'expérience</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Core Team Section -->
-    <section class="py-16">
+    <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold mb-12 text-center">L'équipe principale</h2>
+            <h2 class="section-title">L'équipe principale</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Team Member Card 1 -->
-                <div class="card rounded-xl overflow-hidden glow">
-                    <div class="relative">
-                        <img src="images/Teams/Lanor.png" alt="Photo de profil de Lanor" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                Fondateur
-                            </span>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                <!-- Team Member 1: Lanor -->
+                <div class="team-card">
+                    <div class="team-image-wrapper">
+                        <img src="images/Teams/Lanor.png" alt="Lanor" class="team-image">
+                        <div class="role-badge">🏆 Fondateur</div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Lanor</h3>
-                        <p class="text-indigo-400 mb-4">Edit & Clean</p>
-                        <p class="text-gray-400 text-sm mb-4">
-                            
+                    <div class="p-6 relative z-10">
+                        <h3 class="member-name">Lanor</h3>
+                        <p class="member-role mb-4">Edit & Clean</p>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Fondateur et pilier de LanorTrad, Lanor s'occupe de l'édition et du nettoyage de tous les projets avec une précision remarquable.
                         </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tous les Projets</span>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="project-tag">Tous les Projets</span>
+                        </div>
+                        <div class="flex gap-3 justify-center pt-4 border-t border-gray-700">
+                            <a href="#" class="social-link">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Team Member Card 2 -->
-                <div class="card rounded-xl overflow-hidden glow">
-                    <div class="relative">
-                        <img src="images/Teams/Taichoskii.png" alt="Photo de profil de Taichoskii" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                Traducteur 
-                            </span>
-                        </div>
+                <!-- Team Member 2: Taichoskii -->
+                <div class="team-card">
+                    <div class="team-image-wrapper">
+                        <img src="images/Teams/Taichoskii.png" alt="Taichoskii" class="team-image">
+                        <div class="role-badge">🌐 Traducteur</div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Taichoskii</h3>
-                        <p class="text-indigo-400 mb-4">Traduction</p>
-                        <p class="text-gray-400 text-sm mb-4">
-                            
+                    <div class="p-6 relative z-10">
+                        <h3 class="member-name">Taichoskii</h3>
+                        <p class="member-role mb-4">Traduction</p>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Expert en traduction, Taichoskii apporte son talent linguistique pour rendre les dialoges fluides et naturels en français.
                         </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Satsudou</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tougen Anki</span>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="project-tag">Satsudou</span>
+                            <span class="project-tag">Tougen Anki</span>
+                        </div>
+                        <div class="flex gap-3 justify-center pt-4 border-t border-gray-700">
+                            <a href="#" class="social-link">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Team Member Card 3 -->
-                <div class="card rounded-xl overflow-hidden glow">
-                    <div class="relative">
-                        <img src="images/Teams/Zerox.png" alt="Photo de profil de Zerox" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                Correcteur 
-                            </span>
-                        </div>
+                <!-- Team Member 3: Zerox -->
+                <div class="team-card">
+                    <div class="team-image-wrapper">
+                        <img src="images/Teams/Zerox.png" alt="Zerox" class="team-image">
+                        <div class="role-badge">✅ Correcteur</div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Zerox</h3>
-                        <p class="text-indigo-400 mb-4">Qcheck</p>
-                        <p class="text-gray-400 text-sm mb-4">
-                            
+                    <div class="p-6 relative z-10">
+                        <h3 class="member-name">Zerox</h3>
+                        <p class="member-role mb-4">Qcheck</p>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Garant de la qualité finale, Zerox vérifie méticuleusement chaque détail pour vous offrir une lecture parfaite.
                         </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tougen Anki</span>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="project-tag">Tougen Anki</span>
+                        </div>
+                        <div class="flex gap-3 justify-center pt-4 border-t border-gray-700">
+                            <a href="#" class="social-link">
+                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -246,36 +263,66 @@
     </section>
 
     <!-- Join Team Section -->
-    <section class="py-16 bg-gradient-to-b from-gray-900/50 to-transparent">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-bold mb-4">Rejoignez l'aventure</h2>
-            <p class="text-gray-400 mb-8">
-                Vous êtes passionné de manga et vous souhaitez participer à l'aventure ? 
-                Nous recherchons toujours de nouveaux talents !
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card p-6 rounded-xl text-left">
-                    <h3 class="text-lg font-bold mb-4">Postes recherchés</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>• Traducteurs JP-FR / AN-FR</li>
-                        <li>• Correcteurs</li>
-                        <li>• Clean</li>
-                    </ul>
+    <section class="py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="join-section">
+                <div class="text-center relative z-10 mb-12">
+                    <div class="text-6xl mb-4 float-animation">🚀</div>
+                    <h2 class="text-4xl font-black mb-4">Rejoignez l'aventure</h2>
+                    <p class="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+                        Vous êtes passionné de manga et vous souhaitez participer à l'aventure ? 
+                        Nous recherchons toujours de nouveaux talents !
+                    </p>
                 </div>
-                <div class="card p-6 rounded-xl text-left">
-                    <h3 class="text-lg font-bold mb-4">Prérequis</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>• Passion pour les mangas</li>
-                        <li>• Rigueur et sérieux</li>
-                        <li>• Esprit d'équipe</li>
-                    </ul>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                    <div class="requirement-card">
+                        <div class="text-3xl mb-4">📋</div>
+                        <h3 class="text-xl font-bold mb-6">Postes recherchés</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Traducteurs JP-FR / AN-FR
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Correcteurs
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Clean
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="text-3xl mb-4">⭐</div>
+                        <h3 class="text-xl font-bold mb-6">Prérequis</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Passion pour les mangas
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Rigueur et sérieux
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Esprit d'équipe
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center relative z-10">
+                    <a href="https://discord.com/channels/1325767167203082341/1326357433588912179/1332094737666015232">
+                        <button class="apply-btn text-white relative z-10">
+                            <span class="relative z-10">✨ Postuler maintenant</span>
+                        </button>
+                    </a>
                 </div>
             </div>
-            <a href="https://discord.com/channels/1325767167203082341/1326357433588912179/1332094737666015232">
-                <button class="mt-8 px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                    Postuler maintenant
-                </button>
-            </a>            
         </div>
     </section>
 
