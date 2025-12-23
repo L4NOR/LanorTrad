@@ -135,11 +135,19 @@ window.changeChapter = function(delta) {
         ? newChapterNumber 
         : newChapterNumber.toFixed(1);
     
+<<<<<<< HEAD
     const newUrl = `${CONFIG.chapterPrefix} ${formattedChapter}.html`;
     console.log('🔗 Nouvelle URL:', newUrl);
     
     // Arrêter le tracking avant de naviguer
     if (window.readingAnalytics && typeof window.readingAnalytics.endReading === 'function') {
+=======
+    const newUrl = `${basePath}${CONFIG.chapterPrefix} ${formattedChapter}.html`;
+    console.log('🔗 Nouvelle URL:', newUrl);
+    
+    // Arrêter le tracking avant de naviguer
+    if (window.readingAnalytics) {
+>>>>>>> aa1c1022b0d66e31318ead204aae81dbb11c8b29
         console.log('📊 Arrêt du tracking');
         window.readingAnalytics.endReading();
     }
@@ -374,4 +382,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('❌ Fonction changeChapter non disponible !');
     }
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> aa1c1022b0d66e31318ead204aae81dbb11c8b29
