@@ -1,3 +1,4 @@
+// chapitres.js - Version corrigée (délègue à AoNoExorcist.js)
 let currentZoom = 1;
 let isFullscreen = false;
 
@@ -6,25 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupEventListeners() {
-    document.getElementById('chapterSelect').addEventListener('change', handleChapterChange);
+    const chapterSelect = document.getElementById('chapterSelect');
+    if (chapterSelect) {
+        chapterSelect.addEventListener('change', handleChapterChange);
+    }
     
-    document.getElementById('settingsBtn').addEventListener('click', toggleSettings);
+    const settingsBtn = document.getElementById('settingsBtn');
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', toggleSettings);
+    }
     
     document.addEventListener('keydown', handleKeyPress);
-
     document.addEventListener('wheel', handleWheel, { passive: false });
 }
 
-function changeChapter(direction) {
-    const select = document.getElementById('chapterSelect');
-    const currentValue = parseInt(select.value);
-    const newValue = currentValue + direction;
-    
-    if (newValue >= 1 && newValue <= 3) { 
-        select.value = newValue;
-        handleChapterChange();
-    }
-}
+// ❌ RETIRE CETTE FONCTION - Elle sera utilisée depuis AoNoExorcist.js
+// function changeChapter(direction) { ... }
 
 function handleChapterChange() {
     const chapterNumber = document.getElementById('chapterSelect').value;
@@ -36,4 +34,16 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
+}
+
+function handleKeyPress(e) {
+    // Gestion des raccourcis clavier
+}
+
+function handleWheel(e) {
+    // Gestion du scroll
+}
+
+function toggleSettings() {
+    // Toggle settings panel
 }

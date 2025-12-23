@@ -110,11 +110,9 @@ function initializeChapterSelect() {
     select.addEventListener('change', e => navigateToChapter(e.target.value));
 }
 
+// ✅ CORRECTION : Utiliser un chemin relatif au lieu d'absolu
 function navigateToChapter(chapterNumber) {
-    const currentPath = window.location.pathname;
-    const lastSlashIndex = currentPath.lastIndexOf('/');
-    const basePath = currentPath.substring(0, lastSlashIndex + 1);
-    const newUrl = `${basePath}${CONFIG.chapterPrefix} ${chapterNumber}.html`;
+    const newUrl = `${CONFIG.chapterPrefix} ${chapterNumber}.html`;
     window.location.href = newUrl;
 }
 
@@ -253,11 +251,6 @@ function getCurrentChapterImages() {
         .map(img => img.src);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initializeChapterSelect();
-    displayChapters();
-});
-
 // Tracker la lecture du chapitre
 function trackChapterReading() {
     if (!window.readingAnalytics) return;
@@ -277,7 +270,10 @@ function trackChapterReading() {
     }
 }
 
-// Appeler après un court délai pour s'assurer que l'utilisateur lit vraiment
 document.addEventListener('DOMContentLoaded', () => {
+    initializeChapterSelect();
+    displayChapters();
+    
+    // Appeler après un court délai pour s'assurer que l'utilisateur lit vraiment
     setTimeout(trackChapterReading, 3000); // Après 3 secondes
 });
