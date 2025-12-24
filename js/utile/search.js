@@ -38,6 +38,47 @@ const availableMangas = [
         genres: ['Action', 'Drame', 'Fantaisie'],
         chapters: 220,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
+    },
+    // ONESHOTS
+    {
+        title: 'Countdown',
+        url: 'https://lanortrad.netlify.app/Manga/Countdown',
+        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/Countdown.jpg',
+        genres: ['Action', 'Thriller', 'Oneshot'],
+        chapters: 1,
+        synopsis: 'Un thriller intense qui compte à rebours vers un final explosif.'
+    },
+    {
+        title: 'Gestation of Kalavinka',
+        url: 'https://lanortrad.netlify.app/Manga/Gestation%20of%20Kalavinka',
+        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/GestationOfKalavinka.jpg',
+        genres: ['Fantasy', 'Mystérieux', 'Oneshot'],
+        chapters: 1,
+        synopsis: 'Une histoire mystique autour de la naissance d\'une créature légendaire.'
+    },
+    {
+        title: 'In the White',
+        url: 'https://lanortrad.netlify.app/Manga/In%20the%20White',
+        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/InTheWhite.jpg',
+        genres: ['Drame', 'Psychologique', 'Oneshot'],
+        chapters: 1,
+        synopsis: 'Une exploration psychologique dans un monde entièrement blanc.'
+    },
+    {
+        title: 'Sake to Sakana',
+        url: 'https://lanortrad.netlify.app/Manga/Sake%20to%20Sakana',
+        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/SakeToSakana.jpg',
+        genres: ['Vie Scolaire', 'Comédie', 'Oneshot'],
+        chapters: 1,
+        synopsis: 'Une histoire légère autour du saké et de l\'amitié.'
+    },
+    {
+        title: 'Second Coming',
+        url: 'https://lanortrad.netlify.app/Manga/Second%20Coming',
+        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/SecondComing.jpg',
+        genres: ['Action', 'Surnaturel', 'Oneshot'],
+        chapters: 1,
+        synopsis: 'Le retour mystérieux d\'une force légendaire.'
     }
 ];
 

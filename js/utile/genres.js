@@ -44,6 +44,52 @@ const mangas = [
         chapters: 220,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
+    },
+    // 🆕 ONESHOTS
+    {
+        id: "Countdown",
+        title: "Countdown",
+        genres: ["Action", "Thriller", "Oneshot"],
+        status: "Terminé",
+        chapters: 1,
+        description: "Un thriller intense qui compte à rebours vers un final explosif.",
+        image: "images/cover/Countdown.jpg"
+    },
+    {
+        id: "Gestation of Kalavinka",
+        title: "Gestation of Kalavinka",
+        genres: ["Fantasy", "Mystérieux", "Oneshot"],
+        status: "Terminé",
+        chapters: 1,
+        description: "Une histoire mystique autour de la naissance d'une créature légendaire.",
+        image: "images/cover/GestationOfKalavinka.jpg"
+    },
+    {
+        id: "In the White",
+        title: "In the White",
+        genres: ["Drame", "Psychologique", "Oneshot"],
+        status: "Terminé",
+        chapters: 1,
+        description: "Une exploration psychologique dans un monde entièrement blanc.",
+        image: "images/cover/InTheWhite.jpg"
+    },
+    {
+        id: "Sake to Sakana",
+        title: "Sake to Sakana",
+        genres: ["Vie Scolaire", "Comédie", "Oneshot"],
+        status: "Terminé",
+        chapters: 1,
+        description: "Une histoire légère autour du saké et de l'amitié.",
+        image: "images/cover/SakeToSakana.jpg"
+    },
+    {
+        id: "Second Coming",
+        title: "Second Coming",
+        genres: ["Action", "Surnaturel", "Oneshot"],
+        status: "Terminé",
+        chapters: 1,
+        description: "Le retour mystérieux d'une force légendaire.",
+        image: "images/cover/SecondComing.jpg"
     }
 ];
 
