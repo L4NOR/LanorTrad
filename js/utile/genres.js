@@ -49,47 +49,47 @@ const mangas = [
     {
         id: "Countdown",
         title: "Countdown",
-        genres: ["Action", "Thriller", "Oneshot"],
+        genres: ["Spectres", "Surnaturel", "Oneshot"],
         status: "Terminé",
         chapters: 1,
-        description: "Un thriller intense qui compte à rebours vers un final explosif.",
-        image: "images/cover/Countdown.jpg"
+        description: "Vêtements noirs, yeux noirs, cheveux noirs... et si vous rencontriez cela...?!",
+        image: "manga/Countdown/oneshot/001.jpg"
     },
     {
         id: "Gestation of Kalavinka",
         title: "Gestation of Kalavinka",
-        genres: ["Fantasy", "Mystérieux", "Oneshot"],
+        genres: ["Réincarnation", "Surnaturel", "Oneshot"],
         status: "Terminé",
         chapters: 1,
-        description: "Une histoire mystique autour de la naissance d'une créature légendaire.",
-        image: "images/cover/GestationOfKalavinka.jpg"
+        description: "Après avoir perdu sa femme, Dawei accomplit le rituel de l'enterrement céleste sur son corps afin de faire son deuil..",
+        image: "manga/Gestation Of Kalavinka/oneshot/001.jpg"
     },
     {
         id: "In the White",
         title: "In the White",
-        genres: ["Drame", "Psychologique", "Oneshot"],
+        genres: ["Psychologie", "Romance", "Oneshot"],
         status: "Terminé",
         chapters: 1,
-        description: "Une exploration psychologique dans un monde entièrement blanc.",
-        image: "images/cover/InTheWhite.jpg"
+        description: "Une petite araignée vient perturber la vie d'un auteur désespéré.",
+        image: "manga/In the White/oneshot/001.jpg"
     },
     {
         id: "Sake to Sakana",
         title: "Sake to Sakana",
-        genres: ["Vie Scolaire", "Comédie", "Oneshot"],
+        genres: ["Drame", "Fantaisie", "Horreur", "Mystère", "Oneshot"], 
         status: "Terminé",
         chapters: 1,
-        description: "Une histoire légère autour du saké et de l'amitié.",
-        image: "images/cover/SakeToSakana.jpg"
+        description: "Fumi et Haru sont deux amies d'université qui partagent une passion pour la natation, jusqu'à ce que l'héritage \"unique\" de Fumi vienne compliquer les choses.",
+        image: "manga/Sake To Sakana/oneshot/002.jpg"
     },
     {
         id: "Second Coming",
         title: "Second Coming",
-        genres: ["Action", "Surnaturel", "Oneshot"],
+        genres: ["Drame", "Horreur", "Mystère", "Tragédie", "Oneshot"],
         status: "Terminé",
         chapters: 1,
-        description: "Le retour mystérieux d'une force légendaire.",
-        image: "images/cover/SecondComing.jpg"
+        description: "Un forgeron perd sa fille lors d'un sacrifice et attend 40 ans pour se venger.",
+        image: "manga/Second Coming/oneshot/001.jpg"
     }
 ];
 

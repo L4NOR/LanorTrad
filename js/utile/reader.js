@@ -298,7 +298,7 @@ class MangaReader {
             });
         }
 
-        // Scroll progress tracking
+        // Scroll progress tracking (SEULEMENT en mode scroll)
         let scrollTimeout;
         window.addEventListener('scroll', () => {
             if (this.currentMode !== 'scroll') return;
@@ -377,7 +377,9 @@ class MangaReader {
                 scrollContainer.style.display = 'none';
                 pageContainer.classList.add('active');
                 pageContainer.style.display = 'flex';
-                this.updatePageDisplay();
+                
+                // ✅ CORRECTION : Toujours démarrer à la page 1 en mode page
+                this.goToPage(0);
             }
         }
     }
@@ -479,11 +481,14 @@ class MangaReader {
     }
 
     savePageProgress() {
-        localStorage.setItem(this.getChapterKey(), JSON.stringify({
-            mode: 'page',
-            page: this.currentPage,
-            timestamp: Date.now()
-        }));
+        // ✅ Ne sauvegarder la progression qu'en mode page ET si on n'est pas à la page 1
+        if (this.currentPage > 0) {
+            localStorage.setItem(this.getChapterKey(), JSON.stringify({
+                mode: 'page',
+                page: this.currentPage,
+                timestamp: Date.now()
+            }));
+        }
     }
 
     saveScrollProgress() {
@@ -508,10 +513,13 @@ class MangaReader {
                 return;
             }
 
+            // ✅ CORRECTION : En mode page, NE PAS restaurer la progression
+            // On démarre toujours à la page 1
             if (data.mode === 'page' && data.page !== undefined) {
-                this.setMode('page');
-                setTimeout(() => this.goToPage(data.page), 100);
+                // Ne rien faire - on reste à la page 0 (page 1 pour l'utilisateur)
+                console.log('Mode page détecté - démarrage à la page 1');
             } else if (data.mode === 'scroll' && data.scrollPercent !== undefined) {
+                // En mode scroll, on peut restaurer la position
                 this.setMode('scroll');
                 setTimeout(() => {
                     const scrollY = data.scrollPercent * (document.body.scrollHeight - window.innerHeight);
