@@ -1,7 +1,13 @@
 class ReadingAnalytics {
-    constructor() {
-        this.stats = this.loadStats();
-    }
+        constructor() {
+            console.log('📊 ReadingAnalytics initialisé');
+        }
+
+        trackChapterRead(mangaId, chapterId, readingTime = 0) {
+            console.log(`📊 Tracking: ${mangaId} - ${chapterId}`);
+            // logique existante
+        }
+
 
     loadStats() {
         return JSON.parse(localStorage.getItem('lanortrad_stats') || JSON.stringify({
@@ -16,7 +22,7 @@ class ReadingAnalytics {
             weekendReadingCount: 0,
             marathonSessions: 0,
             diverseReadingCount: 0,
-            oneshotsRead: [] // ✨ NOUVEAU : Liste des oneshots lus
+            oneshotsRead: [] // ✨ Liste des oneshots lus
         }));
     }
 
@@ -25,17 +31,22 @@ class ReadingAnalytics {
     }
 
     trackChapterRead(mangaId, chapterNumber, readingTime = 5) {
-        // ✅ Gérer les oneshots différemment
-        const isOneshot = chapterNumber === 'oneshot' || chapterNumber === '1' && this.isOneshotManga(mangaId);
+        // ✅ Détection améliorée des oneshots
+        const isOneshot = chapterNumber === 'oneshot' || this.isOneshotManga(mangaId);
+        
+        console.log(`📊 Tracking: ${mangaId} - Chapitre: ${chapterNumber} - Oneshot: ${isOneshot}`);
         
         this.stats.totalChaptersRead++;
         this.stats.totalReadingTime += readingTime;
         
-        // ✨ Si c'est un oneshot, l'ajouter à la liste
+        // ✨ Tracking des oneshots
         if (isOneshot) {
             if (!this.stats.oneshotsRead) this.stats.oneshotsRead = [];
             if (!this.stats.oneshotsRead.includes(mangaId)) {
                 this.stats.oneshotsRead.push(mangaId);
+                console.log(`⭐ Oneshot "${mangaId}" ajouté (total: ${this.stats.oneshotsRead.length})`);
+            } else {
+                console.log(`ℹ️ Oneshot "${mangaId}" déjà lu`);
             }
         }
         
@@ -45,11 +56,17 @@ class ReadingAnalytics {
                 chaptersRead: 0,
                 readingTime: 0,
                 lastRead: Date.now(),
-                isOneshot: isOneshot // ✨ Marquer si c'est un oneshot
+                isOneshot: isOneshot
             };
         }
         
-        this.stats.mangaStats[mangaId].chaptersRead++;
+        // ✅ Pour les oneshots : comptage unique (pas d'incrémentation multiple)
+        if (isOneshot) {
+            this.stats.mangaStats[mangaId].chaptersRead = 1;
+        } else {
+            this.stats.mangaStats[mangaId].chaptersRead++;
+        }
+        
         this.stats.mangaStats[mangaId].readingTime += readingTime;
         this.stats.mangaStats[mangaId].lastRead = Date.now();
         
@@ -79,9 +96,11 @@ class ReadingAnalytics {
         this.updateStreak();
         this.checkAchievements();
         this.saveStats();
+        
+        console.log(`✅ Stats sauvegardées - Oneshots lus: ${(this.stats.oneshotsRead || []).length}`);
     }
 
-    // ✨ NOUVEAU : Vérifier si un manga est un oneshot
+    // ✨ Liste complète des oneshots
     isOneshotManga(mangaId) {
         const oneshots = [
             'Countdown',
@@ -177,26 +196,38 @@ class ReadingAnalytics {
                 icon: '⭐'
             },
 
-            // ✨ NOUVEAU : Succès oneshots
+            // ✨ Succès oneshots
             {
                 id: 'first_oneshot',
                 title: 'Histoire courte',
                 description: 'Lire votre premier oneshot',
-                condition: () => (this.stats.oneshotsRead || []).length >= 1,
+                condition: () => {
+                    const count = (this.stats.oneshotsRead || []).length;
+                    console.log(`🏆 Vérification first_oneshot: ${count} oneshots lus`);
+                    return count >= 1;
+                },
                 icon: '⭐'
             },
             {
                 id: 'oneshot_collector',
                 title: 'Collectionneur de oneshots',
                 description: 'Lire 3 oneshots différents',
-                condition: () => (this.stats.oneshotsRead || []).length >= 3,
+                condition: () => {
+                    const count = (this.stats.oneshotsRead || []).length;
+                    console.log(`🏆 Vérification oneshot_collector: ${count} oneshots lus`);
+                    return count >= 3;
+                },
                 icon: '🌟'
             },
             {
                 id: 'oneshot_master',
                 title: 'Maître des oneshots',
-                description: 'Lire tous les oneshots disponibles',
-                condition: () => (this.stats.oneshotsRead || []).length >= 5,
+                description: 'Lire tous les oneshots disponibles (5)',
+                condition: () => {
+                    const count = (this.stats.oneshotsRead || []).length;
+                    console.log(`🏆 Vérification oneshot_master: ${count} oneshots lus`);
+                    return count >= 5;
+                },
                 icon: '✨'
             },
 
@@ -412,6 +443,7 @@ class ReadingAnalytics {
                 
                 this.stats.achievements.push(newAchievement);
                 this.showAchievementUnlocked(newAchievement);
+                console.log(`🏆 SUCCÈS DÉBLOQUÉ: ${achievement.title}`);
             }
         });
     }
@@ -432,7 +464,7 @@ class ReadingAnalytics {
             nightReadingCount: this.stats.nightReadingCount || 0,
             weekendReadingCount: this.stats.weekendReadingCount || 0,
             diverseReadingCount: this.stats.diverseReadingCount || 0,
-            oneshotsRead: this.stats.oneshotsRead || [] // ✨ Inclure les oneshots lus
+            oneshotsRead: this.stats.oneshotsRead || []
         };
     }
 
