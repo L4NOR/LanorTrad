@@ -1,4 +1,3 @@
-// Structure de données des mangas avec support du type (manga/oneshot)
 const mangas = [
     // === SÉRIES RÉGULIÈRES ===
     {
@@ -105,7 +104,7 @@ const mangas = [
     }
 ];
 
-// Créer une carte manga
+// Créer une carte manga avec bouton favoris
 function createMangaCard(manga) {
     const mangaLink = manga.id === "Satsudou" ? `/Manga/${manga.id}.html` : `/Manga/${manga.title}.html`;
     
@@ -120,7 +119,7 @@ function createMangaCard(manga) {
         : `${manga.chapters} chapitres`;
     
     return `
-        <div class="card rounded-xl overflow-hidden glow" data-manga-id="${manga.id}" data-type="${manga.type}">
+        <div class="card rounded-xl overflow-hidden glow" data-manga-id="${manga.id}" data-type="${manga.type}" data-title="${manga.title}" data-image="${manga.image}">
             <div class="relative">
                 <img src="${manga.image}" alt="${manga.title}" loading="lazy" class="w-full h-64 object-cover">
                 ${oneshotBadge}
@@ -137,6 +136,12 @@ function createMangaCard(manga) {
                     ${manga.genres.map(genre => `
                         <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">${genre}</span>`).join('')}
                 </div>
+                
+                <!-- Bouton Favoris -->
+                <button class="favorite-btn w-full mb-4 py-2 px-4 rounded-lg border-2 border-gray-600 text-gray-400 transition-all duration-300 hover:border-pink-500 hover:text-pink-400" data-manga-id="${manga.id}" data-manga-type="${manga.type}">
+                    🤍 Ajouter aux favoris
+                </button>
+                
                 <div class="flex justify-between items-center">
                     <span class="text-sm text-gray-400">${chaptersText}</span>
                     <a href="${mangaLink}">
@@ -177,13 +182,18 @@ function filterMangas() {
     if (filteredMangas.length === 0) {
         container.innerHTML = `
             <div class="col-span-full text-center py-20">
-                <div class="text-6xl mb-4">📭</div>
+                <div class="text-6xl mb-4">🔭</div>
                 <h3 class="text-2xl font-bold text-white mb-2">Aucun résultat</h3>
                 <p class="text-gray-400">Aucun manga ne correspond à vos critères de recherche</p>
             </div>
         `;
     } else {
         container.innerHTML = filteredMangas.map(manga => createMangaCard(manga)).join('');
+        
+        // ✨ IMPORTANT : Réinitialiser les boutons favoris après génération
+        if (window.userPrefs) {
+            window.userPrefs.setupFavoriteButtons();
+        }
     }
     
     // Mettre à jour le compteur de résultats
