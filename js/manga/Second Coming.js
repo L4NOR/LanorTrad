@@ -5,9 +5,42 @@ function scrollToTop() {
   });
 }
 
+// ✅ Fonction de tracking améliorée pour les oneshots
+function trackOneshotReading() {
+  if (!window.readingAnalytics) {
+    console.warn("Analytics non disponible");
+    return;
+  }
+
+  // Récupérer le nom du manga depuis le titre de la page
+  const pageTitle = document.title.split("-")[0].trim();
+  const mangaId = pageTitle; // Ex: "Countdown", "Sake to Sakana", etc.
+
+  // Temps de lecture estimé pour un oneshot : 10 minutes
+  const readingTime = 10;
+
+  // Tracker uniquement si pas déjà tracké dans cette session
+  const sessionKey = `tracked_oneshot_${mangaId}`;
+  if (!sessionStorage.getItem(sessionKey)) {
+    // ✨ Utiliser 'oneshot' comme numéro de chapitre
+    window.readingAnalytics.trackChapterRead(mangaId, "oneshot", readingTime);
+    sessionStorage.setItem(sessionKey, "true");
+    console.log(`📊 Oneshot "${mangaId}" tracké`);
+  }
+}
+
+// ✅ Initialisation avec tracking
+document.addEventListener("DOMContentLoaded", () => {
+  // Attendre 3 secondes avant de tracker (s'assurer que l'utilisateur lit vraiment)
+  setTimeout(trackOneshotReading, 3000);
+});
+
 async function downloadOneshot() {
+  // Récupérer le nom depuis le titre
+  const pageTitle = document.title.split("-")[0].trim();
+
   const zip = new JSZip();
-  const imgFolder = zip.folder("Second Coming - Oneshot");
+  const imgFolder = zip.folder(`${pageTitle} - Oneshot`);
   const importantFolder = imgFolder.folder("IMPORTANT");
   const imgUrls = getCurrentImages();
 
@@ -31,16 +64,16 @@ LanorTrad`;
       "fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50";
     downloadStatus.style.cssText = `opacity: 0; transition: opacity 0.3s ease-in-out;`;
     downloadStatus.innerHTML = `
-                    <div class="bg-gray-900 text-white p-6 rounded-lg shadow-xl text-center" 
-                         style="transform: translateY(-20px); transition: transform 0.3s ease-out;">
-                        <p class="text-lg">Téléchargement en cours...</p>
-                        <div id="progress" class="mt-4">
-                            <div class="w-full bg-gray-700 rounded-full">
-                                <div id="progressBar" class="bg-green-500 h-2 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
-                            </div>
-                        </div>
+            <div class="bg-gray-900 text-white p-6 rounded-lg shadow-xl text-center" 
+                 style="transform: translateY(-20px); transition: transform 0.3s ease-out;">
+                <p class="text-lg">Téléchargement en cours...</p>
+                <div id="progress" class="mt-4">
+                    <div class="w-full bg-gray-700 rounded-full">
+                        <div id="progressBar" class="bg-green-500 h-2 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
                     </div>
-                `;
+                </div>
+            </div>
+        `;
     document.body.appendChild(downloadStatus);
 
     requestAnimationFrame(() => {
@@ -79,14 +112,14 @@ LanorTrad`;
     await Promise.all(downloadPromises);
 
     const content = await zip.generateAsync({ type: "blob" });
-    saveAs(content, "Second Coming - Oneshot.zip");
+    saveAs(content, `${pageTitle} - Oneshot.zip`);
 
     const messageBox = downloadStatus.querySelector(".bg-gray-900");
     messageBox.innerHTML = `
-                    <p class="text-lg" style="opacity: 0; transform: translateY(-10px); transition: all 0.3s ease-out">
-                        Téléchargement terminé !
-                    </p>
-                `;
+            <p class="text-lg" style="opacity: 0; transform: translateY(-10px); transition: all 0.3s ease-out">
+                Téléchargement terminé !
+            </p>
+        `;
 
     requestAnimationFrame(() => {
       const successText = messageBox.querySelector("p");

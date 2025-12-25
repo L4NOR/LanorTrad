@@ -728,179 +728,213 @@
     }
 
     // === HISTORIQUE (existant) ===
-    function loadHistory() {
-        if (!window.userPrefs) {
-            console.error('userPrefs n\'est pas chargé');
-            return;
-        }
+        // Fonction améliorée pour charger l'historique
+function loadHistory() {
+    if (!window.userPrefs) {
+        console.error('userPrefs n\'est pas chargé');
+        return;
+    }
 
-        const history = window.userPrefs.history || [];
-        const container = document.getElementById('historyList');
-        const empty = document.getElementById('emptyHistory');
+    const history = window.userPrefs.history || [];
+    const container = document.getElementById('historyList');
+    const empty = document.getElementById('emptyHistory');
+    
+    document.getElementById('histCount').textContent = history.length;
+    
+    if (history.length === 0) {
+        if (container) container.classList.add('hidden');
+        if (empty) empty.classList.remove('hidden');
+        return;
+    }
+    
+    if (container) container.classList.remove('hidden');
+    if (empty) empty.classList.add('hidden');
+    
+    // ✅ Construire les liens correctement selon le type
+    container.innerHTML = history.map(item => {
+        const timeAgo = formatTimeAgo(item.readAt);
         
-        document.getElementById('histCount').textContent = history.length;
-        
-        if (history.length === 0) {
-            container.classList.add('hidden');
-            empty.classList.remove('hidden');
-            return;
+        // Déterminer l'URL selon le type
+        let chapterUrl;
+        if (item.type === 'oneshot') {
+            // Pour les oneshots
+            chapterUrl = `/Manga/${item.mangaId}/oneshot.html`;
+        } else if (item.chapter === 'oneshot') {
+            // Fallback si le type n'est pas défini mais c'est un oneshot
+            chapterUrl = `/Manga/${item.mangaId}/oneshot.html`;
+        } else {
+            // Pour les chapitres normaux
+            chapterUrl = `/Manga/${item.mangaId}/Chapitre ${item.chapter}.html`;
         }
         
-        container.classList.remove('hidden');
-        empty.classList.add('hidden');
+        // Texte du chapitre
+        const chapterText = item.type === 'oneshot' || item.chapter === 'oneshot' 
+            ? 'Oneshot' 
+            : `Chapitre ${item.chapter}`;
         
-        container.innerHTML = history.map(item => {
-            const timeAgo = formatTimeAgo(item.readAt);
+        return `
+            <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
+                <img src="${item.image}" alt="${item.title}" class="w-20 h-28 object-cover rounded-lg">
+                <div class="flex-grow">
+                    <h3 class="font-bold text-white">${item.title}</h3>
+                    <p class="text-indigo-400">${chapterText}</p>
+                    <p class="text-sm text-gray-400">${timeAgo}</p>
+                    ${item.type === 'oneshot' ? '<span class="inline-block mt-1 px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50">⭐ Oneshot</span>' : ''}
+                </div>
+                <a href="${chapterUrl}">
+                    <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                        ${item.type === 'oneshot' ? 'Relire' : 'Reprendre'}
+                    </button>
+                </a>
+            </div>
+        `;
+    }).join('');
+}
+
+// Fonction pour effacer l'historique
+function clearHistory() {
+    if (!window.userPrefs) return;
+    
+    if (confirm('Êtes-vous sûr de vouloir effacer tout votre historique ?')) {
+        window.userPrefs.history = [];
+        window.userPrefs.saveHistory();
+        loadHistory();
+        if (window.toast) {
+            window.toast.success('Historique effacé');
+        }
+    }
+}
+
+// Fonction pour formater le temps écoulé
+function formatTimeAgo(timestamp) {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    
+    if (seconds < 60) return 'À l\'instant';
+    if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
+    if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
+    if (seconds < 604800) return `Il y a ${Math.floor(seconds / 86400)} jour${Math.floor(seconds / 86400) > 1 ? 's' : ''}`;
+    
+    return new Date(timestamp).toLocaleDateString('fr-FR');
+}
+
+// Fonction améliorée pour charger les statistiques
+function loadStatistics() {
+    if (!window.readingAnalytics) {
+        console.error('Analytics non disponible');
+        return;
+    }
+
+    const stats = window.readingAnalytics.getStats();
+    
+    // Global stats
+    document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
+    
+    const hours = Math.floor(stats.totalReadingTime / 60);
+    const minutes = stats.totalReadingTime % 60;
+    document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
+    
+    document.getElementById('streak').textContent = `${stats.readingStreak} jour${stats.readingStreak > 1 ? 's' : ''}`;
+    
+    // Per manga stats
+    const mangaStatsContainer = document.getElementById('manga-stats');
+    const emptyMangaStats = document.getElementById('emptyMangaStats');
+    const mangaStatsArray = Object.entries(stats.mangaStats);
+    
+    if (mangaStatsArray.length === 0) {
+        mangaStatsContainer.classList.add('hidden');
+        emptyMangaStats.classList.remove('hidden');
+    } else {
+        mangaStatsContainer.classList.remove('hidden');
+        emptyMangaStats.classList.add('hidden');
+        
+        mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
+            const avgTime = mangaData.chaptersRead > 0 
+                ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
+                : 0;
+            
+            // ✅ Badge spécial pour les oneshots
+            const oneshotBadge = mangaData.isOneshot 
+                ? '<span class="inline-block px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50 mb-2">⭐ Oneshot</span>' 
+                : '';
+            
             return `
-                <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
-                    <img src="${item.image}" alt="${item.title}" class="w-20 h-28 object-cover rounded-lg">
-                    <div class="flex-grow">
-                        <h3 class="font-bold text-white">${item.title}</h3>
-                        <p class="text-indigo-400">Chapitre ${item.chapter}</p>
-                        <p class="text-sm text-gray-400">${timeAgo}</p>
+                <div class="card rounded-xl p-6">
+                    ${oneshotBadge}
+                    <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">${mangaData.isOneshot ? 'Lu:' : 'Chapitres lus:'}</span>
+                            <span class="font-semibold text-indigo-400">${mangaData.isOneshot ? 'Oui ✓' : mangaData.chaptersRead}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Temps total:</span>
+                            <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
+                        </div>
+                        ${!mangaData.isOneshot ? `
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Temps moyen:</span>
+                            <span class="font-semibold text-indigo-400">${avgTime} min</span>
+                        </div>
+                        ` : ''}
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Dernière lecture:</span>
+                            <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>
+                        </div>
                     </div>
-                    <a href="/Manga/${item.mangaId}/Chapitre ${item.chapter}.html">
-                        <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                            Reprendre
-                        </button>
-                    </a>
                 </div>
             `;
         }).join('');
     }
-
-    function clearHistory() {
-        if (!window.userPrefs) return;
+    
+    // Achievements
+    const achievementsContainer = document.getElementById('achievements-list');
+    const emptyAchievements = document.getElementById('emptyAchievements');
+    
+    if (stats.achievements.length === 0) {
+        achievementsContainer.classList.add('hidden');
+        emptyAchievements.classList.remove('hidden');
+    } else {
+        achievementsContainer.classList.remove('hidden');
+        emptyAchievements.classList.add('hidden');
         
-        if (confirm('Êtes-vous sûr de vouloir effacer tout votre historique ?')) {
-            window.userPrefs.history = [];
-            window.userPrefs.saveHistory();
-            loadHistory();
-            if (window.toast) {
-                window.toast.success('Historique effacé');
-            }
-        }
-    }
-
-    // === STATISTIQUES (existant) ===
-    function loadStatistics() {
-        if (!window.readingAnalytics) {
-            console.error('Analytics non disponible');
-            return;
-        }
-
-        const stats = window.readingAnalytics.getStats();
-        
-        // Global stats
-        document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
-        
-        const hours = Math.floor(stats.totalReadingTime / 60);
-        const minutes = stats.totalReadingTime % 60;
-        document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
-        
-        document.getElementById('streak').textContent = `${stats.readingStreak} jour${stats.readingStreak > 1 ? 's' : ''}`;
-        
-        // Per manga stats
-        const mangaStatsContainer = document.getElementById('manga-stats');
-        const emptyMangaStats = document.getElementById('emptyMangaStats');
-        const mangaStatsArray = Object.entries(stats.mangaStats);
-        
-        if (mangaStatsArray.length === 0) {
-            mangaStatsContainer.classList.add('hidden');
-            emptyMangaStats.classList.remove('hidden');
-        } else {
-            mangaStatsContainer.classList.remove('hidden');
-            emptyMangaStats.classList.add('hidden');
-            
-            mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
-                const avgTime = mangaData.chaptersRead > 0 
-                    ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
-                    : 0;
-                
-                return `
-                    <div class="card rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Chapitres lus:</span>
-                                <span class="font-semibold text-indigo-400">${mangaData.chaptersRead}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Temps total:</span>
-                                <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Temps moyen:</span>
-                                <span class="font-semibold text-indigo-400">${avgTime} min</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Dernière lecture:</span>
-                                <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        // Achievements
-        const achievementsContainer = document.getElementById('achievements-list');
-        const emptyAchievements = document.getElementById('emptyAchievements');
-        
-        if (stats.achievements.length === 0) {
-            achievementsContainer.classList.add('hidden');
-            emptyAchievements.classList.remove('hidden');
-        } else {
-            achievementsContainer.classList.remove('hidden');
-            emptyAchievements.classList.add('hidden');
-            
-            achievementsContainer.innerHTML = stats.achievements.map(achievement => `
-                <div class="card rounded-xl p-6 flex items-center gap-4">
-                    <div class="text-5xl">${achievement.icon}</div>
-                    <div class="flex-grow">
-                        <h4 class="text-lg font-bold mb-1">${achievement.title}</h4>
-                        <p class="text-sm text-gray-400">${achievement.description}</p>
-                        <p class="text-xs text-indigo-400 mt-2">Débloqué le ${new Date(achievement.unlockedAt).toLocaleDateString('fr-FR')}</p>
-                    </div>
+        achievementsContainer.innerHTML = stats.achievements.map(achievement => `
+            <div class="card rounded-xl p-6 flex items-center gap-4">
+                <div class="text-5xl">${achievement.icon}</div>
+                <div class="flex-grow">
+                    <h4 class="text-lg font-bold mb-1">${achievement.title}</h4>
+                    <p class="text-sm text-gray-400">${achievement.description}</p>
+                    <p class="text-xs text-indigo-400 mt-2">Débloqué le ${new Date(achievement.unlockedAt).toLocaleDateString('fr-FR')}</p>
                 </div>
-            `).join('');
-        }
+            </div>
+        `).join('');
     }
+}
 
-    function formatTimeAgo(timestamp) {
-        const seconds = Math.floor((Date.now() - timestamp) / 1000);
-        
-        if (seconds < 60) return 'À l\'instant';
-        if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
-        if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
-        if (seconds < 604800) return `Il y a ${Math.floor(seconds / 86400)} jour${Math.floor(seconds / 86400) > 1 ? 's' : ''}`;
-        
-        return new Date(timestamp).toLocaleDateString('fr-FR');
+// Modification de la fonction d'initialisation dans Bibliotheque.html
+function initializeBibliotheque() {
+    if (window.userPrefs && window.readingAnalytics && window.userLists) {
+        loadFavorites();
+        loadUserLists();
+        loadHistory(); // ✅ S'assurer qu'elle est appelée
+    } else {
+        console.warn('En attente du chargement complet...');
+        setTimeout(() => {
+            if (window.userPrefs && window.readingAnalytics && window.userLists) {
+                loadFavorites();
+                loadUserLists();
+                loadHistory(); // ✅ S'assurer qu'elle est appelée
+            } else {
+                console.error('Erreur de chargement des modules');
+            }
+        }, 200);
     }
+}
 
-    // Initialisation
-    function initializeBibliotheque() {
-        if (window.userPrefs && window.readingAnalytics && window.userLists) {
-            loadFavorites();
-            loadUserLists();
-        } else {
-            console.warn('En attente du chargement complet...');
-            setTimeout(() => {
-                if (window.userPrefs && window.readingAnalytics && window.userLists) {
-                    loadFavorites();
-                    loadUserLists();
-                } else {
-                    console.error('Erreur de chargement des modules');
-                }
-            }, 200);
-        }
-    }
-
-    // Load on page load
-    document.addEventListener('DOMContentLoaded', initializeBibliotheque);
-    if (document.readyState !== 'loading') {
-        initializeBibliotheque();
-    }
+// S'assurer que l'initialisation est appelée
+document.addEventListener('DOMContentLoaded', initializeBibliotheque);
+if (document.readyState !== 'loading') {
+    initializeBibliotheque();
+}
 
     // Fermer les modals en cliquant en dehors
     document.addEventListener('click', (e) => {

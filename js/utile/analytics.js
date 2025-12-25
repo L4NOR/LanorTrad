@@ -15,7 +15,8 @@ class ReadingAnalytics {
             nightReadingCount: 0,
             weekendReadingCount: 0,
             marathonSessions: 0,
-            diverseReadingCount: 0
+            diverseReadingCount: 0,
+            oneshotsRead: [] // ✨ NOUVEAU : Liste des oneshots lus
         }));
     }
 
@@ -24,15 +25,27 @@ class ReadingAnalytics {
     }
 
     trackChapterRead(mangaId, chapterNumber, readingTime = 5) {
+        // ✅ Gérer les oneshots différemment
+        const isOneshot = chapterNumber === 'oneshot' || chapterNumber === '1' && this.isOneshotManga(mangaId);
+        
         this.stats.totalChaptersRead++;
         this.stats.totalReadingTime += readingTime;
+        
+        // ✨ Si c'est un oneshot, l'ajouter à la liste
+        if (isOneshot) {
+            if (!this.stats.oneshotsRead) this.stats.oneshotsRead = [];
+            if (!this.stats.oneshotsRead.includes(mangaId)) {
+                this.stats.oneshotsRead.push(mangaId);
+            }
+        }
         
         // Stats par manga
         if (!this.stats.mangaStats[mangaId]) {
             this.stats.mangaStats[mangaId] = {
                 chaptersRead: 0,
                 readingTime: 0,
-                lastRead: Date.now()
+                lastRead: Date.now(),
+                isOneshot: isOneshot // ✨ Marquer si c'est un oneshot
             };
         }
         
@@ -42,6 +55,7 @@ class ReadingAnalytics {
         
         // Ajouter la date de lecture
         const today = new Date().toDateString();
+        if (!this.stats.readingDates) this.stats.readingDates = [];
         if (!this.stats.readingDates.includes(today)) {
             this.stats.readingDates.push(today);
         }
@@ -65,6 +79,20 @@ class ReadingAnalytics {
         this.updateStreak();
         this.checkAchievements();
         this.saveStats();
+    }
+
+    // ✨ NOUVEAU : Vérifier si un manga est un oneshot
+    isOneshotManga(mangaId) {
+        const oneshots = [
+            'Countdown',
+            'Gestation of Kalavinka',
+            'Gestation Of Kalavinka',
+            'In the White',
+            'Sake to Sakana',
+            'Sake To Sakana',
+            'Second Coming'
+        ];
+        return oneshots.includes(mangaId);
     }
 
     updateStreak() {
@@ -147,6 +175,29 @@ class ReadingAnalytics {
                 description: 'Lire 500 chapitres',
                 condition: () => this.stats.totalChaptersRead >= 500,
                 icon: '⭐'
+            },
+
+            // ✨ NOUVEAU : Succès oneshots
+            {
+                id: 'first_oneshot',
+                title: 'Histoire courte',
+                description: 'Lire votre premier oneshot',
+                condition: () => (this.stats.oneshotsRead || []).length >= 1,
+                icon: '⭐'
+            },
+            {
+                id: 'oneshot_collector',
+                title: 'Collectionneur de oneshots',
+                description: 'Lire 3 oneshots différents',
+                condition: () => (this.stats.oneshotsRead || []).length >= 3,
+                icon: '🌟'
+            },
+            {
+                id: 'oneshot_master',
+                title: 'Maître des oneshots',
+                description: 'Lire tous les oneshots disponibles',
+                condition: () => (this.stats.oneshotsRead || []).length >= 5,
+                icon: '✨'
             },
 
             // Succès de série (streak)
@@ -290,7 +341,7 @@ class ReadingAnalytics {
                 description: 'Lire 10 chapitres d\'un même manga',
                 condition: () => {
                     return Object.values(this.stats.mangaStats).some(
-                        manga => manga.chaptersRead >= 10
+                        manga => manga.chaptersRead >= 10 && !manga.isOneshot
                     );
                 },
                 icon: '❤️'
@@ -301,7 +352,7 @@ class ReadingAnalytics {
                 description: 'Lire 50 chapitres d\'un même manga',
                 condition: () => {
                     return Object.values(this.stats.mangaStats).some(
-                        manga => manga.chaptersRead >= 50
+                        manga => manga.chaptersRead >= 50 && !manga.isOneshot
                     );
                 },
                 icon: '💖'
@@ -312,7 +363,7 @@ class ReadingAnalytics {
                 description: 'Lire 100 chapitres d\'un même manga',
                 condition: () => {
                     return Object.values(this.stats.mangaStats).some(
-                        manga => manga.chaptersRead >= 100
+                        manga => manga.chaptersRead >= 100 && !manga.isOneshot
                     );
                 },
                 icon: '💝'
@@ -380,7 +431,8 @@ class ReadingAnalytics {
             achievements: this.stats.achievements,
             nightReadingCount: this.stats.nightReadingCount || 0,
             weekendReadingCount: this.stats.weekendReadingCount || 0,
-            diverseReadingCount: this.stats.diverseReadingCount || 0
+            diverseReadingCount: this.stats.diverseReadingCount || 0,
+            oneshotsRead: this.stats.oneshotsRead || [] // ✨ Inclure les oneshots lus
         };
     }
 
