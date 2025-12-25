@@ -75,51 +75,49 @@ class UserPreferences {
   }
 
   trackReadingHistory() {
-    // Détecter automatiquement la lecture
     const currentPath = window.location.pathname;
 
-    // Pattern pour les chapitres réguliers
+    // Chapitres normaux
     const chapterMatch = currentPath.match(
       /\/Manga\/([^\/]+)\/Chapitre\s*(\d+(?:\.\d+)?)/i
     );
 
-    // ✅ Pattern amélioré pour les oneshots
-    const oneshotMatch = currentPath.match(/\/Manga\/([^\/]+)\/oneshot\.html/i);
+    // ✅ ONESHOT (CORRECTION FINALE)
+    const oneshotMatch = currentPath.match(
+      /\/Manga\/([^\/]+)\/Oneshot\.html$/i
+    );
+
+    const pageTitle = document.title.split("-")[0].trim();
 
     if (chapterMatch) {
       const mangaId = decodeURIComponent(chapterMatch[1]);
       const chapterNumber = chapterMatch[2];
-
-      // Récupérer les infos du manga depuis le titre de la page
-      const pageTitle = document.title.split("-")[0].trim();
 
       this.addToHistory(mangaId, chapterNumber, {
         title: pageTitle,
         image: this.getMangaImage(mangaId),
         type: "manga",
       });
-    } else if (oneshotMatch) {
+
+      if (window.readingAnalytics) {
+        window.readingAnalytics.trackChapterRead(mangaId, chapterNumber, 10);
+      }
+    }
+
+    // ✅ ONESHOT = LECTURE COMPLÈTE
+    else if (oneshotMatch) {
       const mangaId = decodeURIComponent(oneshotMatch[1]);
-      const pageTitle = document.title.split("-")[0].trim();
 
-      console.log("✅ Oneshot détecté:", mangaId);
+      console.log("📖 Oneshot ajouté à l'historique :", mangaId);
 
-      // 📖 Historique
       this.addToHistory(mangaId, "oneshot", {
         title: pageTitle,
         image: this.getMangaImage(mangaId),
         type: "oneshot",
       });
 
-      // 📊 ANALYTICS (⚠️ CE QUI MANQUAIT)
       if (window.readingAnalytics) {
-        window.readingAnalytics.trackChapterRead(
-          mangaId,
-          "oneshot",
-          10 // temps de lecture estimé (modifiable)
-        );
-      } else {
-        console.warn("❌ readingAnalytics non chargé");
+        window.readingAnalytics.trackChapterRead(mangaId, "oneshot", 15);
       }
     }
   }
@@ -135,12 +133,12 @@ class UserPreferences {
 
       // ✅ CORRECTION : Chemins corrigés pour les oneshots
       Countdown: "images/cover/Countdown.jpg",
-      "Gestation of Kalavinka": "images/cover/GestationOfKalavinka.jpg",
-      "Gestation Of Kalavinka": "images/cover/GestationOfKalavinka.jpg",
-      "In the White": "images/cover/InTheWhite.jpg",
-      "Sake to Sakana": "images/cover/SakeToSakana.jpg",
-      "Sake To Sakana": "images/cover/SakeToSakana.jpg",
-      "Second Coming": "images/cover/SecondComing.jpg",
+      "Gestation of Kalavinka": "/images/cover/Gestation Of Kalavinka.jpg",
+      "Gestation Of Kalavinka": "/images/cover/Gestation Of Kalavinka.jpg",
+      "In the White": "/images/cover/In the White.jpg",
+      "Sake to Sakana": "/images/cover/Sake To Sakana.jpg",
+      "Sake To Sakana": "/images/cover/Sake To Sakana.jpg",
+      "Second Coming": "/images/cover/Second Coming.jpg",
     };
     return mangaImages[mangaId] || "images/default-cover.jpg";
   }
