@@ -154,6 +154,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap gap-4 items-center justify-between">
                 <div class="flex flex-wrap gap-4">
+                    <!-- ✨ NOUVEAU : Filtre par type -->
+                    <select id="type-filter" class="px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm text-gray-300">
+                        <option value="all">Tous les types</option>
+                        <option value="manga">📚 Séries</option>
+                        <option value="oneshot">⭐ Oneshots</option>
+                    </select>
+                    
                     <select id="genre-filter" class="px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm text-gray-300">
                         <option>Tous les genres</option>
                         <option>Action</option>
@@ -168,6 +175,11 @@
                         <option>Sports</option>
                         <option>Surnaturel</option>
                         <option>Vie Scolaire</option>
+                        <option>Spectres</option>
+                        <option>Réincarnation</option>
+                        <option>Psychologie</option>
+                        <option>Fantaisie</option>
+                        <option>Tragédie</option>
                     </select>
                     <select id="status-filter" class="px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm text-gray-300">
                         <option>Statut</option>
@@ -189,127 +201,9 @@
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Manga Card 1 -->
-                <div class="card rounded-xl overflow-hidden glow" data-manga-id="Ao No Exorcist">
-                    <div class="relative">
-                        <img src="images/cover/AoNoExorcist.jpg" loading="lazy" alt="Cover" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                En cours
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Ao No Exorcist</h3>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Action</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Aventure</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Fantaisie</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-400">164 chapitres</span>
-                            <a href="/Manga/Ao%20No%20Exorcist.html">
-                                <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                    Lire →
-                               </button>
-                            </a>   
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Manga Card 2 -->
-                <div class="card rounded-xl overflow-hidden glow" data-manga-id="Satsudou">
-                    <div class="relative">
-                        <img src="images/cover/Satsudou.jpg" loading="lazy" alt="Cover" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                En Cours
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Satsudou</h3>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Akamori Mitsuo veut être un salarié ordinaire mais... C'est un meurtrier de génie né dans une famille qui pratique l'art ancien de tuer...
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Aventure</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Comédie</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Arts Martiaux</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-400">18 chapitres</span>
-                            <a href="/Manga/Satsudou.html">
-                                <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                    Lire →
-                               </button>
-                            </a>   
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card rounded-xl overflow-hidden glow" data-manga-id="Tokyo Underworld">
-                    <div class="relative">
-                        <img src="images/cover/TokyoUnderworld.jpg" loading="lazy" alt="Cover" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                En Cours
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Tokyo Underworld</h3>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et...
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Horreur</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Mystérieux</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-400">34 chapitres</span>
-                            <a href="/Manga/Tokyo Underworld.html">
-                                <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                    Lire →
-                               </button>
-                            </a>   
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card rounded-xl overflow-hidden glow" data-manga-id="Tougen Anki">
-                    <div class="relative">
-                        <img src="images/cover/TougenAnki.jpg" loading="lazy" alt="Cover" class="w-full h-64 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
-                                En Cours
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Tougen Anki</h3>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Action</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Drame</span>
-                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Fantaisie</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-400">220 chapitres</span>
-                            <a href="/Manga/Tougen Anki.html">
-                                <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-                                    Lire →
-                               </button>
-                            </a>   
-                        </div>
-                    </div>
-                </div>
+                <!-- Les cartes seront générées dynamiquement par genres.js -->
             </div>
+        </div>
     </section>
 
     <!-- Footer -->

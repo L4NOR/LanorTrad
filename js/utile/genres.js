@@ -1,8 +1,10 @@
-// Structure de données des mangas
+// Structure de données des mangas avec support du type (manga/oneshot)
 const mangas = [
+    // === SÉRIES RÉGULIÈRES ===
     {
         id: "Ao No Exorcist",
         title: "Ao No Exorcist",
+        type: "manga",
         genres: ["Action", "Aventure", "Fantasy", "LanorTrad"],
         status: "En cours",
         chapters: 164,
@@ -12,15 +14,17 @@ const mangas = [
     {
         id: "Catenaccio",
         title: "Catenaccio",
+        type: "manga",
         genres: ["Sports", "Vie Scolaire", "Collaboration"],
         status: "En cours",
         chapters: 36,
-        description: "Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...",
+        description: "Yataro Araki, membre de l'équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...",
         image: "images/cover/Catenaccio.png"
     },
     {
         id: "Satsudou",
         title: "Satsudou",
+        type: "manga",
         genres: ["Aventure", "Comédie", "Arts Martiaux", "LanorTrad"],
         status: "En cours",
         chapters: 18,
@@ -30,6 +34,7 @@ const mangas = [
     {
         id: "Tokyo Underworld",
         title: "Tokyo Underworld",
+        type: "manga",
         genres: ["Horreur", "Mystérieux", "LanorTrad"],
         status: "En cours",
         chapters: 34,
@@ -39,16 +44,19 @@ const mangas = [
     {
         id: "Tougen Anki",
         title: "Tougen Anki",
+        type: "manga",
         genres: ["Action", "Drame", "Fantasy", "LanorTrad"],
         status: "En cours",
         chapters: 220,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     },
-    // 🆕 ONESHOTS
+    
+    // === ONESHOTS ===
     {
         id: "Countdown",
         title: "Countdown",
+        type: "oneshot",
         genres: ["Spectres", "Surnaturel", "Oneshot"],
         status: "Terminé",
         chapters: 1,
@@ -58,6 +66,7 @@ const mangas = [
     {
         id: "Gestation of Kalavinka",
         title: "Gestation of Kalavinka",
+        type: "oneshot",
         genres: ["Réincarnation", "Surnaturel", "Oneshot"],
         status: "Terminé",
         chapters: 1,
@@ -67,6 +76,7 @@ const mangas = [
     {
         id: "In the White",
         title: "In the White",
+        type: "oneshot",
         genres: ["Psychologie", "Romance", "Oneshot"],
         status: "Terminé",
         chapters: 1,
@@ -76,6 +86,7 @@ const mangas = [
     {
         id: "Sake to Sakana",
         title: "Sake to Sakana",
+        type: "oneshot",
         genres: ["Drame", "Fantaisie", "Horreur", "Mystère", "Oneshot"], 
         status: "Terminé",
         chapters: 1,
@@ -85,6 +96,7 @@ const mangas = [
     {
         id: "Second Coming",
         title: "Second Coming",
+        type: "oneshot",
         genres: ["Drame", "Horreur", "Mystère", "Tragédie", "Oneshot"],
         status: "Terminé",
         chapters: 1,
@@ -97,10 +109,21 @@ const mangas = [
 function createMangaCard(manga) {
     const mangaLink = manga.id === "Satsudou" ? `/Manga/${manga.id}.html` : `/Manga/${manga.title}.html`;
     
+    // Badge spécial pour les oneshots
+    const oneshotBadge = manga.type === 'oneshot' 
+        ? '<span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 text-yellow-400 text-xs font-bold">⭐ Oneshot</span>'
+        : '';
+    
+    // Texte du nombre de chapitres
+    const chaptersText = manga.type === 'oneshot' 
+        ? '1 histoire complète'
+        : `${manga.chapters} chapitres`;
+    
     return `
-        <div class="card rounded-xl overflow-hidden glow" data-manga-id="${manga.id}">
+        <div class="card rounded-xl overflow-hidden glow" data-manga-id="${manga.id}" data-type="${manga.type}">
             <div class="relative">
                 <img src="${manga.image}" alt="${manga.title}" loading="lazy" class="w-full h-64 object-cover">
+                ${oneshotBadge}
                 <div class="absolute top-4 right-4">
                     <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
                         ${manga.status}
@@ -112,11 +135,10 @@ function createMangaCard(manga) {
                 <p class="text-gray-400 text-sm mb-4">${manga.description}</p>
                 <div class="flex flex-wrap gap-2 mb-4">
                     ${manga.genres.map(genre => `
-                        <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">${genre}</span>
-                    `).join('')}
+                        <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">${genre}</span>`).join('')}
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-400">${manga.chapters} chapitres</span>
+                    <span class="text-sm text-gray-400">${chaptersText}</span>
                     <a href="${mangaLink}">
                         <button class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                             Lire →
@@ -128,30 +150,92 @@ function createMangaCard(manga) {
     `;
 }
 
-// Filtrer les mangas
+// Filtrer les mangas avec support du type
 function filterMangas() {
+    const selectedType = document.getElementById('type-filter')?.value || 'all';
     const selectedGenre = document.getElementById('genre-filter').value;
     const selectedStatus = document.getElementById('status-filter').value;
     const selectedTeam = document.getElementById('team-filter').value;
     
     const filteredMangas = mangas.filter(manga => {
+        // Filtre par type (manga/oneshot)
+        const typeMatch = selectedType === 'all' || 
+                         (selectedType === 'manga' && manga.type === 'manga') ||
+                         (selectedType === 'oneshot' && manga.type === 'oneshot');
+        
         const genreMatch = selectedGenre === 'Tous les genres' || manga.genres.includes(selectedGenre);
         const statusMatch = selectedStatus === 'Statut' || manga.status === selectedStatus;
         const teamMatch = selectedTeam === 'Toutes les teams' || 
             (selectedTeam === 'LanorTrad' && manga.genres.includes('LanorTrad')) ||
             (selectedTeam === 'Collaboration' && manga.genres.includes('Collaboration'));
         
-        return genreMatch && statusMatch && teamMatch;
+        return typeMatch && genreMatch && statusMatch && teamMatch;
     });
     
     const container = document.querySelector('.grid');
-    container.innerHTML = filteredMangas.map(manga => createMangaCard(manga)).join('');
+    
+    if (filteredMangas.length === 0) {
+        container.innerHTML = `
+            <div class="col-span-full text-center py-20">
+                <div class="text-6xl mb-4">📭</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Aucun résultat</h3>
+                <p class="text-gray-400">Aucun manga ne correspond à vos critères de recherche</p>
+            </div>
+        `;
+    } else {
+        container.innerHTML = filteredMangas.map(manga => createMangaCard(manga)).join('');
+    }
+    
+    // Mettre à jour le compteur de résultats
+    updateResultCount(filteredMangas.length);
+}
+
+// Mettre à jour le compteur de résultats
+function updateResultCount(count) {
+    let countElement = document.getElementById('result-count');
+    
+    if (!countElement) {
+        // Créer le compteur s'il n'existe pas
+        const filtersSection = document.querySelector('.py-8.border-b');
+        if (filtersSection) {
+            const countContainer = document.createElement('div');
+            countContainer.className = 'mt-4 text-center';
+            countContainer.innerHTML = `
+                <p class="text-sm text-gray-400">
+                    <span id="result-count" class="font-semibold text-indigo-400">${count}</span> 
+                    résultat${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+                </p>
+            `;
+            filtersSection.appendChild(countContainer);
+            countElement = document.getElementById('result-count');
+        }
+    }
+    
+    if (countElement) {
+        countElement.textContent = count;
+        const parentText = countElement.parentElement;
+        if (parentText) {
+            parentText.innerHTML = `
+                <span id="result-count" class="font-semibold text-indigo-400">${count}</span> 
+                résultat${count > 1 ? 's' : ''} trouvé${count > 1 ? 's' : ''}
+            `;
+        }
+    }
 }
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('genre-filter').addEventListener('change', filterMangas);
-    document.getElementById('status-filter').addEventListener('change', filterMangas);
-    document.getElementById('team-filter').addEventListener('change', filterMangas);
+    // Écouter tous les filtres
+    const typeFilter = document.getElementById('type-filter');
+    const genreFilter = document.getElementById('genre-filter');
+    const statusFilter = document.getElementById('status-filter');
+    const teamFilter = document.getElementById('team-filter');
+    
+    if (typeFilter) typeFilter.addEventListener('change', filterMangas);
+    if (genreFilter) genreFilter.addEventListener('change', filterMangas);
+    if (statusFilter) statusFilter.addEventListener('change', filterMangas);
+    if (teamFilter) teamFilter.addEventListener('change', filterMangas);
+    
+    // Affichage initial
     filterMangas();
 });

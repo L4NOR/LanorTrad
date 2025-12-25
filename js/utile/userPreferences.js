@@ -27,6 +27,7 @@ class UserPreferences {
                 id: mangaId,
                 title: mangaData.title,
                 image: mangaData.image,
+                type: mangaData.type || 'manga', // 🆕 Support des types
                 addedAt: Date.now()
             });
             this.showToast('✨ Ajouté aux favoris !');
@@ -62,6 +63,7 @@ class UserPreferences {
             chapter: chapterNumber,
             title: mangaData.title,
             image: mangaData.image,
+            type: mangaData.type || 'manga', // 🆕 Support des types
             readAt: Date.now()
         });
         
@@ -73,7 +75,12 @@ class UserPreferences {
     trackReadingHistory() {
         // Détecter automatiquement la lecture
         const currentPath = window.location.pathname;
+        
+        // Pattern pour les chapitres réguliers
         const chapterMatch = currentPath.match(/\/Manga\/([^\/]+)\/Chapitre\s*(\d+(?:\.\d+)?)/i);
+        
+        // 🆕 Pattern pour les oneshots
+        const oneshotMatch = currentPath.match(/\/Manga\/([^\/]+)\/oneshot/i);
     
         if (chapterMatch) {
             const mangaId = chapterMatch[1];
@@ -84,18 +91,38 @@ class UserPreferences {
         
             this.addToHistory(mangaId, chapterNumber, {
                 title: pageTitle,
-                image: this.getMangaImage(mangaId)
+                image: this.getMangaImage(mangaId),
+                type: 'manga'
+            });
+        } else if (oneshotMatch) {
+            const mangaId = oneshotMatch[1];
+            const pageTitle = document.title.split('-')[0].trim();
+            
+            this.addToHistory(mangaId, 'oneshot', {
+                title: pageTitle,
+                image: this.getMangaImage(mangaId),
+                type: 'oneshot'
             });
         }
     }
 
     getMangaImage(mangaId) {
         const mangaImages = {
+            // Séries régulières
             'Ao No Exorcist': 'images/cover/AoNoExorcist.jpg',
             'Tougen Anki': 'images/cover/TougenAnki.jpg',
             'Tokyo Underworld': 'images/cover/TokyoUnderworld.jpg',
             'Satsudou': 'images/cover/Satsudou.jpg',
-            'Catenaccio': 'images/cover/Catenaccio.png'
+            'Catenaccio': 'images/cover/Catenaccio.png',
+            
+            // 🆕 Oneshots
+            'Countdown': 'https://i.postimg.cc/k59yjjZz/001.jpg',
+            'Gestation of Kalavinka': 'manga/Gestation Of Kalavinka/oneshot/001.jpg',
+            'Gestation Of Kalavinka': 'manga/Gestation Of Kalavinka/oneshot/001.jpg',
+            'In the White': 'manga/In the White/oneshot/001.jpg',
+            'Sake to Sakana': 'manga/Sake To Sakana/oneshot/002.jpg',
+            'Sake To Sakana': 'manga/Sake To Sakana/oneshot/002.jpg',
+            'Second Coming': 'manga/Second Coming/oneshot/001.jpg'
         };
         return mangaImages[mangaId] || 'images/default-cover.jpg';
     }
@@ -108,24 +135,35 @@ class UserPreferences {
             
             let favBtn = card.querySelector('.favorite-btn');
             if (!favBtn) {
-                favBtn = this.createFavoriteButton(mangaId);
-                card.querySelector('.p-6').insertBefore(favBtn, card.querySelector('.flex.justify-between'));
+                favBtn = this.createFavoriteButton(mangaId, card.dataset.type);
+                const container = card.querySelector('.p-6');
+                if (container) {
+                    const insertBefore = container.querySelector('.flex.justify-between');
+                    if (insertBefore) {
+                        container.insertBefore(favBtn, insertBefore);
+                    }
+                }
             }
             
             this.updateFavoriteButton(favBtn, isFav);
         });
     }
 
-    createFavoriteButton(mangaId) {
+    createFavoriteButton(mangaId, mangaType = 'manga') {
         const btn = document.createElement('button');
         btn.className = 'favorite-btn w-full mb-4 py-2 px-4 rounded-lg border-2 transition-all duration-300';
         btn.dataset.mangaId = mangaId;
+        btn.dataset.mangaType = mangaType;
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const card = e.target.closest('[data-manga-id]');
+            const titleEl = card.querySelector('h3');
+            const imgEl = card.querySelector('img');
+            
             this.toggleFavorite(mangaId, {
-                title: card.querySelector('h3').textContent,
-                image: card.querySelector('img').src
+                title: titleEl ? titleEl.textContent : mangaId,
+                image: imgEl ? imgEl.src : this.getMangaImage(mangaId),
+                type: mangaType
             });
         });
         return btn;
@@ -149,6 +187,13 @@ class UserPreferences {
     }
 
     showToast(message) {
+        // Utiliser le système de toast si disponible
+        if (window.toast) {
+            window.toast.success(message);
+            return;
+        }
+        
+        // Fallback basique
         const toast = document.createElement('div');
         toast.className = 'fixed top-24 right-4 bg-gray-900 border border-indigo-500 text-white px-6 py-3 rounded-lg shadow-xl z-[9999] animate-slide-in';
         toast.textContent = message;
@@ -164,4 +209,5 @@ class UserPreferences {
 }
 
 // Initialiser
-const userPrefs = new UserPreferences();window.userPrefs = userPrefs;
+const userPrefs = new UserPreferences();
+window.userPrefs = userPrefs;

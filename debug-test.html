@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Debug - LanorTrad</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { background: #0f0f23; color: white; padding: 20px; }
+        .debug-section { background: #1a1a2e; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .error { color: #ff6b6b; }
+        .success { color: #51cf66; }
+        .info { color: #4dabf7; }
+    </style>
+</head>
+<body>
+    <h1 class="text-3xl font-bold mb-6">🔍 Debug LanorTrad - Favoris & Historique</h1>
+
+    <div class="debug-section">
+        <h2 class="text-xl font-bold mb-4">1️⃣ Chargement des Scripts</h2>
+        <div id="script-status"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="text-xl font-bold mb-4">2️⃣ État de UserPreferences</h2>
+        <div id="userprefs-status"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="text-xl font-bold mb-4">3️⃣ LocalStorage</h2>
+        <div id="localstorage-status"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="text-xl font-bold mb-4">4️⃣ Test Manga Card</h2>
+        <div id="test-card-container"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="text-xl font-bold mb-4">5️⃣ Console Errors</h2>
+        <div id="console-errors" class="error"></div>
+    </div>
+
+    <script>
+        // Capturer les erreurs console
+        const errors = [];
+        const originalError = console.error;
+        console.error = function(...args) {
+            errors.push(args.join(' '));
+            originalError.apply(console, args);
+            document.getElementById('console-errors').innerHTML = errors.map(e => `❌ ${e}`).join('<br>');
+        };
+
+        // Vérifier le chargement
+        document.getElementById('script-status').innerHTML = `
+            <div class="info">✅ HTML Chargé</div>
+            <div id="check-userprefs" class="info">⏳ Vérification UserPreferences...</div>
+            <div id="check-genres" class="info">⏳ Vérification genres.js...</div>
+        `;
+    </script>
+
+    <!-- Charger les scripts dans le bon ordre -->
+    <script src="js/utile/userPreferences.js"></script>
+    <script src="js/utile/genres.js"></script>
+
+    <script>
+        setTimeout(() => {
+            // Vérifier UserPreferences
+            const userPrefsStatus = document.getElementById('check-userprefs');
+            if (typeof UserPreferences !== 'undefined' && window.userPrefs) {
+                userPrefsStatus.innerHTML = '✅ UserPreferences chargé et initialisé';
+                userPrefsStatus.className = 'success';
+                
+                // Afficher l'état
+                const statusDiv = document.getElementById('userprefs-status');
+                statusDiv.innerHTML = `
+                    <div class="success">✅ Classe UserPreferences: ${typeof UserPreferences}</div>
+                    <div class="success">✅ Instance window.userPrefs: ${typeof window.userPrefs}</div>
+                    <div class="info">📊 Favoris: ${window.userPrefs.favorites.length}</div>
+                    <div class="info">📚 Historique: ${window.userPrefs.history.length}</div>
+                `;
+            } else {
+                userPrefsStatus.innerHTML = '❌ UserPreferences NON chargé';
+                userPrefsStatus.className = 'error';
+            }
+
+            // Vérifier genres.js
+            const genresStatus = document.getElementById('check-genres');
+            if (typeof mangas !== 'undefined') {
+                genresStatus.innerHTML = '✅ genres.js chargé';
+                genresStatus.className = 'success';
+            } else {
+                genresStatus.innerHTML = '❌ genres.js NON chargé';
+                genresStatus.className = 'error';
+            }
+
+            // Afficher LocalStorage
+            const localStorageDiv = document.getElementById('localstorage-status');
+            const favorites = localStorage.getItem('lanortrad_favorites');
+            const history = localStorage.getItem('lanortrad_history');
+            localStorageDiv.innerHTML = `
+                <div class="info">🔑 lanortrad_favorites: ${favorites ? JSON.parse(favorites).length + ' items' : 'vide'}</div>
+                <div class="info">🔑 lanortrad_history: ${history ? JSON.parse(history).length + ' items' : 'vide'}</div>
+                <button onclick="localStorage.clear(); location.reload();" class="mt-4 px-4 py-2 bg-red-600 rounded">
+                    🗑️ Effacer LocalStorage
+                </button>
+            `;
+
+            // Créer une carte de test
+            if (typeof mangas !== 'undefined' && mangas.length > 0) {
+                const testManga = mangas[0];
+                const cardContainer = document.getElementById('test-card-container');
+                cardContainer.innerHTML = `
+                    <div class="card rounded-xl overflow-hidden bg-gray-800 max-w-md" data-manga-id="${testManga.id}" data-type="${testManga.type}">
+                        <div class="relative">
+                            <img src="${testManga.image}" alt="${testManga.title}" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">${testManga.title}</h3>
+                            <p class="text-gray-400 text-sm mb-4">${testManga.description}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Laisser UserPreferences créer le bouton
+                if (window.userPrefs) {
+                    setTimeout(() => {
+                        window.userPrefs.setupFavoriteButtons();
+                        const hasButton = cardContainer.querySelector('.favorite-btn');
+                        if (hasButton) {
+                            cardContainer.innerHTML += '<div class="success mt-4">✅ Bouton favori créé!</div>';
+                        } else {
+                            cardContainer.innerHTML += '<div class="error mt-4">❌ Bouton favori NON créé</div>';
+                        }
+                    }, 100);
+                }
+            }
+        }, 500);
+    </script>
+</body>
+</html>
