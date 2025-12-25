@@ -27,7 +27,7 @@ class UserPreferences {
                 id: mangaId,
                 title: mangaData.title,
                 image: mangaData.image,
-                type: mangaData.type || 'manga', // 🆕 Support des types
+                type: mangaData.type || 'manga',
                 addedAt: Date.now()
             });
             this.showToast('✨ Ajouté aux favoris !');
@@ -63,7 +63,7 @@ class UserPreferences {
             chapter: chapterNumber,
             title: mangaData.title,
             image: mangaData.image,
-            type: mangaData.type || 'manga', // 🆕 Support des types
+            type: mangaData.type || 'manga',
             readAt: Date.now()
         });
         
@@ -79,11 +79,11 @@ class UserPreferences {
         // Pattern pour les chapitres réguliers
         const chapterMatch = currentPath.match(/\/Manga\/([^\/]+)\/Chapitre\s*(\d+(?:\.\d+)?)/i);
         
-        // 🆕 Pattern pour les oneshots
-        const oneshotMatch = currentPath.match(/\/Manga\/([^\/]+)\/oneshot/i);
+        // ✅ Pattern amélioré pour les oneshots
+        const oneshotMatch = currentPath.match(/\/Manga\/([^\/]+)\/oneshot\.html/i);
     
         if (chapterMatch) {
-            const mangaId = chapterMatch[1];
+            const mangaId = decodeURIComponent(chapterMatch[1]);
             const chapterNumber = chapterMatch[2];
         
             // Récupérer les infos du manga depuis le titre de la page
@@ -95,8 +95,10 @@ class UserPreferences {
                 type: 'manga'
             });
         } else if (oneshotMatch) {
-            const mangaId = oneshotMatch[1];
+            const mangaId = decodeURIComponent(oneshotMatch[1]);
             const pageTitle = document.title.split('-')[0].trim();
+            
+            console.log('✅ Oneshot détecté:', mangaId);
             
             this.addToHistory(mangaId, 'oneshot', {
                 title: pageTitle,
@@ -115,14 +117,14 @@ class UserPreferences {
             'Satsudou': 'images/cover/Satsudou.jpg',
             'Catenaccio': 'images/cover/Catenaccio.png',
             
-            // 🆕 Oneshots
-            'Countdown': 'https://i.postimg.cc/k59yjjZz/001.jpg',
-            'Gestation of Kalavinka': 'manga/Gestation Of Kalavinka/oneshot/001.jpg',
-            'Gestation Of Kalavinka': 'manga/Gestation Of Kalavinka/oneshot/001.jpg',
-            'In the White': 'manga/In the White/oneshot/001.jpg',
-            'Sake to Sakana': 'manga/Sake To Sakana/oneshot/002.jpg',
-            'Sake To Sakana': 'manga/Sake To Sakana/oneshot/002.jpg',
-            'Second Coming': 'manga/Second Coming/oneshot/001.jpg'
+            // ✅ CORRECTION : Chemins corrigés pour les oneshots
+            'Countdown': 'images/cover/Countdown.jpg',
+            'Gestation of Kalavinka': 'images/cover/GestationOfKalavinka.jpg',
+            'Gestation Of Kalavinka': 'images/cover/GestationOfKalavinka.jpg',
+            'In the White': 'images/cover/InTheWhite.jpg',
+            'Sake to Sakana': 'images/cover/SakeToSakana.jpg',
+            'Sake To Sakana': 'images/cover/SakeToSakana.jpg',
+            'Second Coming': 'images/cover/SecondComing.jpg'
         };
         return mangaImages[mangaId] || 'images/default-cover.jpg';
     }
@@ -187,13 +189,11 @@ class UserPreferences {
     }
 
     showToast(message) {
-        // Utiliser le système de toast si disponible
         if (window.toast) {
             window.toast.success(message);
             return;
         }
         
-        // Fallback basique
         const toast = document.createElement('div');
         toast.className = 'fixed top-24 right-4 bg-gray-900 border border-indigo-500 text-white px-6 py-3 rounded-lg shadow-xl z-[9999] animate-slide-in';
         toast.textContent = message;
