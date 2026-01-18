@@ -19,6 +19,13 @@ const chapters = Array.from({ length: CONFIG.maxChapters }, (_, index) => {
 // Variables globales
 let displayCount = 5;
 
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 // Fonctions utilitaires
 function formatDate(date) {
     return new Intl.DateTimeFormat('fr-FR', {

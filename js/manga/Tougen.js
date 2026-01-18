@@ -30,6 +30,13 @@ const chapters = [...regularChapters, ...bonusChapters].sort((a, b) => b.number 
 
 let displayCount = 5;
 
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 function formatDate(date) {
     return new Intl.DateTimeFormat('fr-FR', {
         day: 'numeric',

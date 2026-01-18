@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 164,
+    maxChapters: 165,
     currentManga: "Ao No Exorcist",
     chapterPrefix: "Chapitre"
 };
@@ -30,6 +30,13 @@ let displayCount = 5;
 // ============================================
 // FONCTIONS UTILITAIRES
 // ============================================
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 function formatDate(date) {
     return new Intl.DateTimeFormat('fr-FR', {

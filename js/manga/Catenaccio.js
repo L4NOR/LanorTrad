@@ -15,6 +15,13 @@ const chapters = Array.from({ length: CONFIG.maxChapters }, (_, index) => {
 
 let displayCount = 5;
 
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
 function formatDate(date) {
     return new Intl.DateTimeFormat('fr-FR', {
         day: 'numeric',
