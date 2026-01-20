@@ -18,28 +18,28 @@ class PlanningManager {
         
         // Sorties pour décembre 2025
         const december2025Releases = {
-            "2025-12-24": [
+            "2026-01-27": [
                 { 
-                    title: "Cadeau de Noël", 
-                    chapter: "Spécial", 
-                    type: "Oneshot",
-                    time: "18:00",
-                    cover: "https://i.pinimg.com/736x/f7/11/52/f7115221e8bb3f92f681561a2270b4e3.jpg",
-                    url: ""
+                    title: "Tougen Anki", 
+                    chapter: "Chapitre 221", 
+                    type: "Manga",
+                    time: "17:00-18:00",
+                    cover: "images/cover/TougenAnki.jpg",
+                    url: "/Manga/Tougen Anki.html"
                 }
             ]
         };
 
         // Sorties pour janvier 2026
         const january2026Releases = {
-            "2026-01-09": [
+            "2026-01-31": [
                 { 
-                    title: "Ao No Exorcist", 
-                    chapter: "165", 
+                    title: "Tougen Anki", 
+                    chapter: "Tome 26", 
                     type: "Manga",
-                    time: "15:00",
-                    cover: "images/cover/AoNoExorcist.jpg",
-                    url: "/Manga/Ao No Exorcist.html"
+                    time: "16:00-17:00",
+                    cover: "images/cover/TougenAnki.jpg",
+                    url: "/Manga/Tougen Anki.html"
                 }
             ]
         };
