@@ -12,7 +12,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/manga/Catenaccio',
         coverImage: 'https://i.postimg.cc/5Nq64t37/Catenaccio.png',
         genres: ['Sports', 'Vie Scolaire', 'Collaboration'],
-        chapters: 36,
+        chapters: 46,
         synopsis: 'Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...'
     },
     {
@@ -36,7 +36,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
         coverImage: 'https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg',
         genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 220,
+        chapters: 221,
         synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
     },
     // ONESHOTS

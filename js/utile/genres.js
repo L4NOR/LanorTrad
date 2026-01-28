@@ -16,7 +16,7 @@ const mangas = [
         type: "manga",
         genres: ["Sports", "Vie Scolaire", "Collaboration"],
         status: "En cours",
-        chapters: 36,
+        chapters: 46,
         description: "Yataro Araki, membre de l'équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...",
         image: "images/cover/Catenaccio.png"
     },
@@ -46,7 +46,7 @@ const mangas = [
         type: "manga",
         genres: ["Action", "Drame", "Fantasy", "LanorTrad"],
         status: "En cours",
-        chapters: 220,
+        chapters: 221,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     },
