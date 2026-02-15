@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LanorTrad - Gestionnaire de Chapitres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .card { background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(99, 102, 241, 0.1); }
+        .card:hover { border-color: rgba(99, 102, 241, 0.3); transform: translateY(-2px); }
+        .card { transition: all 0.3s; }
+        .modal-bg { background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
+        .drop-zone { border: 2px dashed rgba(99, 102, 241, 0.4); transition: all 0.3s; }
+        .drop-zone.dragover { border-color: #6366f1; background: rgba(99, 102, 241, 0.1); }
+        .toast { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .btn-primary:hover { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .btn-danger:hover { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .chapter-pill { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); }
+        .chapter-pill:hover { background: rgba(99, 102, 241, 0.25); }
+        .progress-bar { transition: width 0.3s; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Toast container -->
+    <div id="toasts" class="fixed top-4 right-4 z-[100] flex flex-col gap-2"></div>
+
+    <!-- Header -->
+    <header class="bg-slate-900/80 border-b border-slate-700/50 sticky top-0 z-50 backdrop-blur">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+                <span class="text-sm text-slate-400 border-l border-slate-600 pl-3">Gestionnaire de Chapitres</span>
+            </div>
+            <button onclick="loadMangas()" class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-sm transition-colors">
+                Rafraichir
+            </button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Manga grid (main view) -->
+        <div id="manga-grid-view">
+            <h2 class="text-3xl font-bold mb-6">Mangas</h2>
+            <div id="manga-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+
+        <!-- Manga detail view (hidden by default) -->
+        <div id="manga-detail-view" class="hidden">
+            <button onclick="showGrid()" class="mb-6 flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Retour aux mangas
+            </button>
+
+            <div class="flex flex-col md:flex-row gap-8 mb-8">
+                <img id="detail-cover" src="" alt="" class="w-48 h-72 object-cover rounded-xl shadow-lg">
+                <div class="flex-1">
+                    <h2 id="detail-title" class="text-3xl font-bold mb-2"></h2>
+                    <div id="detail-genres" class="flex flex-wrap gap-2 mb-3"></div>
+                    <p id="detail-status" class="text-slate-400 mb-2"></p>
+                    <p id="detail-chapter-count" class="text-lg font-semibold text-indigo-400 mb-4"></p>
+                    <p id="detail-description" class="text-slate-300 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3 mb-8">
+                <button onclick="openAddModal()" class="btn-primary px-6 py-3 rounded-xl text-white font-semibold transition-all hover:scale-105">
+                    + Ajouter un chapitre
+                </button>
+            </div>
+
+            <!-- Chapter list -->
+            <h3 class="text-xl font-bold mb-4">Chapitres existants</h3>
+            <div id="chapters-list" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Add Chapter -->
+    <div id="add-modal" class="hidden fixed inset-0 z-50 modal-bg flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl border border-slate-700 w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Ajouter un chapitre</h3>
+                <button onclick="closeModal('add-modal')" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <form id="add-form" onsubmit="submitAddChapter(event)">
+                <div class="space-y-5">
+                    <!-- Chapter number -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Numero du chapitre</label>
+                        <input type="number" id="add-chapter-num" required min="1"
+                            class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white focus:border-indigo-500 focus:outline-none">
+                    </div>
+
+                    <!-- Page count -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Nombre de pages</label>
+                        <input type="number" id="add-page-count" required min="1"
+                            class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white focus:border-indigo-500 focus:outline-none">
+                    </div>
+
+                    <!-- Image source choice -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Source des images</label>
+                        <div class="flex gap-3 mb-3">
+                            <button type="button" onclick="toggleImageSource('upload')" id="btn-upload"
+                                class="flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors">
+                                Drag & Drop
+                            </button>
+                            <button type="button" onclick="toggleImageSource('folder')" id="btn-folder"
+                                class="flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors">
+                                Chemin dossier
+                            </button>
+                        </div>
+
+                        <!-- Drop zone -->
+                        <div id="upload-zone" class="drop-zone rounded-xl p-8 text-center cursor-pointer"
+                             onclick="document.getElementById('file-input').click()">
+                            <input type="file" id="file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                            <div class="text-4xl mb-3">📁</div>
+                            <p class="text-slate-300 font-medium">Glissez-deposez vos images ici</p>
+                            <p class="text-slate-500 text-sm mt-1">ou cliquez pour selectionner</p>
+                            <div id="file-preview" class="mt-4 text-sm text-indigo-400 hidden"></div>
+                        </div>
+
+                        <!-- Folder path -->
+                        <div id="folder-zone" class="hidden">
+                            <input type="text" id="folder-path" placeholder="C:\Users\...\images-chapitre"
+                                class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white focus:border-indigo-500 focus:outline-none">
+                            <p class="text-slate-500 text-sm mt-1">Chemin complet vers le dossier contenant les images JPG</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="mt-8 flex gap-3">
+                    <button type="submit" id="add-submit-btn" class="btn-primary flex-1 py-3 rounded-xl text-white font-semibold transition-all hover:scale-[1.02]">
+                        Creer le chapitre
+                    </button>
+                    <button type="button" onclick="closeModal('add-modal')" class="px-6 py-3 rounded-xl bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors">
+                        Annuler
+                    </button>
+                </div>
+
+                <!-- Progress -->
+                <div id="add-progress" class="hidden mt-4">
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                        <div id="add-progress-bar" class="progress-bar bg-indigo-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p id="add-progress-text" class="text-sm text-slate-400 mt-2 text-center"></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Delete Chapter -->
+    <div id="delete-modal" class="hidden fixed inset-0 z-50 modal-bg flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl border border-slate-700 w-full max-w-md p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-red-400">Supprimer le chapitre</h3>
+                <button onclick="closeModal('delete-modal')" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <p class="text-slate-300 mb-2">Es-tu sur de vouloir supprimer le <strong id="delete-chapter-label" class="text-white"></strong> ?</p>
+            <p class="text-slate-500 text-sm mb-6">Cette action supprimera le fichier HTML et le dossier d'images. Irreversible.</p>
+
+            <div class="flex gap-3">
+                <button onclick="confirmDelete()" class="btn-danger flex-1 py-3 rounded-xl text-white font-semibold transition-all">
+                    Supprimer
+                </button>
+                <button onclick="closeModal('delete-modal')" class="px-6 py-3 rounded-xl bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors">
+                    Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Modify Chapter -->
+    <div id="modify-modal" class="hidden fixed inset-0 z-50 modal-bg flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl border border-slate-700 w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Modifier le <span id="modify-chapter-label"></span></h3>
+                <button onclick="closeModal('modify-modal')" class="text-slate-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <form id="modify-form" onsubmit="submitModifyChapter(event)">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Nouveau nombre de pages</label>
+                        <input type="number" id="modify-page-count" min="1"
+                            class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white focus:border-indigo-500 focus:outline-none">
+                        <p class="text-slate-500 text-sm mt-1">Laisse vide pour ne pas changer</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Remplacer les images (optionnel)</label>
+                        <div class="flex gap-3 mb-3">
+                            <button type="button" onclick="toggleModifyImageSource('upload')" id="modify-btn-upload"
+                                class="flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors">
+                                Drag & Drop
+                            </button>
+                            <button type="button" onclick="toggleModifyImageSource('folder')" id="modify-btn-folder"
+                                class="flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors">
+                                Chemin dossier
+                            </button>
+                        </div>
+
+                        <div id="modify-upload-zone" class="drop-zone rounded-xl p-6 text-center cursor-pointer"
+                             onclick="document.getElementById('modify-file-input').click()">
+                            <input type="file" id="modify-file-input" multiple accept="image/*" class="hidden" onchange="handleModifyFileSelect(event)">
+                            <p class="text-slate-300">Glissez-deposez ou cliquez</p>
+                            <div id="modify-file-preview" class="mt-2 text-sm text-indigo-400 hidden"></div>
+                        </div>
+
+                        <div id="modify-folder-zone" class="hidden">
+                            <input type="text" id="modify-folder-path" placeholder="C:\Users\...\images"
+                                class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-600 text-white focus:border-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex gap-3">
+                    <button type="submit" class="btn-primary flex-1 py-3 rounded-xl text-white font-semibold transition-all hover:scale-[1.02]">
+                        Enregistrer
+                    </button>
+                    <button type="button" onclick="closeModal('modify-modal')" class="px-6 py-3 rounded-xl bg-slate-700 text-slate-300 font-medium hover:bg-slate-600 transition-colors">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ─── State ──────────────────────────────────────────────
+        let mangas = [];
+        let currentManga = null;
+        let currentChapters = [];
+        let selectedFiles = [];
+        let modifySelectedFiles = [];
+        let deleteChapterNum = null;
+        let modifyChapterNum = null;
+
+        // ─── Init ───────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMangas();
+            setupDragDrop();
+        });
+
+        // ─── Load mangas ────────────────────────────────────────
+        async function loadMangas() {
+            try {
+                const res = await fetch('/api/mangas');
+                mangas = await res.json();
+                renderMangaGrid();
+            } catch (err) {
+                showToast('Erreur de chargement: ' + err.message, 'error');
+            }
+        }
+
+        // ─── Render manga grid ──────────────────────────────────
+        function renderMangaGrid() {
+            const grid = document.getElementById('manga-grid');
+            grid.innerHTML = mangas.map(m => `
+                <div class="card rounded-xl overflow-hidden cursor-pointer" onclick="selectManga('${m.id.replace(/'/g, "\\'")}')">
+                    <img src="/site-image?path=${encodeURIComponent(m.image)}" alt="${m.title}"
+                         class="w-full h-56 object-cover" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect fill=%22%231e293b%22 width=%22300%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%236366f1%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2220%22>${m.title}</text></svg>'">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-white mb-2">${m.title}</h3>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            ${m.genres.slice(0, 3).map(g => `<span class="px-2 py-0.5 rounded-full bg-slate-700 text-slate-300 text-xs">${g}</span>`).join('')}
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-indigo-400 font-semibold">${m.chapters} chapitres</span>
+                            <span class="text-xs text-slate-500">${m.status}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ─── Select manga ───────────────────────────────────────
+        async function selectManga(mangaId) {
+            currentManga = mangas.find(m => m.id === mangaId);
+            if (!currentManga) return;
+
+            // Load chapters
+            try {
+                const res = await fetch(`/api/manga/${encodeURIComponent(mangaId)}/chapters`);
+                const data = await res.json();
+                currentChapters = data.chapters;
+            } catch (err) {
+                showToast('Erreur: ' + err.message, 'error');
+                return;
+            }
+
+            // Update detail view
+            document.getElementById('detail-cover').src = `/site-image?path=${encodeURIComponent(currentManga.image)}`;
+            document.getElementById('detail-title').textContent = currentManga.title;
+            document.getElementById('detail-status').textContent = `Statut: ${currentManga.status}`;
+            document.getElementById('detail-chapter-count').textContent = `${currentChapters.length} chapitres`;
+            document.getElementById('detail-description').textContent = currentManga.description;
+            document.getElementById('detail-genres').innerHTML = currentManga.genres.map(g =>
+                `<span class="px-3 py-1 rounded-full bg-slate-700 text-slate-300 text-sm">${g}</span>`
+            ).join('');
+
+            renderChapters();
+
+            // Show detail view
+            document.getElementById('manga-grid-view').classList.add('hidden');
+            document.getElementById('manga-detail-view').classList.remove('hidden');
+        }
+
+        // ─── Render chapters ────────────────────────────────────
+        function renderChapters() {
+            const list = document.getElementById('chapters-list');
+            list.innerHTML = currentChapters.map(ch => `
+                <div class="chapter-pill rounded-lg px-3 py-2 flex items-center justify-between group">
+                    <span class="text-sm font-medium">Ch. ${ch}</span>
+                    <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onclick="openModifyModal(${ch})" class="text-indigo-400 hover:text-indigo-300 text-xs" title="Modifier">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        </button>
+                        <button onclick="openDeleteModal(${ch})" class="text-red-400 hover:text-red-300 text-xs" title="Supprimer">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ─── Show grid ──────────────────────────────────────────
+        function showGrid() {
+            document.getElementById('manga-grid-view').classList.remove('hidden');
+            document.getElementById('manga-detail-view').classList.add('hidden');
+            currentManga = null;
+            loadMangas();
+        }
+
+        // ─── Image source toggle ────────────────────────────────
+        function toggleImageSource(mode) {
+            const uploadZone = document.getElementById('upload-zone');
+            const folderZone = document.getElementById('folder-zone');
+            const btnUpload = document.getElementById('btn-upload');
+            const btnFolder = document.getElementById('btn-folder');
+
+            if (mode === 'upload') {
+                uploadZone.classList.remove('hidden');
+                folderZone.classList.add('hidden');
+                btnUpload.className = 'flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors';
+                btnFolder.className = 'flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors';
+            } else {
+                uploadZone.classList.add('hidden');
+                folderZone.classList.remove('hidden');
+                btnFolder.className = 'flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors';
+                btnUpload.className = 'flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors';
+            }
+        }
+
+        function toggleModifyImageSource(mode) {
+            const uploadZone = document.getElementById('modify-upload-zone');
+            const folderZone = document.getElementById('modify-folder-zone');
+            const btnUpload = document.getElementById('modify-btn-upload');
+            const btnFolder = document.getElementById('modify-btn-folder');
+
+            if (mode === 'upload') {
+                uploadZone.classList.remove('hidden');
+                folderZone.classList.add('hidden');
+                btnUpload.className = 'flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors';
+                btnFolder.className = 'flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors';
+            } else {
+                uploadZone.classList.add('hidden');
+                folderZone.classList.remove('hidden');
+                btnFolder.className = 'flex-1 py-2 rounded-lg bg-indigo-600 text-white font-medium transition-colors';
+                btnUpload.className = 'flex-1 py-2 rounded-lg bg-slate-700 text-slate-300 font-medium transition-colors';
+            }
+        }
+
+        // ─── Drag & drop setup ──────────────────────────────────
+        function setupDragDrop() {
+            ['upload-zone', 'modify-upload-zone'].forEach(id => {
+                const zone = document.getElementById(id);
+                if (!zone) return;
+
+                zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+                zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('dragover');
+                    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                    if (id === 'upload-zone') {
+                        selectedFiles = files;
+                        updateFilePreview('file-preview', files);
+                        document.getElementById('add-page-count').value = files.length;
+                    } else {
+                        modifySelectedFiles = files;
+                        updateFilePreview('modify-file-preview', files);
+                        document.getElementById('modify-page-count').value = files.length;
+                    }
+                });
+            });
+        }
+
+        function handleFileSelect(event) {
+            selectedFiles = Array.from(event.target.files);
+            updateFilePreview('file-preview', selectedFiles);
+            document.getElementById('add-page-count').value = selectedFiles.length;
+        }
+
+        function handleModifyFileSelect(event) {
+            modifySelectedFiles = Array.from(event.target.files);
+            updateFilePreview('modify-file-preview', modifySelectedFiles);
+            document.getElementById('modify-page-count').value = modifySelectedFiles.length;
+        }
+
+        function updateFilePreview(elementId, files) {
+            const preview = document.getElementById(elementId);
+            if (files.length > 0) {
+                preview.textContent = `${files.length} image(s) selectionnee(s)`;
+                preview.classList.remove('hidden');
+            } else {
+                preview.classList.add('hidden');
+            }
+        }
+
+        // ─── Modals ─────────────────────────────────────────────
+        function openAddModal() {
+            if (!currentManga) return;
+            // Suggest next chapter number
+            const maxChapter = currentChapters.length > 0 ? Math.max(...currentChapters.filter(c => Number.isInteger(c))) : 0;
+            document.getElementById('add-chapter-num').value = maxChapter + 1;
+            document.getElementById('add-page-count').value = '';
+            selectedFiles = [];
+            document.getElementById('file-preview').classList.add('hidden');
+            document.getElementById('folder-path').value = '';
+            document.getElementById('add-progress').classList.add('hidden');
+            document.getElementById('add-modal').classList.remove('hidden');
+        }
+
+        function openDeleteModal(chapterNum) {
+            deleteChapterNum = chapterNum;
+            document.getElementById('delete-chapter-label').textContent = `Chapitre ${chapterNum}`;
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function openModifyModal(chapterNum) {
+            modifyChapterNum = chapterNum;
+            document.getElementById('modify-chapter-label').textContent = `Chapitre ${chapterNum}`;
+            document.getElementById('modify-page-count').value = '';
+            modifySelectedFiles = [];
+            document.getElementById('modify-file-preview').classList.add('hidden');
+            document.getElementById('modify-folder-path').value = '';
+            document.getElementById('modify-modal').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // ─── Add chapter ────────────────────────────────────────
+        async function submitAddChapter(event) {
+            event.preventDefault();
+            if (!currentManga) return;
+
+            const chapterNum = document.getElementById('add-chapter-num').value;
+            const pageCount = document.getElementById('add-page-count').value;
+            const folderPath = document.getElementById('folder-path').value.trim();
+
+            if (!chapterNum || !pageCount) {
+                showToast('Veuillez remplir tous les champs', 'error');
+                return;
+            }
+
+            const progress = document.getElementById('add-progress');
+            const progressBar = document.getElementById('add-progress-bar');
+            const progressText = document.getElementById('add-progress-text');
+            const submitBtn = document.getElementById('add-submit-btn');
+
+            progress.classList.remove('hidden');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creation en cours...';
+            progressBar.style.width = '30%';
+            progressText.textContent = 'Creation du chapitre...';
+
+            try {
+                const formData = new FormData();
+                formData.append('chapterNumber', chapterNum);
+                formData.append('pageCount', pageCount);
+
+                if (selectedFiles.length > 0) {
+                    selectedFiles.forEach(file => formData.append('images', file));
+                } else if (folderPath) {
+                    formData.append('folderPath', folderPath);
+                }
+
+                progressBar.style.width = '60%';
+                progressText.textContent = 'Upload des images et mise a jour des fichiers...';
+
+                const res = await fetch(`/api/manga/${encodeURIComponent(currentManga.id)}/add-chapter`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    progressBar.style.width = '100%';
+                    progressText.textContent = 'Termine !';
+                    showToast(`Chapitre ${chapterNum} cree avec succes !`, 'success');
+
+                    // Refresh chapters
+                    setTimeout(async () => {
+                        closeModal('add-modal');
+                        await selectManga(currentManga.id);
+                    }, 1000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                showToast('Erreur: ' + err.message, 'error');
+                progressBar.style.width = '0%';
+                progressText.textContent = '';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Creer le chapitre';
+            }
+        }
+
+        // ─── Delete chapter ─────────────────────────────────────
+        async function confirmDelete() {
+            if (!currentManga || deleteChapterNum === null) return;
+
+            try {
+                const res = await fetch(`/api/manga/${encodeURIComponent(currentManga.id)}/delete-chapter`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chapterNumber: deleteChapterNum })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    showToast(`Chapitre ${deleteChapterNum} supprime`, 'success');
+                    closeModal('delete-modal');
+                    await selectManga(currentManga.id);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                showToast('Erreur: ' + err.message, 'error');
+            }
+        }
+
+        // ─── Modify chapter ─────────────────────────────────────
+        async function submitModifyChapter(event) {
+            event.preventDefault();
+            if (!currentManga || modifyChapterNum === null) return;
+
+            const pageCount = document.getElementById('modify-page-count').value;
+            const folderPath = document.getElementById('modify-folder-path').value.trim();
+
+            try {
+                const formData = new FormData();
+                formData.append('chapterNumber', modifyChapterNum);
+                if (pageCount) formData.append('pageCount', pageCount);
+
+                if (modifySelectedFiles.length > 0) {
+                    modifySelectedFiles.forEach(file => formData.append('images', file));
+                } else if (folderPath) {
+                    formData.append('folderPath', folderPath);
+                }
+
+                const res = await fetch(`/api/manga/${encodeURIComponent(currentManga.id)}/modify-chapter`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    showToast(`Chapitre ${modifyChapterNum} modifie`, 'success');
+                    closeModal('modify-modal');
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                showToast('Erreur: ' + err.message, 'error');
+            }
+        }
+
+        // ─── Toast notifications ────────────────────────────────
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toasts');
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-indigo-600'
+            };
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${colors[type]} px-6 py-3 rounded-xl text-white font-medium shadow-lg`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

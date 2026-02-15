@@ -6,7 +6,7 @@ const mangas = [
         type: "manga",
         genres: ["Action", "Aventure", "Fantasy", "LanorTrad"],
         status: "En cours",
-        chapters: 165,
+        chapters: 166,
         description: "Rin Okumura est un adolescent qui découvre un jour qu'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...",
         image: "images/cover/AoNoExorcist.jpg"
     },
@@ -46,7 +46,7 @@ const mangas = [
         type: "manga",
         genres: ["Action", "Drame", "Fantasy", "LanorTrad"],
         status: "En cours",
-        chapters: 221,
+        chapters: 230,
         description: "Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu'un inconnu se...",
         image: "images/cover/TougenAnki.jpg"
     },
