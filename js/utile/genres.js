@@ -36,7 +36,7 @@ const mangas = [
         type: "manga",
         genres: ["Horreur", "Mystérieux", "LanorTrad"],
         status: "En cours",
-        chapters: 34,
+        chapters: 38,
         description: "Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et...",
         image: "images/cover/TokyoUnderworld.jpg"
     },

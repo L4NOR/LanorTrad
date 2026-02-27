@@ -28,7 +28,7 @@ const availableMangas = [
         url: 'https://lanortrad.netlify.app/Manga/Tokyo%20Underworld',
         coverImage: 'https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg',
         genres: ['Horreur', 'Mystérieux'],
-        chapters: 34,
+        chapters: 38,
         synopsis: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...'
     },
     {

@@ -53,11 +53,11 @@
     <script src="js/utile/toast.js"></script>
     <script src="js/utile/lazyLoad.js"></script>
     <script src="js/utile/userPreferences.js"></script>
-    <script src="js/utile/ads.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
 
     <meta name="monetag" content="9a67983722a725619cd594866a00f75a">
+    <script src="https://5gvci.com/act/files/tag.min.js?z=10644610" data-cfasync="false" async></script>
 
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,11 +205,6 @@
         </div>
     </section>
 
-    <!-- Pub : entre hero et dernières sorties -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="ad-container" data-ad-type="banner"></div>
-    </div>
-
     <div class="max-w-7xl mx-auto mb-12">
         <div class="flex items-center justify-between mb-6">
             <div>
@@ -243,34 +238,33 @@
 
             <div class="flex flex-col md:flex-row">
                 <div class="md:w-1/3 relative overflow-hidden group">
-                    <img src="https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg" alt="Tougen Anki" class="w-full h-80 md:h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg" alt="Tokyo Underworld" class="w-full h-80 md:h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="shimmer-effect absolute inset-0"></div>
                 </div>
 
                 <div class="p-8 md:w-2/3 flex flex-col justify-center">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="chapter-badge px-4 py-2 rounded-full text-white text-sm font-bold">
-                            Chapitre 230
+                            Chapitre 38.5
                         </span>
                         <span class="time-badge px-3 py-1 rounded-full text-xs font-medium">
-                            🕒 15 Fevrier
+                            🕒 26 Fevrier
                         </span>
                     </div>
 
-                    <h3 class="text-3xl font-black mb-3">Tougen Anki</h3>
+                    <h3 class="text-3xl font-black mb-3">Tokyo Underworld</h3>
 
                     <p class="text-gray-300 mb-4 leading-relaxed">
-                        Ichinose Shiki, héritier du sang d'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant...
+                        Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d'aucune pitié et...
                     </p>
 
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="genre-tag px-3 py-1 rounded-lg text-xs font-medium">Action</span>
-                        <span class="genre-tag px-3 py-1 rounded-lg text-xs font-medium">Drame</span>
-                        <span class="genre-tag px-3 py-1 rounded-lg text-xs font-medium">Fantaisie</span>
+                        <span class="genre-tag px-3 py-1 rounded-lg text-xs font-medium">Horreur</span>
+                        <span class="genre-tag px-3 py-1 rounded-lg text-xs font-medium">Mystérieux</span>
                     </div>
 
                     <div class="flex gap-3">
-                        <a href="../Manga/Tougen Anki/Chapitre 230.html">
+                        <a href="Manga/Tokyo Underworld/Chapitre 38.5.html">
                             <button class="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold transition-all hover:scale-105 shadow-lg">
                                 Lire maintenant →
                             </button>
@@ -288,7 +282,33 @@
             Également disponibles
         </h3>
 
+        <!-- GRID-START -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="manga-card rounded-xl overflow-hidden group">
+                <div class="relative overflow-hidden">
+                    <img src="https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg" alt="Ao No Exorcist" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute top-3 right-3">
+                        <span class="chapter-badge px-3 py-1 rounded-full text-white text-xs font-bold">
+                            Ch. 166
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-lg mb-2 truncate">Ao No Exorcist</h4>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Action</span>
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Aventure</span>
+                    </div>
+                    <div class="text-xs text-gray-400 mb-3">🕒 23 février</div>
+                    <a href="Manga/Ao No Exorcist/Chapitre 166.html">
+                        <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
+                            Lire →
+                        </button>
+                    </a>
+                </div>
+            </div>
 
             <div class="manga-card rounded-xl overflow-hidden group">
                 <div class="relative overflow-hidden">
@@ -304,35 +324,10 @@
                     <h4 class="font-bold text-lg mb-2 truncate">Catenaccio</h4>
                     <div class="flex flex-wrap gap-1 mb-3">
                         <span class="genre-tag px-2 py-0.5 rounded text-xs">Sports</span>
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">École</span>
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Vie Scolaire</span>
                     </div>
-                    <div class="text-xs text-gray-400 mb-3">🕒 28 janvier</div>
-                    <a href="../Manga/Catenaccio/Chapitre 46.html">
-                        <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
-                            Lire →
-                        </button>
-                    </a>
-                </div>
-            </div>
-            <!-- Card 1 -->
-            <div class="manga-card rounded-xl overflow-hidden group">
-                <div class="relative overflow-hidden">
-                    <img src="https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg" alt="Ao No Exorcist" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute top-3 right-3">
-                        <span class="chapter-badge px-3 py-1 rounded-full text-white text-xs font-bold">
-                            Ch. 165
-                        </span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-bold text-lg mb-2 truncate">Ao No Exorcist</h4>
-                    <div class="flex flex-wrap gap-1 mb-3">
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Action</span>
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Aventure</span>
-                    </div>
-                    <div class="text-xs text-gray-400 mb-3">🕒 15 février</div>
-                    <a href="../Manga/Ao No Exorcist/Chapitre 166.html">
+                    <div class="text-xs text-gray-400 mb-3">🕒 23 février</div>
+                    <a href="Manga/Catenaccio/Chapitre 46.html">
                         <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
                             Lire →
                         </button>
@@ -340,33 +335,6 @@
                 </div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="manga-card rounded-xl overflow-hidden group">
-                <div class="relative overflow-hidden">
-                    <img src="https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg" alt="Tokyo Underworld" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute top-3 right-3">
-                        <span class="chapter-badge px-3 py-1 rounded-full text-white text-xs font-bold">
-                            Ch. 34
-                        </span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-bold text-lg mb-2 truncate">Tokyo Underworld</h4>
-                    <div class="flex flex-wrap gap-1 mb-3">
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Horreur</span>
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Mystère</span>
-                    </div>
-                    <div class="text-xs text-gray-400 mb-3">🕒 23 avril</div>
-                    <a href="../Manga/Tokyo Underworld/Chapitre 34.html">
-                        <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
-                            Lire →
-                        </button>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
             <div class="manga-card rounded-xl overflow-hidden group">
                 <div class="relative overflow-hidden">
                     <img src="https://i.postimg.cc/Hs4VYLzH/Satsudou.jpg" alt="Satsudou" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
@@ -380,11 +348,36 @@
                 <div class="p-4">
                     <h4 class="font-bold text-lg mb-2 truncate">Satsudou</h4>
                     <div class="flex flex-wrap gap-1 mb-3">
-                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Action</span>
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Aventure</span>
                         <span class="genre-tag px-2 py-0.5 rounded text-xs">Comédie</span>
                     </div>
-                    <div class="text-xs text-gray-400 mb-3">🕒 25 avril</div>
-                    <a href="../Manga/Satsudou/Chapitre 18.html">
+                    <div class="text-xs text-gray-400 mb-3">🕒 23 février</div>
+                    <a href="Manga/Satsudou/Chapitre 18.html">
+                        <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
+                            Lire →
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="manga-card rounded-xl overflow-hidden group">
+                <div class="relative overflow-hidden">
+                    <img src="https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg" alt="Tougen Anki" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute top-3 right-3">
+                        <span class="chapter-badge px-3 py-1 rounded-full text-white text-xs font-bold">
+                            Ch. 230
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-bold text-lg mb-2 truncate">Tougen Anki</h4>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Action</span>
+                        <span class="genre-tag px-2 py-0.5 rounded text-xs">Drame</span>
+                    </div>
+                    <div class="text-xs text-gray-400 mb-3">🕒 23 février</div>
+                    <a href="Manga/Tougen Anki/Chapitre 230.html">
                         <button class="w-full py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white font-medium transition-all text-sm">
                             Lire →
                         </button>
@@ -392,6 +385,7 @@
                 </div>
             </div>
         </div>
+        <!-- GRID-END -->
     </div>
 
     <!-- CTA Mobile -->
@@ -402,11 +396,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
         </a>
-    </div>
-
-    <!-- Pub : entre les sorties et le planning -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div class="ad-container" data-ad-type="rectangle"></div>
     </div>
 
     <!-- Section Planning Preview (NOUVEAU) -->
@@ -436,14 +425,14 @@
                     <div class="planning-item rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <div class="flex-shrink-0">
-                                <img src="images/cover/TougenAnki.jpg" alt="Tougen Anki" class="w-12 h-16 object-cover rounded">
+                                <img src="images/cover/Catenaccio.png" alt="Catenaccio" class="w-12 h-16 object-cover rounded">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-white truncate">Tougen Anki</h3>
-                                <p class="text-sm text-gray-400">27 janvier • Chapitre 221</p>
+                                <h3 class="font-bold text-white truncate">Catenaccio</h3>
+                                <p class="text-sm text-gray-400">28 mars • Chapitre 47 jusqu'au 56</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs text-indigo-400 font-medium">Dans 3 jours</div>
+                                <div class="text-xs text-indigo-400 font-medium">Dans 28 jours</div>
                             </div>
                         </div>
                     </div>
@@ -451,14 +440,14 @@
                     <div class="planning-item rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <div class="flex-shrink-0">
-                                <img src="images/cover/TougenAnki.jpg" alt="Tougen Anki" class="w-12 h-16 object-cover rounded">
+                                <img src="images/cover/TokyoUnderworld.jpg" alt="Tokyo Underworld" class="w-12 h-16 object-cover rounded">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-white truncate">Tougen Anki</h3>
-                                <p class="text-sm text-gray-400">31 janvier • Tome 26</p>
+                                <h3 class="font-bold text-white truncate">Tokyo Underworld</h3>
+                                <p class="text-sm text-gray-400">30 mars • Chapitre 39 jusqu'au 46</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-xs text-indigo-400 font-medium">Dans 11 jours</div>
+                                <div class="text-xs text-indigo-400 font-medium">Dans 28 jours</div>
                             </div>
                         </div>
                     </div>

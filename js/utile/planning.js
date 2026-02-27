@@ -18,28 +18,28 @@ class PlanningManager {
         
         // Sorties pour décembre 2025
         const december2025Releases = {
-            "2026-01-27": [
+            "2026-03-28": [
                 { 
-                    title: "Tougen Anki", 
-                    chapter: "Chapitre 221", 
+                    title: "Catenaccio", 
+                    chapter: "47 jusqu'au 56", 
                     type: "Manga",
                     time: "17:00-18:00",
-                    cover: "images/cover/TougenAnki.jpg",
-                    url: "/Manga/Tougen Anki.html"
+                    cover: "images/cover/Catenaccio.png",
+                    url: "/Manga/Catenaccio.html"
                 }
             ]
         };
 
         // Sorties pour janvier 2026
         const january2026Releases = {
-            "2026-01-31": [
+            "2026-03-30": [
                 { 
-                    title: "Tougen Anki", 
-                    chapter: "Tome 26", 
+                    title: "Tokyo Underworld", 
+                    chapter: "39 jusqu'au 46", 
                     type: "Manga",
                     time: "16:00-17:00",
-                    cover: "images/cover/TougenAnki.jpg",
-                    url: "/Manga/Tougen Anki.html"
+                    cover: "images/cover/TokyoUnderworld.jpg",
+                    url: "/Manga/Tokyo Underworld.html"
                 }
             ]
         };

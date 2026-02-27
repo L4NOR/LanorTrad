@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 34,  // Changé de 29.5 à 29 pour les chapitres réguliers
+    maxChapters: 38,  // Changé de 29.5 à 29 pour les chapitres réguliers
     currentManga: "Tokyo Underworld",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1)
@@ -7,7 +7,9 @@ const CONFIG = {
 
 // Définition correcte des chapitres bonus
 const bonusChapters = [
-    { number: 24.5 }, { number: 26.5 }, { number: 29.5 }, { number: 32.5}
+    { number: 24.5 }, { number: 26.5 }, { number: 29.5 }, { number: 32.5 },
+    { number: 35.5 },
+    { number: 38.5 }
 ].map(ch => ({
     ...ch,
     date: CONFIG.baseDate,
