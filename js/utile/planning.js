@@ -424,21 +424,31 @@ class PlanningManager {
         const key = `${dateStr}-${mangaTitle}`;
         if (this.notifications[key]) {
             delete this.notifications[key];
+            // Annuler le vrai rappel
+            if (window.notificationScheduler) {
+                window.notificationScheduler.unschedule(dateStr, mangaTitle);
+            }
         } else {
             this.notifications[key] = {
                 date: dateStr,
                 manga: mangaTitle,
                 enabled: true
             };
+            // Programmer un vrai rappel navigateur
+            const dayReleases = this.releases[dateStr];
+            const release = dayReleases ? dayReleases.find(r => r.title === mangaTitle) : null;
+            if (release && window.notificationScheduler) {
+                window.notificationScheduler.schedule(dateStr, release.time, mangaTitle);
+            }
         }
         localStorage.setItem('planningNotifications', JSON.stringify(this.notifications));
         this.renderCurrentView();
-        
+
         if (window.toast) {
             window.toast.info(
-                this.notifications[key] 
-                    ? `Rappel activé pour ${mangaTitle}` 
-                    : `Rappel désactivé pour ${mangaTitle}`
+                this.notifications[key]
+                    ? `🔔 Rappel activé pour ${mangaTitle}`
+                    : `🔕 Rappel désactivé pour ${mangaTitle}`
             );
         }
     }
@@ -447,17 +457,35 @@ class PlanningManager {
         return !!this.notifications[`${dateStr}-${mangaTitle}`];
     }
 
-    toggleNotifications() {
-        if ('Notification' in window) {
-            if (Notification.permission === 'granted') {
-                if (window.toast) window.toast.info('Notifications déjà activées');
-            } else if (Notification.permission !== 'denied') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        if (window.toast) window.toast.success('Notifications activées !');
-                    }
-                });
+    async toggleNotifications() {
+        if (!('Notification' in window)) {
+            if (window.toast) window.toast.error('Votre navigateur ne supporte pas les notifications');
+            return;
+        }
+
+        if (Notification.permission === 'granted') {
+            if (window.toast) window.toast.success('Notifications déjà activées ! Utilisez les 🔔 pour programmer vos rappels.');
+            return;
+        }
+
+        if (Notification.permission === 'denied') {
+            if (window.toast) window.toast.error('Notifications bloquées. Réactivez-les dans les paramètres de votre navigateur.');
+            return;
+        }
+
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                if (window.toast) window.toast.success('Notifications activées ! Vous recevrez un rappel 1h avant chaque sortie.');
+                // Enregistrer le service worker
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                }
+            } else {
+                if (window.toast) window.toast.warning('Notifications refusées. Vous pouvez toujours exporter vers Google Calendar.');
             }
+        } catch (e) {
+            if (window.toast) window.toast.error('Erreur lors de la demande de permission');
         }
     }
 

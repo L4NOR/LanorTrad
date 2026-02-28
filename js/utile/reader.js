@@ -390,11 +390,20 @@ class MangaReader {
 
     goToPage(pageIndex) {
         if (pageIndex < 0 || pageIndex >= this.totalPages) return;
-        
+
         this.currentPage = pageIndex;
         this.updatePageDisplay();
         this.savePageProgress();
         this.preloadAdjacentImages();
+
+        window.dispatchEvent(new CustomEvent('readerPageChanged', {
+            detail: {
+                currentPage: this.currentPage,
+                totalPages: this.totalPages,
+                isLastPage: this.currentPage === this.totalPages - 1,
+                mode: this.currentMode
+            }
+        }));
     }
 
     preloadAdjacentImages() {
@@ -535,3 +544,24 @@ class MangaReader {
 // Initialize reader
 const mangaReader = new MangaReader();
 window.MangaReader = mangaReader;
+
+// === ENGAGEMENT FEATURES LOADER ===
+(function loadEngagement() {
+    const scripts = document.querySelectorAll('script[src*="reader.js"]');
+    if (scripts.length === 0) return;
+    const readerSrc = scripts[0].getAttribute('src');
+    const basePath = readerSrc.substring(0, readerSrc.lastIndexOf('/') + 1);
+
+    // Compute CSS path from JS path (js/utile/ -> css/)
+    const cssPath = basePath.replace(/js\/utile\/?$/, 'css/').replace(/js\\utile\\?$/, 'css/');
+
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = cssPath + 'engagement.css';
+    document.head.appendChild(css);
+
+    const script = document.createElement('script');
+    script.src = basePath + 'engagement.js';
+    script.defer = true;
+    document.head.appendChild(script);
+})();
