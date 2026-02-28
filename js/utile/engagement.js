@@ -1,6 +1,6 @@
 /* ========================================
    ENGAGEMENT MODULE - LanorTrad
-   Notations, Reactions, Partage, Disqus, Auto-Next
+   Notations, Partage, Disqus
    Injecté dynamiquement par reader.js
    ======================================== */
 
@@ -11,10 +11,6 @@ class EngagementManager {
         this.chapterKey = this.getChapterKey();
         this.mangaName = this.getMangaName();
         this.chapterNumber = this.getChapterNumber();
-        this.isOneshot = this.detectOneshot();
-        this.autoNextEnabled = this.loadAutoNextPref();
-        this.autoNextTriggered = false;
-        this.autoNextTimer = null;
 
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.setup());
@@ -47,20 +43,6 @@ class EngagementManager {
         return match ? match[1] : null;
     }
 
-    detectOneshot() {
-        const path = decodeURIComponent(window.location.pathname).toLowerCase();
-        return path.includes('oneshot') || !this.getChapterNumber();
-    }
-
-    loadAutoNextPref() {
-        const saved = localStorage.getItem('lanortrad_autoNext');
-        return saved !== null ? saved === 'true' : true;
-    }
-
-    saveAutoNextPref() {
-        localStorage.setItem('lanortrad_autoNext', String(this.autoNextEnabled));
-    }
-
     setup() {
         const readerContainer = document.getElementById('readerContainer');
         if (!readerContainer) return;
@@ -78,17 +60,9 @@ class EngagementManager {
 
         this.initRating();
         this.addSeparator();
-        this.initReactions();
-        this.addSeparator();
         this.initShare();
         this.addSeparator();
-        this.initAutoNextToggle();
-        this.addSeparator();
         this.initDisqus();
-
-        if (!this.isOneshot) {
-            this.initAutoNext();
-        }
     }
 
     addSeparator() {
@@ -177,67 +151,6 @@ class EngagementManager {
         ratingContainer.appendChild(starsDiv);
         ratingContainer.appendChild(label);
         block.appendChild(ratingContainer);
-        this.container.appendChild(block);
-    }
-
-    // ==========================================
-    // REACTIONS (emojis)
-    // ==========================================
-
-    initReactions() {
-        const storageKey = `lanortrad_reactions_${this.chapterKey}`;
-        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
-
-        const reactions = [
-            { id: 'fire', emoji: '🔥', label: 'Feu' },
-            { id: 'cry', emoji: '😢', label: 'Émotion' },
-            { id: 'mindblown', emoji: '🤯', label: 'Choqué' },
-            { id: 'laugh', emoji: '😂', label: 'Drôle' },
-            { id: 'love', emoji: '❤️', label: 'Love' }
-        ];
-
-        const block = document.createElement('div');
-        block.className = 'engagement-block';
-
-        const title = document.createElement('div');
-        title.className = 'engagement-block-title';
-        title.textContent = 'Votre réaction';
-        block.appendChild(title);
-
-        const reactionsDiv = document.createElement('div');
-        reactionsDiv.className = 'reactions-container';
-
-        reactions.forEach(r => {
-            const btn = document.createElement('div');
-            btn.className = 'reaction-btn' + (saved[r.id] ? ' active' : '');
-
-            const emoji = document.createElement('span');
-            emoji.className = 'reaction-emoji';
-            emoji.textContent = r.emoji;
-
-            const label = document.createElement('span');
-            label.className = 'reaction-label';
-            label.textContent = r.label;
-
-            btn.appendChild(emoji);
-            btn.appendChild(label);
-
-            btn.addEventListener('click', () => {
-                const isActive = btn.classList.contains('active');
-                if (isActive) {
-                    btn.classList.remove('active');
-                    delete saved[r.id];
-                } else {
-                    btn.classList.add('active');
-                    saved[r.id] = true;
-                }
-                localStorage.setItem(storageKey, JSON.stringify(saved));
-            });
-
-            reactionsDiv.appendChild(btn);
-        });
-
-        block.appendChild(reactionsDiv);
         this.container.appendChild(block);
     }
 
@@ -344,51 +257,6 @@ class EngagementManager {
     }
 
     // ==========================================
-    // AUTO-NEXT TOGGLE
-    // ==========================================
-
-    initAutoNextToggle() {
-        if (this.isOneshot) return;
-
-        const block = document.createElement('div');
-        block.className = 'engagement-block';
-
-        const toggleDiv = document.createElement('div');
-        toggleDiv.className = 'auto-next-toggle';
-
-        const labelEl = document.createElement('label');
-        labelEl.textContent = 'Chapitre suivant automatique';
-        labelEl.setAttribute('for', 'autoNextToggle');
-
-        const switchLabel = document.createElement('label');
-        switchLabel.className = 'toggle-switch';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = 'autoNextToggle';
-        checkbox.checked = this.autoNextEnabled;
-
-        const slider = document.createElement('span');
-        slider.className = 'toggle-slider';
-
-        switchLabel.appendChild(checkbox);
-        switchLabel.appendChild(slider);
-
-        checkbox.addEventListener('change', () => {
-            this.autoNextEnabled = checkbox.checked;
-            this.saveAutoNextPref();
-            if (window.toast) {
-                window.toast.info(this.autoNextEnabled ? 'Auto-next activé' : 'Auto-next désactivé');
-            }
-        });
-
-        toggleDiv.appendChild(labelEl);
-        toggleDiv.appendChild(switchLabel);
-        block.appendChild(toggleDiv);
-        this.container.appendChild(block);
-    }
-
-    // ==========================================
     // DISQUS (lazy loaded)
     // ==========================================
 
@@ -431,12 +299,18 @@ class EngagementManager {
 
     loadDisqus(placeholder) {
         const pageUrl = window.location.href.split('#')[0].split('?')[0];
+        const identifier = this.chapterKey;
+        const pageTitle = document.title;
 
         window.disqus_config = function () {
-            this.page.url = pageUrl;
-            this.page.identifier = this.chapterKey;
-            this.page.title = document.title;
-        }.bind(this);
+            try {
+                this.page.url = pageUrl;
+                this.page.identifier = identifier;
+                this.page.title = pageTitle;
+            } catch (e) {
+                // Disqus will still work with default config
+            }
+        };
 
         const script = document.createElement('script');
         script.src = `https://${DISQUS_SHORTNAME}.disqus.com/embed.js`;
@@ -456,93 +330,6 @@ class EngagementManager {
         (document.head || document.body).appendChild(script);
     }
 
-    // ==========================================
-    // AUTO-NEXT CHAPTER
-    // ==========================================
-
-    initAutoNext() {
-        // Scroll mode detection
-        window.addEventListener('scroll', () => {
-            if (!this.autoNextEnabled || this.autoNextTriggered) return;
-
-            const scrollBottom = window.scrollY + window.innerHeight;
-            const pageHeight = document.body.scrollHeight;
-
-            if (scrollBottom >= pageHeight - 150) {
-                this.triggerAutoNext();
-            }
-        }, { passive: true });
-
-        // Page mode detection (via custom event from reader.js)
-        window.addEventListener('readerPageChanged', (e) => {
-            if (!this.autoNextEnabled || this.autoNextTriggered) return;
-
-            if (e.detail && e.detail.isLastPage) {
-                this.triggerAutoNext();
-            }
-        });
-    }
-
-    triggerAutoNext() {
-        // Check if changeChapter exists and we're not on last chapter
-        if (typeof window.changeChapter !== 'function') return;
-
-        this.autoNextTriggered = true;
-        this.showAutoNextOverlay();
-    }
-
-    showAutoNextOverlay() {
-        const overlay = document.createElement('div');
-        overlay.className = 'auto-next-overlay';
-
-        const text = document.createElement('span');
-        text.className = 'auto-next-text';
-
-        const progress = document.createElement('div');
-        progress.className = 'auto-next-progress';
-        const progressFill = document.createElement('div');
-        progressFill.className = 'auto-next-progress-fill';
-        progress.appendChild(progressFill);
-
-        const cancelBtn = document.createElement('button');
-        cancelBtn.className = 'auto-next-cancel';
-        cancelBtn.textContent = 'Annuler';
-
-        overlay.appendChild(text);
-        overlay.appendChild(progress);
-        overlay.appendChild(cancelBtn);
-        document.body.appendChild(overlay);
-
-        let seconds = 5;
-        text.innerHTML = `Chapitre suivant dans <strong>${seconds}s</strong>`;
-
-        // Start progress animation
-        requestAnimationFrame(() => {
-            progressFill.style.width = '100%';
-            progressFill.style.transition = `width ${seconds}s linear`;
-        });
-
-        this.autoNextTimer = setInterval(() => {
-            seconds--;
-            if (seconds <= 0) {
-                clearInterval(this.autoNextTimer);
-                overlay.classList.add('hiding');
-                setTimeout(() => {
-                    overlay.remove();
-                    window.changeChapter(1);
-                }, 300);
-            } else {
-                text.innerHTML = `Chapitre suivant dans <strong>${seconds}s</strong>`;
-            }
-        }, 1000);
-
-        cancelBtn.addEventListener('click', () => {
-            clearInterval(this.autoNextTimer);
-            overlay.classList.add('hiding');
-            setTimeout(() => overlay.remove(), 300);
-            // Don't re-trigger until page reload
-        });
-    }
 }
 
 // Initialize
