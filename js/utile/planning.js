@@ -44,8 +44,22 @@ class PlanningManager {
             ]
         };
 
+        // Test notification - sortie du jour
+        const testRelease = {
+            "2026-02-28": [
+                {
+                    title: "Ao No Exorcist",
+                    chapter: "167",
+                    type: "Manga",
+                    time: "15:00-16:00",
+                    cover: "images/cover/AoNoExorcist.jpg",
+                    url: "/Manga/Ao No Exorcist.html"
+                }
+            ]
+        };
+
         // Fusionner toutes les sorties
-        Object.assign(releases, december2025Releases, january2026Releases);
+        Object.assign(releases, december2025Releases, january2026Releases, testRelease);
 
         return releases;
     }

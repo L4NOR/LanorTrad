@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Équipe - LanorTrad</title>
+    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+
+    <!--MetaTags-->
+    <meta name="description" content="Faites connaissance avec l'équipe de LanorTrad, des passionnés de scantrad qui travaillent ensemble pour vous offrir des traductions de mangas de qualité.">
+    <meta name="keywords" content="équipe scantrad, LanorTrad équipe, traducteurs manga, scan, webtoon, manhwa, light novel, traduction française">
+    <meta name="author" content="LanorTrad">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+
+    <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:title" content="Rencontrez l'équipe - LanorTrad">
+    <meta property="og:description" content="Découvrez les membres de l'équipe LanorTrad et leur passion pour la traduction de mangas.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:image" content="images/Lanor/Banner.jpg">
+    <meta property="og:url" content="https://lanortrad.netlify.app/Équipe.html">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@LanorTrad">
+    <meta name="twitter:title" content="Rencontrez l'équipe - LanorTrad">
+    <meta name="twitter:description" content="Faites connaissance avec l'équipe derrière LanorTrad.">
+    <meta name="twitter:image" content="images/Lanor/Banner.jpg">
+
+    <meta name="theme-color" content="#6B46C1">
+    <link rel="alternate" type="application/json+oembed" href="https://discord.gg/md37S7nhkZ">
+
+    <!--Styles-->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/utile/theme.js"></script>
+    <link rel="stylesheet" href="css/intros.css">
+
+    <!--Scripts-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2MZGH30P4J');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
+    <!-- Ezoic : décommente la ligne ci-dessous quand ton compte Ezoic est prêt -->
+    <!-- <script async src="https://www.ezojs.com/ezoic/sa.min.js"></script> -->
+    <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
+    <script src="js/utile/search.js"></script>
+    <script src="js/utile/navbar.js"></script>
+    <script src="js/utile/toast.js"></script>
+    <script src="js/utile/enhancements.js" defer></script>
+</head>
+
+<body class="min-h-screen">
+    <!-- Loading Screen -->
+    <div class="loading-container">
+        <div class="background-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="loading-content">
+            <div class="logo">LanorTrad</div>
+            <div class="loading-bar"></div>
+            <div class="loading-text">Chargement de la page...</div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+                            LanorTrad
+                        </span>
+                    </a>
+                </div>
+    
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" type="button" class="text-gray-300 hover:text-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Ouvrir le menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+    
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="Bibliotheque.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Bibliothèque</a>
+                    <a href="Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
+                    <a href="Planning.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Planning</a>
+                    <a href="Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
+                    <div class="relative">
+                        <input type="search" placeholder="Rechercher un manga..." aria-label="Rechercher un manga"
+                               class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
+                    </div>
+                    <a href="https://discord.gg/md37S7nhkZ">
+                        <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            Rejoindre
+                        </button>
+                    </a>
+                </div>
+            </div>
+    
+        </div>
+    </nav>
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<!-- Mobile Sidebar -->
+<div id="mobile-sidebar" class="mobile-sidebar">
+    <div class="sidebar-header">
+        <span class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+        <button id="sidebar-close" class="sidebar-close" aria-label="Fermer le menu">&times;</button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="/Bibliotheque.html" class="sidebar-link"><span class="sidebar-icon">📚</span> Bibliothèque</a>
+        <a href="/Catalogue.html" class="sidebar-link"><span class="sidebar-icon">📖</span> Catalogue</a>
+        <a href="/Planning.html" class="sidebar-link"><span class="sidebar-icon">📅</span> Planning</a>
+        <a href="/Équipe.html" class="sidebar-link"><span class="sidebar-icon">👥</span> Équipe</a>
+    </nav>
+    <div class="sidebar-search">
+        <input type="search" placeholder="Rechercher un manga..." aria-label="Rechercher un manga">
+    </div>
+    <div class="sidebar-footer">
+        <a href="https://discord.gg/md37S7nhkZ" class="sidebar-discord">💬 Rejoindre Discord</a>
+    </div>
+</div>
+
+    <!-- Header Section -->
+    <section class="hero-gradient pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-black mb-4 bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white">
+                    👥 Notre Équipe
+                </h1>
+                <p class="text-lg text-gray-300">
+                    Découvrez les passionnés qui donnent vie à vos mangas préférés en français
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Stats -->
+    <section class="py-12 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card rounded-xl p-6 text-center glow">
+                    <div class="text-5xl mb-3">👨‍💻</div>
+                    <p class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">3</p>
+                    <p class="text-gray-400 font-medium">Membres actifs</p>
+                </div>
+                <div class="card rounded-xl p-6 text-center glow">
+                    <div class="text-5xl mb-3">📚</div>
+                    <p class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">4</p>
+                    <p class="text-gray-400 font-medium">Séries en cours</p>
+                </div>
+                <div class="card rounded-xl p-6 text-center glow">
+                    <div class="text-5xl mb-3">📖</div>
+                    <p class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">214</p>
+                    <p class="text-gray-400 font-medium">Chapitres traduits</p>
+                </div>
+                <div class="card rounded-xl p-6 text-center glow">
+                    <div class="text-5xl mb-3">🎉</div>
+                    <p class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 mb-2">2</p>
+                    <p class="text-gray-400 font-medium">Années d'expérience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Team Section -->
+    <section class="py-12 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-white mb-3">L'équipe principale</h2>
+                <p class="text-gray-400">Les personnes qui font vivre LanorTrad au quotidien</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Team Member 1: Lanor -->
+                <div class="card rounded-xl overflow-hidden glow">
+                    <div class="relative">
+                        <img src="images/Teams/Lanor.png" alt="Lanor" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
+                                🏆 Fondateur
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Lanor</h3>
+                        <p class="text-indigo-400 font-medium mb-4">Edit & Clean</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Fondateur et pilier de LanorTrad, Lanor s'occupe de l'édition et du nettoyage de tous les projets avec une précision remarquable.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tous les Projets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 2: Taichoskii -->
+                <div class="card rounded-xl overflow-hidden glow">
+                    <div class="relative">
+                        <img src="images/Teams/Taichoskii.png" alt="Taichoskii" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
+                                🌐 Traducteur
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Taichoskii</h3>
+                        <p class="text-indigo-400 font-medium mb-4">Traduction</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Expert en traduction, Taichoskii apporte son talent linguistique pour rendre les dialogues fluides et naturels en français.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Satsudou</span>
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tougen Anki</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Member 3: Zerox -->
+                <div class="card rounded-xl overflow-hidden glow">
+                    <div class="relative">
+                        <img src="images/Teams/Zerox.png" alt="Zerox" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4">
+                            <span class="chapter-tag px-3 py-1 rounded-full text-white text-sm font-medium">
+                                ✅ Correcteur
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Zerox</h3>
+                        <p class="text-indigo-400 font-medium mb-4">Qcheck</p>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Garant de la qualité finale, Zerox vérifie méticuleusement chaque détail pour vous offrir une lecture parfaite.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-300 text-xs">Tougen Anki</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Team Section -->
+    <section class="py-12 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="card rounded-xl p-8 md:p-12 glow">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">🚀</div>
+                    <h2 class="text-3xl font-bold mb-4">Rejoignez l'aventure</h2>
+                    <p class="text-gray-300 max-w-2xl mx-auto">
+                        Vous êtes passionné de manga et vous souhaitez participer à l'aventure ? 
+                        Nous recherchons toujours de nouveaux talents !
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 rounded-xl bg-gray-900/50 border border-gray-800">
+                        <div class="text-3xl mb-4">📋</div>
+                        <h3 class="text-xl font-bold mb-4">Postes recherchés</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Traducteurs JP-FR / AN-FR
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Correcteurs
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Clean
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="p-6 rounded-xl bg-gray-900/50 border border-gray-800">
+                        <div class="text-3xl mb-4">⭐</div>
+                        <h3 class="text-xl font-bold mb-4">Prérequis</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Passion pour les mangas
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Rigueur et sérieux
+                            </li>
+                            <li class="flex items-center text-gray-300">
+                                <span class="mr-3 text-indigo-400">▸</span>
+                                Esprit d'équipe
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="https://discord.com/channels/1325767167203082341/1326357433588912179/1332094737666015232">
+                        <button class="px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                            ✨ Postuler maintenant
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-12 border-t border-gray-800/50 bg-gray-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+                    <p class="mt-4 text-gray-400">Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.</p>
+                    <div class="mt-4 flex gap-3">
+                        <a href="https://discord.gg/md37S7nhkZ" class="px-3 py-1.5 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-sm hover:bg-indigo-600/30 transition-colors">Discord</a>
+                        <a href="https://x.com/LanorTrad" class="px-3 py-1.5 rounded-lg bg-gray-700/30 border border-gray-600/30 text-gray-300 text-sm hover:bg-gray-700/50 transition-colors">Twitter/X</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="/Planning.html" class="text-gray-400 hover:text-white transition-colors">Planning</a></li>
+                        <li><a href="/Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliothèque</a></li>
+                        <li><a href="/Équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Le site</h3>
+                    <ul class="space-y-2">
+                        <li class="text-gray-500 text-sm">5 mangas traduits</li>
+                        <li class="text-gray-500 text-sm">500+ chapitres</li>
+                        <li class="text-gray-500 text-sm">5 oneshots</li>
+                        <li><a href="https://discord.gg/md37S7nhkZ" class="text-gray-400 hover:text-white transition-colors text-sm">Signaler un problème</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-500 text-sm">
+                <p>&copy; 2024-2026 LanorTrad. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/utile/scrollReveal.js"></script>
+</body>
+</html>

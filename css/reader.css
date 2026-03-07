@@ -8,11 +8,11 @@
    ======================================== */
 :root {
     --reader-bg: rgba(17, 24, 39, 0.95);
-    --reader-border: rgba(99, 102, 241, 0.3);
-    --reader-accent: #6366f1;
-    --reader-accent-light: #818cf8;
-    --reader-text: #e5e7eb;
-    --reader-text-muted: #9CA3AF;
+    --reader-border: rgba(var(--accent-rgb, 99, 102, 241), 0.3);
+    --reader-accent: var(--primary-light, #6366f1);
+    --reader-accent-light: var(--accent, #818cf8);
+    --reader-text: var(--text-primary, #e5e7eb);
+    --reader-text-muted: var(--text-secondary, #9CA3AF);
 }
 
 /* ========================================
@@ -134,8 +134,8 @@
 
 .mode-btn.active {
     color: white;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, var(--primary, #4f46e5), var(--accent-light, #7c3aed));
+    box-shadow: 0 2px 8px rgba(var(--accent-rgb, 99, 102, 241), 0.4);
 }
 
 .mode-btn.shortcuts-btn {
@@ -295,7 +295,7 @@
     }
     
     .page-nav-arrow:hover:not(.disabled) {
-        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        background: linear-gradient(135deg, var(--primary, #4f46e5), var(--accent-light, #7c3aed));
         border-color: transparent;
         transform: translateY(-50%) scale(1.05);
     }
@@ -337,7 +337,7 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4f46e5, #818cf8);
+    background: linear-gradient(90deg, var(--primary, #4f46e5), var(--accent, #818cf8));
     border-radius: 999px;
     transition: width 0.2s ease;
     position: relative;
@@ -624,7 +624,7 @@
 .close-shortcuts {
     width: 100%;
     padding: 1rem;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    background: linear-gradient(135deg, var(--primary, #4f46e5), var(--accent-light, #7c3aed));
     border: none;
     color: white;
     font-weight: 600;

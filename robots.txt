@@ -1,0 +1,9 @@
+# robots.txt - LanorTrad
+User-agent: *
+Allow: /
+Disallow: /js/
+Disallow: /css/
+Disallow: /sw.js
+
+# Sitemap
+Sitemap: https://lanortrad.netlify.app/sitemap.xml

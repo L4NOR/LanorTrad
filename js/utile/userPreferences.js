@@ -75,7 +75,7 @@ class UserPreferences {
   }
 
   trackReadingHistory() {
-    const currentPath = window.location.pathname;
+    const currentPath = decodeURIComponent(window.location.pathname);
 
     // Chapitres normaux
     const chapterMatch = currentPath.match(
@@ -203,6 +203,41 @@ class UserPreferences {
       const mangaId = btn.dataset.mangaId;
       this.updateFavoriteButton(btn, this.isFavorite(mangaId));
     });
+  }
+
+  // Obtenir les données "Reprendre la lecture" (derniers chapitres par manga unique)
+  getResumeData(limit = 4) {
+    const history = this.loadHistory();
+    const seen = new Set();
+    const resume = [];
+
+    for (const entry of history) {
+      if (seen.has(entry.mangaId)) continue;
+      seen.add(entry.mangaId);
+
+      // Construire le lien vers le chapitre
+      let chapterLink;
+      if (entry.type === 'oneshot' || entry.chapter === 'oneshot') {
+        chapterLink = `/Manga/${entry.mangaId}/Oneshot.html`;
+      } else {
+        const mangaPath = entry.mangaId === 'Satsudou' ? entry.mangaId : entry.mangaId;
+        chapterLink = `/Manga/${mangaPath}/Chapitre ${entry.chapter}.html`;
+      }
+
+      resume.push({
+        mangaId: entry.mangaId,
+        title: entry.title || entry.mangaId,
+        chapter: entry.chapter,
+        image: entry.image || this.getMangaImage(entry.mangaId),
+        link: chapterLink,
+        readAt: entry.readAt,
+        type: entry.type
+      });
+
+      if (resume.length >= limit) break;
+    }
+
+    return resume;
   }
 
   showToast(message) {

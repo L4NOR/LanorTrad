@@ -22,13 +22,54 @@ class MangaReader {
         const container = document.getElementById('readerContainer');
         if (!container) return;
 
+        this.optimizeLayout();
         this.collectImages();
         this.createReaderUI();
         this.setupEventListeners();
         this.setMode(this.currentMode);
         this.restoreProgress();
-        
+        this.addMangaPageLink();
+
         this.isInitialized = true;
+    }
+
+    optimizeLayout() {
+        // Rendre la barre de contrôles transparente (seuls les boutons restent visibles)
+        const controlsBar = document.querySelector('.fixed.top-20');
+        if (controlsBar) {
+            controlsBar.style.background = 'transparent';
+            controlsBar.style.backdropFilter = 'none';
+            controlsBar.style.webkitBackdropFilter = 'none';
+        }
+    }
+
+    addMangaPageLink() {
+        const pathParts = window.location.pathname.split('/');
+        const fileName = decodeURIComponent(pathParts[pathParts.length - 1]);
+        const mangaFolder = decodeURIComponent(pathParts[pathParts.length - 2]);
+        const mangaPageUrl = `../${encodeURIComponent(mangaFolder)}.html`;
+        const isOneshot = fileName.toLowerCase().includes('oneshot');
+        const label = isOneshot ? 'Page du oneshot' : 'Page du manga';
+
+        const controlsDiv = document.querySelector('.reader-controls .flex');
+        if (controlsDiv) {
+            // Supprimer le bouton "Fin du oneshot" existant s'il y en a un
+            controlsDiv.querySelectorAll('a.control-button').forEach(a => {
+                if (a.textContent.includes('Fin du oneshot')) a.remove();
+            });
+
+            const link = document.createElement('a');
+            link.href = mangaPageUrl;
+            link.className = 'control-button';
+            link.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>${label}</span>
+            `;
+            controlsDiv.appendChild(link);
+        }
     }
 
     collectImages() {
@@ -544,6 +585,27 @@ class MangaReader {
 // Initialize reader
 const mangaReader = new MangaReader();
 window.MangaReader = mangaReader;
+
+// Scroll to top animé avec easing
+function scrollToTop() {
+    const start = window.scrollY;
+    if (start === 0) return;
+    const duration = Math.min(800, 300 + start * 0.05); // adapté à la distance
+    const startTime = performance.now();
+
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+
+    function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, start * (1 - easeOutCubic(progress)));
+        if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
 
 // === ENGAGEMENT FEATURES LOADER ===
 (function loadEngagement() {

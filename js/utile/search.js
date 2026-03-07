@@ -1,226 +1,254 @@
-const availableMangas = [
-    {
-        title: 'Ao No Exorcist',
-        url: 'https://lanortrad.netlify.app/Manga/Ao%20No%20Exorcist',
-        coverImage: 'https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg',
-        genres: ['Action', 'Aventure', 'Fantaisie'],
-        chapters: 166,
-        synopsis: 'Rin Okumura est un adolescent qui découvre un jour qu\'il est le fils de Satan. Déterminé à devenir un exorciste pour vaincre Satan...'
-    },
-    {
-        title: 'Catenaccio',
-        url: 'https://lanortrad.netlify.app/manga/Catenaccio',
-        coverImage: 'https://i.postimg.cc/5Nq64t37/Catenaccio.png',
-        genres: ['Sports', 'Vie Scolaire', 'Collaboration'],
-        chapters: 46,
-        synopsis: 'Yataro Araki, membre de l’équipe de football du lycée Tōjō, nourrit de grandes ambitions : dans dix ans, il se voit déjà au sommet du football européen...'
-    },
-    {
-        title: 'Satsudou',
-        url: 'https://lanortrad.netlify.app/manga/Satsudou',
-        coverImage: 'https://i.postimg.cc/Hs4VYLzH/Satsudou.jpg',
-        genres: ['Action', 'Comédie', 'Arts Martiaux'],
-        chapters: 18,
-        synopsis: 'Akamori Mitsuo veut être un salarié ordinaire mais... C\'est un meurtrier de génie né dans une famille qui pratique l\'art ancien de tuer...'
-    },
-    {
-        title: 'Tokyo Underworld',
-        url: 'https://lanortrad.netlify.app/Manga/Tokyo%20Underworld',
-        coverImage: 'https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg',
-        genres: ['Horreur', 'Mystérieux'],
-        chapters: 38,
-        synopsis: 'Selon la légende urbaine, les coupables sont condamnés à tomber dans les Enfers de Tokyo. Là, ils ne bénéficient d\'aucune pitié et...'
-    },
-    {
-        title: 'Tougen Anki',
-        url: 'https://lanortrad.netlify.app/Manga/Tougen%20Anki',
-        coverImage: 'https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg',
-        genres: ['Action', 'Drame', 'Fantaisie'],
-        chapters: 230,
-        synopsis: 'Ichinose Shiki, héritier du sang d\'Oni, a passé toute son enfance sans se rendre compte de ce fait. Cependant, lorsqu\'un inconnu se...'
-    },
-    // ONESHOTS
-    {
-        title: 'Countdown',
-        url: 'https://lanortrad.netlify.app/Manga/Countdown',
-        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/Countdown.jpg',
-        genres: ['Action', 'Thriller', 'Oneshot'],
-        chapters: 1,
-        synopsis: 'Un thriller intense qui compte à rebours vers un final explosif.'
-    },
-    {
-        title: 'Gestation of Kalavinka',
-        url: 'https://lanortrad.netlify.app/Manga/Gestation%20of%20Kalavinka',
-        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/GestationOfKalavinka.jpg',
-        genres: ['Fantasy', 'Mystérieux', 'Oneshot'],
-        chapters: 1,
-        synopsis: 'Une histoire mystique autour de la naissance d\'une créature légendaire.'
-    },
-    {
-        title: 'In the White',
-        url: 'https://lanortrad.netlify.app/Manga/In%20the%20White',
-        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/InTheWhite.jpg',
-        genres: ['Drame', 'Psychologique', 'Oneshot'],
-        chapters: 1,
-        synopsis: 'Une exploration psychologique dans un monde entièrement blanc.'
-    },
-    {
-        title: 'Sake to Sakana',
-        url: 'https://lanortrad.netlify.app/Manga/Sake%20to%20Sakana',
-        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/SakeToSakana.jpg',
-        genres: ['Vie Scolaire', 'Comédie', 'Oneshot'],
-        chapters: 1,
-        synopsis: 'Une histoire légère autour du saké et de l\'amitié.'
-    },
-    {
-        title: 'Second Coming',
-        url: 'https://lanortrad.netlify.app/Manga/Second%20Coming',
-        coverImage: 'https://i.postimg.cc/VOTRE_IMAGE/SecondComing.jpg',
-        genres: ['Action', 'Surnaturel', 'Oneshot'],
-        chapters: 1,
-        synopsis: 'Le retour mystérieux d\'une force légendaire.'
+// === ENHANCED SEARCH - LanorTrad ===
+// Recherche instantanee avec keyboard nav, highlight, glassmorphism dropdown
+// Utilise la source unique de donnees manga (mangaData.js)
+
+(function () {
+    'use strict';
+
+    // Construire la liste de recherche depuis la source unique
+    function getSearchableMangas() {
+        var data = window.MANGA_DATA || [];
+        return data.map(function (m) {
+            return {
+                title: m.title,
+                url: m.url,
+                coverImage: m.coverImage || m.image,
+                genres: m.genres.filter(function (g) {
+                    return g !== 'LanorTrad' && g !== 'Collaboration';
+                }),
+                chapters: m.chapters,
+                synopsis: m.description
+            };
+        });
     }
-];
 
-function createSuggestionsContainer() {
-    const container = document.createElement('div');
-    container.id = 'search-suggestions';
-    container.style.cssText = `
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        left: 0;
-        right: 0;
-        background: rgba(17, 24, 39, 0.95);
-        border: 1px solid rgba(79, 70, 229, 0.1);
-        border-radius: 0.75rem;
-        margin-top: 0.5rem;
-        max-height: 400px;
-        overflow-y: auto;
-        display: none;
-        z-index: 50;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 4px 20px rgba(79, 70, 229, 0.1);
-    `;
-    return container;
-}
+    // =====================================================================
+    // CSS
+    // =====================================================================
+    function injectSearchCSS() {
+        if (document.getElementById('lt-search-css')) return;
+        var style = document.createElement('style');
+        style.id = 'lt-search-css';
+        style.textContent = [
+            '.lt-search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;min-width:320px;background:rgba(17,24,39,.97);border:1px solid rgba(99,102,241,.25);border-radius:14px;max-height:420px;overflow-y:auto;display:none;z-index:9999;backdrop-filter:blur(16px);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px rgba(99,102,241,.1);animation:ltSearchSlideIn .2s ease}',
+            '.lt-search-dropdown.open{display:block}',
+            '@keyframes ltSearchSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}',
+            '.lt-search-item{display:flex;gap:.75rem;padding:.75rem 1rem;cursor:pointer;transition:all .15s ease;border-bottom:1px solid rgba(255,255,255,.04)}',
+            '.lt-search-item:last-child{border-bottom:none}',
+            '.lt-search-item:hover,.lt-search-item.active{background:rgba(99,102,241,.12)}',
+            '.lt-search-item.active{border-left:3px solid #818cf8}',
+            '.lt-search-item img{width:48px;height:64px;object-fit:cover;border-radius:8px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.3)}',
+            '.lt-search-item-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:.25rem}',
+            '.lt-search-item-title{font-weight:600;font-size:.9rem;color:#e5e7eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+            '.lt-search-item-title mark{background:rgba(99,102,241,.35);color:#c7d2fe;border-radius:2px;padding:0 1px}',
+            '.lt-search-item-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}',
+            '.lt-search-item-genre{font-size:.7rem;padding:2px 7px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);border-radius:6px;color:#a5b4fc}',
+            '.lt-search-item-chapters{font-size:.75rem;color:#818cf8;font-weight:500;margin-left:auto;white-space:nowrap}',
+            '.lt-search-item-synopsis{font-size:.75rem;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+            '.lt-search-empty{padding:2rem;text-align:center;color:#6b7280}',
+            '.lt-search-empty-icon{font-size:2rem;margin-bottom:.5rem;opacity:.4}',
+            '.lt-search-empty-text{font-size:.85rem}',
+            '.lt-search-hint-bar{padding:.5rem 1rem;font-size:.7rem;color:#4b5563;border-top:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center}',
+            '.lt-search-hint-bar kbd{font-family:ui-monospace,monospace;padding:1px 5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;font-size:.65rem;margin:0 1px}',
+            // Scrollbar for dropdown
+            '.lt-search-dropdown::-webkit-scrollbar{width:6px}',
+            '.lt-search-dropdown::-webkit-scrollbar-track{background:transparent}',
+            '.lt-search-dropdown::-webkit-scrollbar-thumb{background:rgba(99,102,241,.3);border-radius:3px}',
+            '.lt-search-dropdown::-webkit-scrollbar-thumb:hover{background:rgba(99,102,241,.5)}'
+        ].join('\n');
+        document.head.appendChild(style);
+    }
 
-function createSuggestionElement(manga) {
-    const div = document.createElement('div');
-    div.className = 'p-4 hover:bg-gray-800/50 cursor-pointer transition-all duration-200 border-b border-gray-700/50 last:border-0';
-    
-    div.innerHTML = `
-        <div class="flex gap-4">
-            <div class="flex-shrink-0">
-                <img src="${manga.coverImage}" alt="${manga.title}" class="w-16 h-24 object-cover rounded-lg shadow-md"/>
-            </div>
-            <div class="flex-grow min-w-0">
-                <div class="flex items-center justify-between mb-1">
-                    <h3 class="font-medium text-white truncate">${manga.title}</h3>
-                    <span class="text-sm text-indigo-400 whitespace-nowrap ml-2">Ch. ${manga.chapters}</span>
-                </div>
-                <div class="flex flex-wrap gap-2 mb-2">
-                    ${manga.genres.map(genre => 
-                        `<span class="px-2 py-0.5 text-xs bg-gray-800/80 text-gray-300 rounded-full border border-gray-700/50">${genre}</span>`
-                    ).join('')}
-                </div>
-                <p class="text-sm text-gray-400 line-clamp-2">${manga.synopsis}</p>
-            </div>
-        </div>
-    `;
-    
-    div.addEventListener('click', () => {
-        window.location.href = manga.url;
-    });
-    
-    return div;
-}
+    // =====================================================================
+    // HIGHLIGHT MATCHING TEXT
+    // =====================================================================
+    function highlightText(text, query) {
+        if (!query) return text;
+        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        var regex = new RegExp('(' + escaped + ')', 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    }
 
-function createNoResultsElement() {
-    const div = document.createElement('div');
-    div.className = 'p-8 text-gray-400 text-center';
-    div.innerHTML = `
-        <span class="block mb-2">✖</span>
-        <span class="text-sm">Aucun manga trouvé</span>
-    `;
-    return div;
-}
+    // =====================================================================
+    // CREATE DROPDOWN FOR AN INPUT
+    // =====================================================================
+    function setupSearchInput(input) {
+        var wrapper = input.parentElement;
+        if (!wrapper) return;
 
-function enhanceSearchInput(searchInput) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'relative group';
-    
-    const searchIcon = document.createElement('span');
-    searchIcon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-    `;
+        // Ensure wrapper is positioned
+        var pos = window.getComputedStyle(wrapper).position;
+        if (pos !== 'relative' && pos !== 'absolute' && pos !== 'fixed') {
+            wrapper.style.position = 'relative';
+        }
 
-    searchInput.className = `
-        w-64 pl-12 pr-4 py-2.5 bg-gray-900/80 rounded-lg
-        border border-gray-700 text-gray-300 text-sm
-        placeholder-gray-400 backdrop-blur-lg
-        transition-all duration-300
-        focus:border-indigo-500/50 focus:shadow-lg focus:shadow-indigo-500/20
-        focus:outline-none focus:ring-0
-    `;
-    
-    searchInput.parentNode.insertBefore(wrapper, searchInput);
-    wrapper.appendChild(searchInput);
-    wrapper.insertBefore(searchIcon, searchInput);
-}
+        // Create dropdown
+        var dropdown = document.createElement('div');
+        dropdown.className = 'lt-search-dropdown';
+        wrapper.appendChild(dropdown);
 
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInputs = document.querySelectorAll('input[type="search"]');
-    
-    searchInputs.forEach(searchInput => {
-        enhanceSearchInput(searchInput);
-        const suggestionsContainer = createSuggestionsContainer();
-        searchInput.parentElement.style.position = 'relative';
-        searchInput.parentElement.appendChild(suggestionsContainer);
+        var activeIndex = -1;
+        var currentResults = [];
 
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase().trim();
-            suggestionsContainer.innerHTML = '';
+        function renderResults(query) {
+            var availableMangas = getSearchableMangas();
+            dropdown.innerHTML = '';
+            activeIndex = -1;
 
-            const iconEl = searchInput.parentElement.querySelector('svg');
-            iconEl.classList.toggle('text-indigo-400', searchTerm.length > 0);
+            if (!query) {
+                dropdown.classList.remove('open');
+                return;
+            }
 
-            if (searchTerm.length > 0) {
-                const matches = availableMangas.filter(manga => 
-                    manga.title.toLowerCase().includes(searchTerm) ||
-                    manga.synopsis.toLowerCase().includes(searchTerm) ||
-                    manga.genres.some(genre => genre.toLowerCase().includes(searchTerm))
-                );
+            var q = query.toLowerCase();
+            currentResults = availableMangas.filter(function (m) {
+                return m.title.toLowerCase().indexOf(q) !== -1 ||
+                       m.synopsis.toLowerCase().indexOf(q) !== -1 ||
+                       m.genres.some(function (g) { return g.toLowerCase().indexOf(q) !== -1; });
+            });
 
-                if (matches.length > 0) {
-                    matches.forEach(manga => {
-                        suggestionsContainer.appendChild(createSuggestionElement(manga));
-                    });
-                } else {
-                    suggestionsContainer.appendChild(createNoResultsElement());
+            if (currentResults.length === 0) {
+                dropdown.innerHTML = '<div class="lt-search-empty"><div class="lt-search-empty-icon">&#x2715;</div><div class="lt-search-empty-text">Aucun manga trouv\u00e9</div></div>';
+                dropdown.classList.add('open');
+                return;
+            }
+
+            var frag = document.createDocumentFragment();
+            currentResults.forEach(function (manga, idx) {
+                var item = document.createElement('div');
+                item.className = 'lt-search-item';
+                item.setAttribute('data-index', idx);
+
+                var img = document.createElement('img');
+                img.src = manga.coverImage;
+                img.alt = 'Couverture de ' + manga.title;
+                img.loading = 'lazy';
+                img.onerror = function () { this.style.display = 'none'; };
+
+                var info = document.createElement('div');
+                info.className = 'lt-search-item-info';
+
+                var title = document.createElement('div');
+                title.className = 'lt-search-item-title';
+                title.innerHTML = highlightText(manga.title, query);
+
+                var meta = document.createElement('div');
+                meta.className = 'lt-search-item-meta';
+                manga.genres.forEach(function (g) {
+                    var tag = document.createElement('span');
+                    tag.className = 'lt-search-item-genre';
+                    tag.textContent = g;
+                    meta.appendChild(tag);
+                });
+                var chap = document.createElement('span');
+                chap.className = 'lt-search-item-chapters';
+                chap.textContent = manga.chapters === 1 ? 'Oneshot' : manga.chapters + ' ch.';
+                meta.appendChild(chap);
+
+                var synopsis = document.createElement('div');
+                synopsis.className = 'lt-search-item-synopsis';
+                synopsis.textContent = manga.synopsis;
+
+                info.appendChild(title);
+                info.appendChild(meta);
+                info.appendChild(synopsis);
+
+                item.appendChild(img);
+                item.appendChild(info);
+
+                item.addEventListener('click', function () {
+                    navigateToManga(manga);
+                });
+
+                item.addEventListener('mouseenter', function () {
+                    setActive(idx);
+                });
+
+                frag.appendChild(item);
+            });
+
+            // Keyboard hints bar
+            var hints = document.createElement('div');
+            hints.className = 'lt-search-hint-bar';
+            hints.innerHTML = '<span><kbd>\u2191</kbd><kbd>\u2193</kbd> naviguer</span><span><kbd>Enter</kbd> ouvrir</span><span><kbd>Esc</kbd> fermer</span>';
+            frag.appendChild(hints);
+
+            dropdown.appendChild(frag);
+            dropdown.classList.add('open');
+        }
+
+        function setActive(idx) {
+            var items = dropdown.querySelectorAll('.lt-search-item');
+            items.forEach(function (item) { item.classList.remove('active'); });
+            activeIndex = idx;
+            if (idx >= 0 && idx < items.length) {
+                items[idx].classList.add('active');
+                // Scroll into view
+                items[idx].scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        function navigateToManga(manga) {
+            window.location.href = manga.url;
+        }
+
+        // Event: input
+        input.addEventListener('input', function () {
+            renderResults(input.value.trim());
+        });
+
+        // Event: focus
+        input.addEventListener('focus', function () {
+            if (input.value.trim()) {
+                renderResults(input.value.trim());
+            }
+        });
+
+        // Event: keyboard navigation
+        input.addEventListener('keydown', function (e) {
+            if (!dropdown.classList.contains('open')) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                var nextIdx = activeIndex + 1;
+                if (nextIdx >= currentResults.length) nextIdx = 0;
+                setActive(nextIdx);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                var prevIdx = activeIndex - 1;
+                if (prevIdx < 0) prevIdx = currentResults.length - 1;
+                setActive(prevIdx);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (activeIndex >= 0 && activeIndex < currentResults.length) {
+                    navigateToManga(currentResults[activeIndex]);
                 }
-                suggestionsContainer.style.display = 'block';
-            } else {
-                suggestionsContainer.style.display = 'none';
+            } else if (e.key === 'Escape') {
+                dropdown.classList.remove('open');
+                input.blur();
             }
         });
 
-        searchInput.addEventListener('focus', () => {
-            searchInput.parentElement.classList.add('focusing');
-            if (searchInput.value.trim().length > 0) {
-                suggestionsContainer.style.display = 'block';
+        // Event: click outside
+        document.addEventListener('click', function (e) {
+            if (!wrapper.contains(e.target)) {
+                dropdown.classList.remove('open');
             }
         });
+    }
 
-        searchInput.addEventListener('blur', () => {
-            searchInput.parentElement.classList.remove('focusing');
-        });
+    // =====================================================================
+    // INIT
+    // =====================================================================
+    function init() {
+        injectSearchCSS();
+        var inputs = document.querySelectorAll('input[type="search"]');
+        inputs.forEach(setupSearchInput);
+    }
 
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
-                suggestionsContainer.style.display = 'none';
-            }
-        });
-    });
-});
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();

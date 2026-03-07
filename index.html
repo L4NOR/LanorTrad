@@ -3,31 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LanorTrad</title>
+    <title>LanorTrad - Scantrad Français de Mangas</title>
     <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="LanorTrad, team de scantrad français passionnée. Lisez Ao No Exorcist, Tougen Anki, Tokyo Underworld et plus, traduits en français avec soin.">
+    <meta name="keywords" content="scantrad français, manga traduit, LanorTrad, Ao No Exorcist, Tougen Anki, Tokyo Underworld, Satsudou, Catenaccio, lecture manga gratuit">
+    <meta name="author" content="LanorTrad">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+    <link rel="canonical" href="https://lanortrad.netlify.app/">
+
     <!-- MetaTags pour l'embed -->
-    <meta property="og:title" content="LanorTrad - Team de scantrad Française">
-    <meta property="og:description" content="Rejoins LanorTrad, une team passionnée de scantrad français spécialisée dans les mangas.">
+    <meta property="og:title" content="LanorTrad - Scantrad Français de Mangas">
+    <meta property="og:description" content="Lisez vos mangas préférés traduits en français par une équipe passionnée. 500+ chapitres disponibles.">
     <meta property="og:image" content="https://i.postimg.cc/XYgQL8Qv/Logo.jpg">
     <meta property="og:url" content="https://lanortrad.netlify.app">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="LanorTrad">
+    <meta property="og:locale" content="fr_FR">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LanorTrad - Team de scantrad Française">
-    <meta name="twitter:description" content="Rejoins LanorTrad, une team passionnée de scantrad français spécialisée dans les mangas.">
+    <meta name="twitter:title" content="LanorTrad - Scantrad Français de Mangas">
+    <meta name="twitter:description" content="Lisez vos mangas préférés traduits en français par une équipe passionnée. 500+ chapitres disponibles.">
     <meta name="twitter:image" content="https://i.postimg.cc/XYgQL8Qv/Logo.jpg">
     <meta name="twitter:site" content="@LanorTrad">
 
-    <!--Styles-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/intros.css">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "LanorTrad",
+        "url": "https://lanortrad.netlify.app",
+        "description": "Team de scantrad français spécialisée dans la traduction de mangas.",
+        "inLanguage": "fr",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://lanortrad.netlify.app/Catalogue.html?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LanorTrad",
+        "url": "https://lanortrad.netlify.app",
+        "logo": "https://i.postimg.cc/XYgQL8Qv/Logo.jpg",
+        "sameAs": [
+            "https://x.com/LanorTrad",
+            "https://discord.gg/md37S7nhkZ"
+        ]
+    }
+    </script>
 
-    <!-- Styles additionnels pour la section Planning -->
-    <style>
-    </style>
+    <!--Styles-->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/utile/theme.js"></script>
+    <link rel="stylesheet" href="css/intros.css">
 
     <!--Scripts-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
@@ -40,21 +76,14 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5673170839903363" crossorigin="anonymous"></script>
     <!-- Ezoic : décommente la ligne ci-dessous quand ton compte Ezoic est prêt -->
     <!-- <script async src="https://www.ezojs.com/ezoic/sa.min.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
-    <div id="gift-notification-root"></div>
-    <script type="module"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="js/utile/script.js"></script>
+    <script src="js/utile/mangaData.js"></script>
+
     <script src="js/utile/navbar.js"></script>
     <script src="js/utile/search.js"></script>
     <script src="js/utile/toast.js"></script>
-    <script src="js/utile/lazyLoad.js"></script>
     <script src="js/utile/userPreferences.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
+    <script src="js/utile/enhancements.js" defer></script>
 
     <meta name="monetag" content="9a67983722a725619cd594866a00f75a">
     <script src="https://5gvci.com/act/files/tag.min.js?z=10644610" data-cfasync="false" async></script>
@@ -76,20 +105,20 @@
     </script>
 </head>
 
-<div class="loading-container">
-    <div class="background-animation">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-    <div class="loading-content">
-      <div class="logo">LanorTrad</div>
-      <div class="loading-bar"></div>
-      <div class="loading-text">Chargement du site...</div>
-    </div>
-</div>
-
 <body class="min-h-screen">
+    <!-- Loading Screen -->
+    <div class="loading-container">
+        <div class="background-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="loading-content">
+            <div class="logo">LanorTrad</div>
+            <div class="loading-bar"></div>
+            <div class="loading-text">Chargement du site...</div>
+        </div>
+    </div>
     <!-- Navbar -->
 <nav class="fixed w-full z-50 top-0 nav-blur border-b">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -117,12 +146,13 @@
             <div class="hidden md:flex items-center space-x-8">
                 <a href="Bibliotheque.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Bibliothèque</a>
                 <a href="Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
+                <a href="Planning.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Planning</a>
                 <a href="Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
                 <div class="relative">
-                    <input type="search" placeholder="Rechercher un manga..."
+                    <input type="search" aria-label="Rechercher un manga" placeholder="Rechercher un manga..."
                            class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
                 </div>
-                <a href="https://discord.com/invite/md37S7nhkZ">
+                <a href="https://discord.gg/md37S7nhkZ">
                     <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
                         Rejoindre
                     </button>
@@ -130,39 +160,61 @@
             </div>
         </div>
 
-        <!-- Mobile menu, show/hide based on menu state -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="Bibliotheque.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Bibliotheque</a>
-                <a href="Catalogue.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Catalogue</a>
-                <a href="Équipe.html" class="block px-3 py-2 rounded-md text-base text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">Équipe</a>
-                <div class="px-3 py-2">
-                    <input type="search" placeholder="Rechercher un manga..."
-                           class="w-full px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
-                </div>
-                <div class="px-3 py-2">
-                    <a href="https://discord.com/invite/md37S7nhkZ" class="block">
-                        <button class="w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                            Rejoindre
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 </nav>
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<!-- Mobile Sidebar -->
+<div id="mobile-sidebar" class="mobile-sidebar">
+    <div class="sidebar-header">
+        <span class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+        <button id="sidebar-close" class="sidebar-close" aria-label="Fermer le menu">&times;</button>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="/Bibliotheque.html" class="sidebar-link"><span class="sidebar-icon">📚</span> Bibliothèque</a>
+        <a href="/Catalogue.html" class="sidebar-link"><span class="sidebar-icon">📖</span> Catalogue</a>
+        <a href="/Planning.html" class="sidebar-link"><span class="sidebar-icon">📅</span> Planning</a>
+        <a href="/Équipe.html" class="sidebar-link"><span class="sidebar-icon">👥</span> Équipe</a>
+    </nav>
+    <div class="sidebar-search">
+        <input type="search" aria-label="Rechercher un manga" placeholder="Rechercher un manga...">
+    </div>
+    <div class="sidebar-footer">
+        <a href="https://discord.gg/md37S7nhkZ" class="sidebar-discord">💬 Rejoindre Discord</a>
+    </div>
+</div>
 
     <!-- Hero Section -->
     <section class="hero-gradient pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto">
-                <br><br>
                 <h1 class="text-5xl font-black mb-6 bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white">
                     Des mangas traduits avec passion.
                 </h1>
                 <p class="text-lg text-gray-300 mb-10">
                     Découvrez notre sélection de mangas soigneusement traduits par notre équipe de passionnés.
                 </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="Catalogue.html" class="px-8 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors text-lg">
+                        Découvrir le catalogue
+                    </a>
+                    <a href="https://discord.gg/md37S7nhkZ" class="px-8 py-3 rounded-lg border border-gray-600 hover:border-indigo-500 text-gray-300 hover:text-white font-semibold transition-colors text-lg">
+                        Rejoindre Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Reprendre la lecture -->
+    <section class="py-12 reveal" id="resume-section" style="display: none;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-8 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></div>
+                <h2 class="text-3xl font-black gradient-text">Reprendre la lecture</h2>
+            </div>
+            <div class="resume-cards" id="resume-cards">
+                <!-- Injecté dynamiquement -->
             </div>
         </div>
     </section>
@@ -205,7 +257,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto mb-12">
+    <div class="max-w-7xl mx-auto mb-12 reveal">
         <div class="flex items-center justify-between mb-6">
             <div>
                 <div class="flex items-center gap-3 mb-2">
@@ -224,7 +276,7 @@
     </div>
 
     <!-- Featured Release (Le plus récent) -->
-    <div class="max-w-7xl mx-auto mb-8">
+    <div class="max-w-7xl mx-auto mb-8 reveal">
         <div class="featured-card rounded-2xl overflow-hidden relative">
             <div class="absolute top-4 left-4 z-10">
                 <div class="new-badge px-4 py-2 rounded-full text-white text-sm font-bold shadow-lg flex items-center gap-2">
@@ -276,7 +328,7 @@
     </div>
 
     <!-- Grid des autres sorties -->
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto reveal">
         <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
             <span class="text-indigo-400">▶</span>
             Également disponibles
@@ -463,37 +515,38 @@
     </section>
 
     <!-- Footer -->
-    <footer class="mt-20 py-12 border-t">
+    <footer class="mt-20 py-12 border-t border-gray-800/50 bg-gray-900/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-2">
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-                        LanorTrad
-                    </span>
-                    <p class="mt-4 text-gray-400">
-                        Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.
-                    </p>
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+                    <p class="mt-4 text-gray-400">Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.</p>
+                    <div class="mt-4 flex gap-3">
+                        <a href="https://discord.gg/md37S7nhkZ" class="px-3 py-1.5 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-sm hover:bg-indigo-600/30 transition-colors">Discord</a>
+                        <a href="https://x.com/LanorTrad" class="px-3 py-1.5 rounded-lg bg-gray-700/30 border border-gray-600/30 text-gray-300 text-sm hover:bg-gray-700/50 transition-colors">Twitter/X</a>
+                    </div>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Liens rapides</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4">Navigation</h3>
                     <ul class="space-y-2">
-                        <li><a href="Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
-                        <li><a href="équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
-                        <li><a href="Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliotheque</a></li>
-
+                        <li><a href="/Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
+                        <li><a href="/Planning.html" class="text-gray-400 hover:text-white transition-colors">Planning</a></li>
+                        <li><a href="/Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliothèque</a></li>
+                        <li><a href="/Équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Réseaux sociaux</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4">Le site</h3>
                     <ul class="space-y-2">
-                        <li><a href="https://discord.gg/invite/Dafg53Dx39" class="text-gray-400 hover:text-white transition-colors">Discord</a></li>
-                        <li><a href="https://x.com/LanorTrad" class="text-gray-400 hover:text-white transition-colors">Twitter</a></li>
-
+                        <li class="text-gray-500 text-sm">5 mangas traduits</li>
+                        <li class="text-gray-500 text-sm">500+ chapitres</li>
+                        <li class="text-gray-500 text-sm">5 oneshots</li>
+                        <li><a href="https://discord.gg/md37S7nhkZ" class="text-gray-400 hover:text-white transition-colors text-sm">Signaler un problème</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-12 pt-8 border-t text-center text-gray-400">
-                <p>© 2024 LanorTrad. Tous droits réservés.</p>
+            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-500 text-sm">
+                <p>&copy; 2024-2026 LanorTrad. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
@@ -570,24 +623,71 @@
             }
         }
 
-        // Scroll reveal animation
-        function reveal() {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(element => {
-                const windowHeight = window.innerHeight;
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
+        // Classe pour gérer la section "Reprendre la lecture"
+        class HomeResume {
+            constructor() {
+                this.init();
+            }
 
-                if (elementTop < windowHeight - elementVisible) {
-                    element.classList.add('active');
+            init() {
+                if (window.userPrefs) {
+                    this.loadResume();
+                } else {
+                    setTimeout(() => this.init(), 100);
                 }
-            });
+            }
+
+            loadResume() {
+                const resumeData = window.userPrefs.getResumeData(4);
+                const section = document.getElementById('resume-section');
+                const container = document.getElementById('resume-cards');
+                if (!section || !container) return;
+
+                if (resumeData.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                section.style.display = 'block';
+                container.innerHTML = resumeData.map(item => this.createResumeCard(item)).join('');
+            }
+
+            createResumeCard(item) {
+                const chapterLabel = item.type === 'oneshot' || item.chapter === 'oneshot'
+                    ? 'Oneshot'
+                    : `Chapitre ${item.chapter}`;
+                const timeAgo = this.timeAgo(item.readAt);
+
+                return `
+                    <a href="${item.link}" class="resume-card">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy">
+                        <div class="resume-card-info">
+                            <div class="resume-card-title">${item.title}</div>
+                            <div class="resume-card-chapter">${chapterLabel}</div>
+                            <div style="font-size:0.7rem;color:#6b7280;margin-top:0.15rem">${timeAgo}</div>
+                        </div>
+                        <span class="resume-card-btn">Reprendre →</span>
+                    </a>
+                `;
+            }
+
+            timeAgo(timestamp) {
+                if (!timestamp) return '';
+                const diff = Date.now() - timestamp;
+                const minutes = Math.floor(diff / 60000);
+                if (minutes < 60) return `il y a ${minutes}min`;
+                const hours = Math.floor(minutes / 60);
+                if (hours < 24) return `il y a ${hours}h`;
+                const days = Math.floor(hours / 24);
+                if (days < 7) return `il y a ${days}j`;
+                return `il y a ${Math.floor(days / 7)} sem.`;
+            }
         }
 
         // Initialiser quand le DOM est prêt
         document.addEventListener('DOMContentLoaded', () => {
             new HomeFavorites();
-            reveal(); // Initial check
+            new HomeResume();
         });
 
         // Aussi essayer d'initialiser immédiatement si le DOM est déjà chargé
@@ -595,8 +695,7 @@
             new HomeFavorites();
         }
 
-        // Scroll event
-        window.addEventListener('scroll', reveal);
     </script>
+    <script src="js/utile/scrollReveal.js"></script>
 </body>
 </html>

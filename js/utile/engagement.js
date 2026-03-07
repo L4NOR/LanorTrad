@@ -58,11 +58,41 @@ class EngagementManager {
             readerWrapper.parentNode.appendChild(this.container);
         }
 
+        this.trackView();
+        this.initViewCounter();
         this.initRating();
         this.addSeparator();
         this.initShare();
         this.addSeparator();
         this.initDisqus();
+    }
+
+    // ==========================================
+    // VIEW COUNTER
+    // ==========================================
+
+    trackView() {
+        const viewKey = `lanortrad_views_${this.chapterKey}`;
+        const sessionKey = `lanortrad_viewed_${this.chapterKey}`;
+
+        // Ne compter qu'une seule vue par session
+        if (sessionStorage.getItem(sessionKey)) return;
+
+        const currentViews = parseInt(localStorage.getItem(viewKey) || '0', 10);
+        localStorage.setItem(viewKey, currentViews + 1);
+        sessionStorage.setItem(sessionKey, '1');
+    }
+
+    initViewCounter() {
+        const viewKey = `lanortrad_views_${this.chapterKey}`;
+        const views = parseInt(localStorage.getItem(viewKey) || '0', 10);
+
+        if (views > 0) {
+            const counter = document.createElement('div');
+            counter.className = 'view-counter';
+            counter.innerHTML = `👁 <span>${views}</span> vue${views > 1 ? 's' : ''}`;
+            this.container.appendChild(counter);
+        }
     }
 
     addSeparator() {

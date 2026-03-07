@@ -60,8 +60,9 @@
     </style>
 
     <!--Styles-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/utile/theme.js"></script>
     <link rel="stylesheet" href="../css/intros.css">
 
     <!--Scripts-->
@@ -87,20 +88,20 @@
     <script src="../js/utile/navbar.js"></script>
 </head>
 
-<div class="loading-container">
-    <div class="background-animation">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-    <div class="loading-content">
-      <div class="logo">LanorTrad</div>
-      <div class="loading-bar"></div>
-      <div class="loading-text">Chargement du manga...</div>
-    </div>
-</div>
-
 <body class="min-h-screen">
+    <!-- Loading Screen -->
+    <div class="loading-container">
+        <div class="background-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="loading-content">
+            <div class="logo">LanorTrad</div>
+            <div class="loading-bar"></div>
+            <div class="loading-text">Chargement du manga...</div>
+        </div>
+    </div>
     <!-- Navbar -->
     <nav class="fixed w-full z-50 top-0 nav-blur border-b border-gray-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,12 +129,13 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="../Bibliotheque.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Bibliotheque</a>
                     <a href="../Catalogue.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Catalogue</a>
+                    <a href="../Planning.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Planning</a>
                     <a href="../Équipe.html" class="nav-link text-base text-gray-300 hover:text-white transition-colors">Équipe</a>
                     <div class="relative">
                         <input type="search" placeholder="Rechercher un manga..." 
                                class="w-64 px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
                     </div>
-                    <a href="https://discord.com/invite/Dafg53Dx39">
+                    <a href="https://discord.gg/md37S7nhkZ">
                         <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
                             Rejoindre
                         </button>
@@ -152,7 +154,7 @@
                                class="w-full px-4 py-2 bg-gray-900/80 rounded-lg border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm placeholder-gray-400">
                     </div>
                     <div class="px-3 py-2">
-                        <a href="https://discord.com/invite/Dafg53Dx39" class="block">
+                        <a href="https://discord.gg/md37S7nhkZ" class="block">
                             <button class="w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
                                 Rejoindre
                             </button>
@@ -260,35 +262,38 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900/50 mt-20 py-12 border-t border-gray-800/50">
+    <footer class="mt-20 py-12 border-t border-gray-800/50 bg-gray-900/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-2">
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
-                        LanorTrad
-                    </span>
-                    <p class="mt-4 text-gray-400">
-                        Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.
-                    </p>
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LanorTrad</span>
+                    <p class="mt-4 text-gray-400">Une équipe passionnée qui traduit vos mangas préférés avec précision et créativité.</p>
+                    <div class="mt-4 flex gap-3">
+                        <a href="https://discord.gg/md37S7nhkZ" class="px-3 py-1.5 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-sm hover:bg-indigo-600/30 transition-colors">Discord</a>
+                        <a href="https://x.com/LanorTrad" class="px-3 py-1.5 rounded-lg bg-gray-700/30 border border-gray-600/30 text-gray-300 text-sm hover:bg-gray-700/50 transition-colors">Twitter/X</a>
+                    </div>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Liens rapides</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4">Navigation</h3>
                     <ul class="space-y-2">
                         <li><a href="../Catalogue.html" class="text-gray-400 hover:text-white transition-colors">Catalogue</a></li>
-                        <li><a href="../équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
-                        <li><a href="../Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliotheque</a></li>
+                        <li><a href="../Planning.html" class="text-gray-400 hover:text-white transition-colors">Planning</a></li>
+                        <li><a href="../Bibliotheque.html" class="text-gray-400 hover:text-white transition-colors">Bibliothèque</a></li>
+                        <li><a href="../Équipe.html" class="text-gray-400 hover:text-white transition-colors">Équipe</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Réseaux sociaux</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4">Le site</h3>
                     <ul class="space-y-2">
-                        <li><a href="https://discord.gg/invite/Dafg53Dx39" class="text-gray-400 hover:text-white transition-colors">Discord</a></li>
-                        <li><a href="https://x.com/LanorTrad" class="text-gray-400 hover:text-white transition-colors">Twitter</a></li>
+                        <li class="text-gray-500 text-sm">5 mangas traduits</li>
+                        <li class="text-gray-500 text-sm">500+ chapitres</li>
+                        <li class="text-gray-500 text-sm">5 oneshots</li>
+                        <li><a href="https://discord.gg/md37S7nhkZ" class="text-gray-400 hover:text-white transition-colors text-sm">Signaler un problème</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-400">
-                <p>© 2024 LanorTrad. Tous droits réservés.</p>
+            <div class="mt-12 pt-8 border-t border-gray-800/50 text-center text-gray-500 text-sm">
+                <p>&copy; 2024-2026 LanorTrad. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
