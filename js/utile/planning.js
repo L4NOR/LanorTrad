@@ -539,13 +539,13 @@ X-WR-CALDESC:Calendrier des sorties de chapitres LanorTrad
                 endDate.setHours(endDate.getHours() + 1);
                 
                 ics += `BEGIN:VEVENT
-UID:${date}-${release.title}@lanortrad.netlify.app
+UID:${date}-${release.title}@lanortrad.com
 DTSTAMP:${this.formatICSDate(new Date())}
 DTSTART:${this.formatICSDate(startDate)}
 DTEND:${this.formatICSDate(endDate)}
 SUMMARY:${release.title} - Chapitre ${release.chapter}
 DESCRIPTION:Nouvelle sortie sur LanorTrad
-LOCATION:https://lanortrad.netlify.app
+LOCATION:https://lanortrad.com
 STATUS:CONFIRMED
 SEQUENCE:0
 BEGIN:VALARM

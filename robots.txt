@@ -6,4 +6,4 @@ Disallow: /css/
 Disallow: /sw.js
 
 # Sitemap
-Sitemap: https://lanortrad.netlify.app/sitemap.xml
+Sitemap: https://lanortrad.com/sitemap.xml

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma Bibliothèque - LanorTrad</title>
-    <link rel="icon" href="https://www.creativefabrica.com/wp-content/uploads/2019/03/Monogram-LT-Logo-Design-by-Greenlines-Studios-580x387.jpg">
+    <link rel="icon" href="/images/icons/icon-192x192.png">
     
     <!--MetaTags-->
     <meta name="description" content="Explorez le catalogue de mangas de LanorTrad. Découvrez une large sélection de titres traduits en français, du shonen au seinen, avec des mises à jour régulières.">
@@ -19,7 +19,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:image" content="images/Lanor/Banner.jpg">
-    <meta property="og:url" content="https://lanortrad.netlify.app/Catalogue.html">
+    <meta property="og:url" content="https://lanortrad.com/Catalogue.html">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@LanorTrad">
@@ -316,21 +316,36 @@
     <section id="statsContent" class="py-12 hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="card rounded-xl p-6 text-center">
-                    <div class="text-5xl mb-3">📚</div>
-                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Chapitres lus</h3>
-                    <p id="total-chapters" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">📚</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Chapitres lus</h3>
+                    <p id="total-chapters" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0</p>
                 </div>
-                <div class="card rounded-xl p-6 text-center">
-                    <div class="text-5xl mb-3">⏱️</div>
-                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Temps de lecture</h3>
-                    <p id="total-time" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0h 0m</p>
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">⏱️</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Temps de lecture</h3>
+                    <p id="total-time" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0h 0m</p>
                 </div>
-                <div class="card rounded-xl p-6 text-center">
-                    <div class="text-5xl mb-3">🔥</div>
-                    <h3 class="text-lg font-semibold text-gray-400 mb-2">Série de lecture</h3>
-                    <p id="streak" class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0 jours</p>
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">🔥</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Série de lecture</h3>
+                    <p id="streak" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0 jours</p>
+                </div>
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">📖</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Mangas lus</h3>
+                    <p id="stat-unique-mangas" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0</p>
+                </div>
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">📅</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Jours actifs</h3>
+                    <p id="stat-active-days" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">0</p>
+                </div>
+                <div class="card rounded-xl p-5 text-center">
+                    <div class="text-4xl mb-2">🌙</div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-1">Heure préférée</h3>
+                    <p id="stat-peak-hour" class="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">-</p>
                 </div>
             </div>
 
@@ -741,63 +756,74 @@
         if (menu) menu.remove();
     }
 
-    // === HISTORIQUE (existant) ===
-        // Fonction améliorée pour charger l'historique
+    // === HISTORIQUE ===
+function getMangaImageForHistory(mangaId) {
+    if (window.userPrefs) return window.userPrefs.getMangaImage(mangaId);
+    const images = {
+        "Ao No Exorcist": "/images/Cover/AoNoExorcist.jpg",
+        "Tougen Anki": "/images/Cover/TougenAnki.jpg",
+        "Tokyo Underworld": "/images/Cover/TokyoUnderworld.jpg",
+        "Satsudou": "/images/Cover/Satsudou.jpg",
+        "Catenaccio": "/images/Cover/Catenaccio.png",
+        "Countdown": "/images/Cover/Countdown.jpg",
+        "Gestation of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
+        "In the White": "/images/Cover/In the White.jpg",
+        "Sake to Sakana": "/images/Cover/Sake to Sakana.jpg",
+        "Second Coming": "/images/Cover/Second Coming.jpg",
+    };
+    return images[mangaId] || "/images/icons/icon-192x192.png";
+}
+
 function loadHistory() {
-    if (!window.userPrefs) {
-        console.error('userPrefs n\'est pas chargé');
-        return;
-    }
+    if (!window.userPrefs) return;
 
     const history = window.userPrefs.history || [];
     const container = document.getElementById('historyList');
     const empty = document.getElementById('emptyHistory');
-    
+
     document.getElementById('histCount').textContent = history.length;
-    
+
     if (history.length === 0) {
         if (container) container.classList.add('hidden');
         if (empty) empty.classList.remove('hidden');
         return;
     }
-    
+
     if (container) container.classList.remove('hidden');
     if (empty) empty.classList.add('hidden');
-    
-    // ✅ Construire les liens correctement selon le type
-    container.innerHTML = history.map(item => {
+
+    container.innerHTML = history.map((item, index) => {
         const timeAgo = formatTimeAgo(item.readAt);
-        
-        // Déterminer l'URL selon le type
+        const coverImage = getMangaImageForHistory(item.mangaId);
+
         let chapterUrl;
-        if (item.type === 'oneshot') {
-            // Pour les oneshots
-            chapterUrl = `/Manga/${item.mangaId}/oneshot.html`;
-        } else if (item.chapter === 'oneshot') {
-            // Fallback si le type n'est pas défini mais c'est un oneshot
-            chapterUrl = `/Manga/${item.mangaId}/oneshot.html`;
+        if (item.type === 'oneshot' || item.chapter === 'oneshot') {
+            chapterUrl = `/Manga/${item.mangaId}/Oneshot.html`;
         } else {
-            // Pour les chapitres normaux
             chapterUrl = `/Manga/${item.mangaId}/Chapitre ${item.chapter}.html`;
         }
-        
-        // Texte du chapitre
-        const chapterText = item.type === 'oneshot' || item.chapter === 'oneshot' 
-            ? 'Oneshot' 
+
+        const chapterText = item.type === 'oneshot' || item.chapter === 'oneshot'
+            ? 'Oneshot'
             : `Chapitre ${item.chapter}`;
-        
+
+        const mangaPageUrl = `/Manga/${item.mangaId}.html`;
+        const isFirstOfManga = index === history.findIndex(h => h.mangaId === item.mangaId);
+
         return `
             <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
-                <img src="${item.image}" alt="${item.title}" class="w-20 h-28 object-cover rounded-lg">
-                <div class="flex-grow">
-                    <h3 class="font-bold text-white">${item.title}</h3>
-                    <p class="text-indigo-400">${chapterText}</p>
-                    <p class="text-sm text-gray-400">${timeAgo}</p>
-                    ${item.type === 'oneshot' ? '<span class="inline-block mt-1 px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50">⭐ Oneshot</span>' : ''}
+                <a href="${mangaPageUrl}" class="flex-shrink-0">
+                    <img src="${coverImage}" alt="${item.title}" class="w-16 h-22 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform" onerror="this.src='/images/icons/icon-192x192.png'">
+                </a>
+                <div class="flex-grow min-w-0">
+                    <a href="${mangaPageUrl}" class="font-bold text-white hover:text-indigo-400 transition-colors block truncate">${item.title || item.mangaId}</a>
+                    <p class="text-indigo-400 text-sm">${chapterText}</p>
+                    <p class="text-xs text-gray-500">${timeAgo}</p>
+                    ${item.type === 'oneshot' || item.chapter === 'oneshot' ? '<span class="inline-block mt-1 px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50">Oneshot</span>' : ''}
                 </div>
-                <a href="${chapterUrl}">
-                    <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-                        ${item.type === 'oneshot' ? 'Relire' : 'Reprendre'}
+                <a href="${chapterUrl}" class="flex-shrink-0">
+                    <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors text-sm">
+                        ${item.type === 'oneshot' || item.chapter === 'oneshot' ? 'Relire' : 'Reprendre'}
                     </button>
                 </a>
             </div>
@@ -831,65 +857,105 @@ function formatTimeAgo(timestamp) {
     return new Date(timestamp).toLocaleDateString('fr-FR');
 }
 
-// Fonction améliorée pour charger les statistiques
 function loadStatistics() {
-    if (!window.readingAnalytics) {
-        console.error('Analytics non disponible');
-        return;
-    }
+    if (!window.readingAnalytics) return;
 
     const stats = window.readingAnalytics.getStats();
-    
-    // Global stats
-    document.getElementById('total-chapters').textContent = stats.totalChaptersRead;
-    
-    const hours = Math.floor(stats.totalReadingTime / 60);
-    const minutes = stats.totalReadingTime % 60;
-    document.getElementById('total-time').textContent = `${hours}h ${minutes}m`;
-    
+    const userStats = window.userPrefs ? window.userPrefs.getUserStats() : null;
+
+    // Global stats - prefer userPrefs data over readingAnalytics
+    document.getElementById('total-chapters').textContent = (userStats && userStats.totalChaptersRead > 0) ? userStats.totalChaptersRead : stats.totalChaptersRead;
+
+    // Temps de lecture - utiliser les vrais temps si disponibles
+    let timeDisplay;
+    if (userStats && userStats.totalReadingTimeSeconds > 0) {
+        const totalSec = userStats.totalReadingTimeSeconds;
+        const h = Math.floor(totalSec / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        timeDisplay = h > 0 ? `${h}h ${m}m` : `${m}m`;
+    } else {
+        const hours = Math.floor(stats.totalReadingTime / 60);
+        const minutes = stats.totalReadingTime % 60;
+        timeDisplay = `${hours}h ${minutes}m`;
+    }
+    document.getElementById('total-time').textContent = timeDisplay;
+
     document.getElementById('streak').textContent = `${stats.readingStreak} jour${stats.readingStreak > 1 ? 's' : ''}`;
-    
-    // Per manga stats
+
+    // Extra stats
+    if (userStats) {
+        const uniqueMangasEl = document.getElementById('stat-unique-mangas');
+        const activeDaysEl = document.getElementById('stat-active-days');
+        const peakHourEl = document.getElementById('stat-peak-hour');
+        if (uniqueMangasEl) uniqueMangasEl.textContent = userStats.uniqueMangasRead;
+        if (activeDaysEl) activeDaysEl.textContent = userStats.activeDays;
+        if (peakHourEl && userStats.historyCount > 0) peakHourEl.textContent = `${userStats.peakReadingHour}h`;
+    }
+
+    // Per manga stats - combine readingAnalytics and userPrefs data
     const mangaStatsContainer = document.getElementById('manga-stats');
     const emptyMangaStats = document.getElementById('emptyMangaStats');
-    const mangaStatsArray = Object.entries(stats.mangaStats);
-    
+    let mangaStatsArray = Object.entries(stats.mangaStats);
+
+    // If readingAnalytics has no data, build from userPrefs history
+    if (mangaStatsArray.length === 0 && userStats && userStats.historyCount > 0) {
+        const history = JSON.parse(localStorage.getItem('lanortrad_history') || '[]');
+        const mangaMap = {};
+        history.forEach(h => {
+            if (!mangaMap[h.mangaId]) {
+                mangaMap[h.mangaId] = {
+                    chaptersRead: 0,
+                    readingTime: 0,
+                    lastRead: h.readAt,
+                    isOneshot: h.type === 'oneshot' || h.chapter === 'oneshot'
+                };
+            }
+            mangaMap[h.mangaId].chaptersRead++;
+            if (h.readAt > mangaMap[h.mangaId].lastRead) mangaMap[h.mangaId].lastRead = h.readAt;
+        });
+        mangaStatsArray = Object.entries(mangaMap);
+    }
+
     if (mangaStatsArray.length === 0) {
         mangaStatsContainer.classList.add('hidden');
         emptyMangaStats.classList.remove('hidden');
     } else {
         mangaStatsContainer.classList.remove('hidden');
         emptyMangaStats.classList.add('hidden');
-        
+
+        const readChapters = userStats ? userStats.readChaptersPerManga : {};
+        const readingTimes = userStats ? userStats.readingTimesPerManga : {};
+
         mangaStatsContainer.innerHTML = mangaStatsArray.map(([mangaId, mangaData]) => {
-            const avgTime = mangaData.chaptersRead > 0 
-                ? Math.round(mangaData.readingTime / mangaData.chaptersRead) 
-                : 0;
-            
-            // ✅ Badge spécial pour les oneshots
-            const oneshotBadge = mangaData.isOneshot 
-                ? '<span class="inline-block px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50 mb-2">⭐ Oneshot</span>' 
+            const coverImage = getMangaImageForHistory(mangaId);
+            const uniqueChaptersRead = readChapters[mangaId] ? readChapters[mangaId].length : mangaData.chaptersRead;
+            const realTime = readingTimes[mangaId] || 0;
+            const realTimeDisplay = realTime > 3600
+                ? `${Math.floor(realTime/3600)}h ${Math.floor((realTime%3600)/60)}m`
+                : realTime > 60 ? `${Math.floor(realTime/60)}m` : `${realTime}s`;
+
+            const oneshotBadge = mangaData.isOneshot
+                ? '<span class="inline-block px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/50 mb-2">Oneshot</span>'
                 : '';
-            
+
             return `
                 <div class="card rounded-xl p-6">
-                    ${oneshotBadge}
-                    <h3 class="text-xl font-bold mb-4">${mangaId}</h3>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="${coverImage}" alt="${mangaId}" class="w-12 h-16 object-cover rounded-lg" onerror="this.src='/images/icons/icon-192x192.png'">
+                        <div>
+                            ${oneshotBadge}
+                            <h3 class="text-lg font-bold">${mangaId}</h3>
+                        </div>
+                    </div>
                     <div class="space-y-2 text-sm">
                         <div class="flex justify-between">
                             <span class="text-gray-400">${mangaData.isOneshot ? 'Lu:' : 'Chapitres lus:'}</span>
-                            <span class="font-semibold text-indigo-400">${mangaData.isOneshot ? 'Oui ✓' : mangaData.chaptersRead}</span>
+                            <span class="font-semibold text-indigo-400">${mangaData.isOneshot ? 'Oui' : uniqueChaptersRead}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-400">Temps total:</span>
-                            <span class="font-semibold text-indigo-400">${Math.floor(mangaData.readingTime / 60)}h ${mangaData.readingTime % 60}m</span>
+                            <span class="text-gray-400">Temps de lecture:</span>
+                            <span class="font-semibold text-indigo-400">${realTime > 0 ? realTimeDisplay : Math.floor(mangaData.readingTime / 60) + 'h ' + (mangaData.readingTime % 60) + 'm'}</span>
                         </div>
-                        ${!mangaData.isOneshot ? `
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Temps moyen:</span>
-                            <span class="font-semibold text-indigo-400">${avgTime} min</span>
-                        </div>
-                        ` : ''}
                         <div class="flex justify-between">
                             <span class="text-gray-400">Dernière lecture:</span>
                             <span class="font-semibold text-indigo-400">${formatTimeAgo(mangaData.lastRead)}</span>

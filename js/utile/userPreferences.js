@@ -8,6 +8,7 @@ class UserPreferences {
   init() {
     this.setupFavoriteButtons();
     this.trackReadingHistory();
+    this.trackPageView();
   }
 
   // Gestion des favoris
@@ -30,10 +31,10 @@ class UserPreferences {
         type: mangaData.type || "manga",
         addedAt: Date.now(),
       });
-      this.showToast("✨ Ajouté aux favoris !");
+      this.showToast("Ajout\u00e9 aux favoris !");
     } else {
       this.favorites.splice(index, 1);
-      this.showToast("❌ Retiré des favoris");
+      this.showToast("Retir\u00e9 des favoris");
     }
 
     this.saveFavorites();
@@ -54,24 +55,72 @@ class UserPreferences {
   }
 
   addToHistory(mangaId, chapterNumber, mangaData) {
-    // Supprimer l'ancienne entrée si elle existe
+    // Supprimer l'ancienne entr\u00e9e si elle existe
     this.history = this.history.filter(
       (h) => !(h.mangaId === mangaId && h.chapter === chapterNumber)
     );
 
-    // Ajouter en première position
+    // Ajouter en premi\u00e8re position
     this.history.unshift({
       mangaId,
       chapter: chapterNumber,
       title: mangaData.title,
-      image: mangaData.image,
+      image: this.getMangaImage(mangaId),
       type: mangaData.type || "manga",
       readAt: Date.now(),
     });
 
-    // Limiter à 50 entrées
-    this.history = this.history.slice(0, 50);
+    // Limiter \u00e0 100 entr\u00e9es
+    this.history = this.history.slice(0, 100);
     this.saveHistory();
+  }
+
+  // Suivi de navigation - tracker chaque page visit\u00e9e
+  trackPageView() {
+    const currentPath = decodeURIComponent(window.location.pathname);
+    const pageViews = JSON.parse(localStorage.getItem("lanortrad_pageviews") || "[]");
+
+    pageViews.unshift({
+      path: currentPath,
+      title: document.title,
+      timestamp: Date.now(),
+    });
+
+    // Garder les 200 derni\u00e8res pages vues
+    localStorage.setItem("lanortrad_pageviews", JSON.stringify(pageViews.slice(0, 200)));
+
+    // Tracker le temps pass\u00e9 sur la page pr\u00e9c\u00e9dente
+    this.trackTimeOnPage();
+  }
+
+  // Mesurer le temps r\u00e9el pass\u00e9 sur chaque page
+  trackTimeOnPage() {
+    const startTime = Date.now();
+    const currentPath = decodeURIComponent(window.location.pathname);
+
+    const saveTime = () => {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+      if (timeSpent < 2) return; // Ignorer les visites < 2s
+
+      const readingTimes = JSON.parse(localStorage.getItem("lanortrad_reading_times") || "{}");
+
+      // Extraire le manga depuis le path
+      const mangaMatch = currentPath.match(/\/Manga\/([^\/]+)\//i);
+      if (mangaMatch) {
+        const mangaId = decodeURIComponent(mangaMatch[1]);
+        if (!readingTimes[mangaId]) readingTimes[mangaId] = 0;
+        readingTimes[mangaId] += timeSpent;
+      }
+
+      // Temps total
+      readingTimes._total = (readingTimes._total || 0) + timeSpent;
+      localStorage.setItem("lanortrad_reading_times", JSON.stringify(readingTimes));
+    };
+
+    window.addEventListener("beforeunload", saveTime, { once: true });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") saveTime();
+    }, { once: true });
   }
 
   trackReadingHistory() {
@@ -82,7 +131,7 @@ class UserPreferences {
       /\/Manga\/([^\/]+)\/Chapitre\s*(\d+(?:\.\d+)?)/i
     );
 
-    // ✅ ONESHOT (CORRECTION FINALE)
+    // Oneshots
     const oneshotMatch = currentPath.match(
       /\/Manga\/([^\/]+)\/Oneshot\.html$/i
     );
@@ -99,16 +148,16 @@ class UserPreferences {
         type: "manga",
       });
 
+      // Tracker le chapitre lu pour le manga (pour la page manga)
+      this.markChapterAsRead(mangaId, chapterNumber);
+
       if (window.readingAnalytics) {
         window.readingAnalytics.trackChapterRead(mangaId, chapterNumber, 10);
       }
     }
 
-    // ✅ ONESHOT = LECTURE COMPLÈTE
     else if (oneshotMatch) {
       const mangaId = decodeURIComponent(oneshotMatch[1]);
-
-      console.log("📖 Oneshot ajouté à l'historique :", mangaId);
 
       this.addToHistory(mangaId, "oneshot", {
         title: pageTitle,
@@ -122,25 +171,54 @@ class UserPreferences {
     }
   }
 
+  // Marquer un chapitre comme lu pour un manga sp\u00e9cifique
+  markChapterAsRead(mangaId, chapterNumber) {
+    const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
+    if (!readChapters[mangaId]) readChapters[mangaId] = [];
+    const chapterStr = String(chapterNumber);
+    if (!readChapters[mangaId].includes(chapterStr)) {
+      readChapters[mangaId].push(chapterStr);
+    }
+    localStorage.setItem("lanortrad_read_chapters", JSON.stringify(readChapters));
+  }
+
+  // V\u00e9rifier si un chapitre a \u00e9t\u00e9 lu
+  isChapterRead(mangaId, chapterNumber) {
+    const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
+    if (!readChapters[mangaId]) return false;
+    return readChapters[mangaId].includes(String(chapterNumber));
+  }
+
+  // Obtenir les chapitres lus pour un manga
+  getReadChapters(mangaId) {
+    const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
+    return readChapters[mangaId] || [];
+  }
+
+  // Obtenir le dernier chapitre lu pour un manga
+  getLastReadChapter(mangaId) {
+    const history = this.loadHistory();
+    const mangaHistory = history.filter(h => h.mangaId === mangaId && h.chapter !== "oneshot");
+    if (mangaHistory.length === 0) return null;
+    return mangaHistory[0]; // Le plus r\u00e9cent
+  }
+
   getMangaImage(mangaId) {
     const mangaImages = {
-      // Séries régulières
-      "Ao No Exorcist": "images/cover/AoNoExorcist.jpg",
-      "Tougen Anki": "images/cover/TougenAnki.jpg",
-      "Tokyo Underworld": "images/cover/TokyoUnderworld.jpg",
-      Satsudou: "images/cover/Satsudou.jpg",
-      Catenaccio: "images/cover/Catenaccio.png",
-
-      // ✅ CORRECTION : Chemins corrigés pour les oneshots
-      Countdown: "images/cover/Countdown.jpg",
-      "Gestation of Kalavinka": "/images/cover/Gestation Of Kalavinka.jpg",
-      "Gestation Of Kalavinka": "/images/cover/Gestation Of Kalavinka.jpg",
-      "In the White": "/images/cover/In the White.jpg",
-      "Sake to Sakana": "/images/cover/Sake To Sakana.jpg",
-      "Sake To Sakana": "/images/cover/Sake To Sakana.jpg",
-      "Second Coming": "/images/cover/Second Coming.jpg",
+      "Ao No Exorcist": "/images/Cover/AoNoExorcist.jpg",
+      "Tougen Anki": "/images/Cover/TougenAnki.jpg",
+      "Tokyo Underworld": "/images/Cover/TokyoUnderworld.jpg",
+      "Satsudou": "/images/Cover/Satsudou.jpg",
+      "Catenaccio": "/images/Cover/Catenaccio.png",
+      "Countdown": "/images/Cover/Countdown.jpg",
+      "Gestation of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
+      "Gestation Of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
+      "In the White": "/images/Cover/In the White.jpg",
+      "Sake to Sakana": "/images/Cover/Sake to Sakana.jpg",
+      "Sake To Sakana": "/images/Cover/Sake to Sakana.jpg",
+      "Second Coming": "/images/Cover/Second Coming.jpg",
     };
-    return mangaImages[mangaId] || "images/default-cover.jpg";
+    return mangaImages[mangaId] || "/images/icons/icon-192x192.png";
   }
 
   // UI Components
@@ -190,11 +268,11 @@ class UserPreferences {
     if (isFav) {
       btn.className =
         "favorite-btn w-full mb-4 py-2 px-4 rounded-lg border-2 border-pink-500 bg-pink-500/10 text-pink-400 transition-all duration-300 hover:bg-pink-500/20";
-      btn.innerHTML = "❤️ Dans mes favoris";
+      btn.innerHTML = "\u2764\uFE0F Dans mes favoris";
     } else {
       btn.className =
         "favorite-btn w-full mb-4 py-2 px-4 rounded-lg border-2 border-gray-600 text-gray-400 transition-all duration-300 hover:border-pink-500 hover:text-pink-400";
-      btn.innerHTML = "🤍 Ajouter aux favoris";
+      btn.innerHTML = "\uD83E\uDD0D Ajouter aux favoris";
     }
   }
 
@@ -205,7 +283,7 @@ class UserPreferences {
     });
   }
 
-  // Obtenir les données "Reprendre la lecture" (derniers chapitres par manga unique)
+  // Obtenir les donn\u00e9es "Reprendre la lecture" (derniers chapitres par manga unique)
   getResumeData(limit = 4) {
     const history = this.loadHistory();
     const seen = new Set();
@@ -220,15 +298,14 @@ class UserPreferences {
       if (entry.type === 'oneshot' || entry.chapter === 'oneshot') {
         chapterLink = `/Manga/${entry.mangaId}/Oneshot.html`;
       } else {
-        const mangaPath = entry.mangaId === 'Satsudou' ? entry.mangaId : entry.mangaId;
-        chapterLink = `/Manga/${mangaPath}/Chapitre ${entry.chapter}.html`;
+        chapterLink = `/Manga/${entry.mangaId}/Chapitre ${entry.chapter}.html`;
       }
 
       resume.push({
         mangaId: entry.mangaId,
         title: entry.title || entry.mangaId,
         chapter: entry.chapter,
-        image: entry.image || this.getMangaImage(entry.mangaId),
+        image: this.getMangaImage(entry.mangaId),
         link: chapterLink,
         readAt: entry.readAt,
         type: entry.type
@@ -238,6 +315,57 @@ class UserPreferences {
     }
 
     return resume;
+  }
+
+  // Statistiques globales de l'utilisateur
+  getUserStats() {
+    const history = this.loadHistory();
+    const readingTimes = JSON.parse(localStorage.getItem("lanortrad_reading_times") || "{}");
+    const pageViews = JSON.parse(localStorage.getItem("lanortrad_pageviews") || "[]");
+    const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
+
+    // Mangas uniques lus
+    const uniqueMangas = new Set(history.map(h => h.mangaId));
+
+    // Chapitres uniques lus au total
+    let totalUniqueChapters = 0;
+    for (const mangaId in readChapters) {
+      totalUniqueChapters += readChapters[mangaId].length;
+    }
+
+    // Temps total de lecture en secondes
+    const totalReadingTime = readingTimes._total || 0;
+
+    // Manga le plus lu
+    const mangaReadCounts = {};
+    history.forEach(h => {
+      mangaReadCounts[h.mangaId] = (mangaReadCounts[h.mangaId] || 0) + 1;
+    });
+    const mostReadManga = Object.entries(mangaReadCounts).sort((a, b) => b[1] - a[1])[0];
+
+    // Jours actifs
+    const activeDays = new Set(history.map(h => new Date(h.readAt).toDateString()));
+
+    // Heures de lecture pr\u00e9f\u00e9r\u00e9es
+    const hourCounts = new Array(24).fill(0);
+    history.forEach(h => {
+      const hour = new Date(h.readAt).getHours();
+      hourCounts[hour]++;
+    });
+    const peakHour = hourCounts.indexOf(Math.max(...hourCounts));
+
+    return {
+      totalChaptersRead: totalUniqueChapters,
+      totalReadingTimeSeconds: totalReadingTime,
+      uniqueMangasRead: uniqueMangas.size,
+      mostReadManga: mostReadManga ? { id: mostReadManga[0], count: mostReadManga[1] } : null,
+      activeDays: activeDays.size,
+      totalPageViews: pageViews.length,
+      peakReadingHour: peakHour,
+      readChaptersPerManga: readChapters,
+      readingTimesPerManga: readingTimes,
+      historyCount: history.length,
+    };
   }
 
   showToast(message) {

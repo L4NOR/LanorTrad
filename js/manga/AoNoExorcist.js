@@ -161,18 +161,38 @@ window.changeChapter = function(delta) {
 
 function isChapterRead(chapterNumber) {
     try {
-        const history = JSON.parse(localStorage.getItem('lanortrad_history') || '[]');
+        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters' ) || '{}' );
+        if (readChapters[CONFIG.currentManga] && readChapters[CONFIG.currentManga].includes(String(chapterNumber))) {
+            return true;
+        }
+        const history = JSON.parse(localStorage.getItem('lanortrad_history' ) || '[]' );
         return history.some(h => h.mangaId === CONFIG.currentManga && String(h.chapter) === String(chapterNumber));
     } catch (e) { return false; }
+}
+
+function getReadChaptersCount() {
+    try {
+        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters' ) || '{}' );
+        return (readChapters[CONFIG.currentManga] || []).length;
+    } catch (e) { return 0; }
+}
+
+function getLastReadChapter() {
+    try {
+        const history = JSON.parse(localStorage.getItem('lanortrad_history' ) || '[]' );
+        const mangaHistory = history.filter(h => h.mangaId === CONFIG.currentManga && h.chapter !== 'oneshot' );
+        return mangaHistory.length > 0 ? mangaHistory[0] : null;
+    } catch (e) { return null; }
 }
 
 function createChapterHTML(chapter) {
     const read = isChapterRead(chapter.number);
     return `
-        <div class="card rounded-xl p-4 flex items-center justify-between${read ? ' border-indigo-500/30' : ''}">
+        <div class="card rounded-xl p-4 flex items-center justify-between${read ? ' border-green-500/20 bg-green-500/5' : ''}">
             <div class="flex items-center gap-3">
                 ${read ? '<span class="text-green-400 text-sm" title="Lu">&#10003;</span>' : '<span class="text-gray-600 text-sm">&#9679;</span>'}
                 <h3 class="text-lg font-medium${read ? ' text-gray-400' : ''}">${CONFIG.chapterPrefix} ${chapter.number}</h3>
+                ${read ? '<span class="text-xs text-green-400/60 ml-1">Lu</span>' : ''}
             </div>
             <div class="flex gap-4">
                 <a href="${chapter.link}" class="px-4 py-2 rounded-lg ${read ? 'bg-gray-700 hover:bg-gray-600' : 'bg-indigo-600 hover:bg-indigo-700'} text-white text-sm font-medium transition-colors">
@@ -181,6 +201,38 @@ function createChapterHTML(chapter) {
             </div>
         </div>
     `;
+}
+
+function showResumeReading() {
+    const lastRead = getLastReadChapter();
+    if (!lastRead) return;
+    const readCount = getReadChaptersCount();
+    const totalChapters = CONFIG.maxChapters;
+    const progressPercent = Math.round((readCount / totalChapters) * 100);
+    const container = document.querySelector('#chapters-container' );
+    if (!container) return;
+    const resumeHTML = `
+        <div class="card rounded-xl p-5 mb-6 border-indigo-500/30 bg-indigo-500/5">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span class="text-indigo-400">&#9654;</span> Reprendre la lecture
+                    </h3>
+                    <p class="text-sm text-gray-400 mt-1">Dernier chapitre lu : <span class="text-indigo-400">Chapitre ${lastRead.chapter}</span></p>
+                </div>
+                <a href="${CONFIG.currentManga}/${CONFIG.chapterPrefix} ${lastRead.chapter}.html" class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
+                    Reprendre &rarr;
+                </a>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex-1 bg-gray-800 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all" style="width: ${progressPercent}%"></div>
+                </div>
+                <span class="text-xs text-gray-400 whitespace-nowrap">${readCount}/${totalChapters} chapitres (${progressPercent}%)</span>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforebegin', resumeHTML);
 }
 
 function displayChapters() {
@@ -199,6 +251,7 @@ function displayChapters() {
 function loadMore() {
     displayCount += 500;
     displayChapters();
+    showResumeReading();
 }
 
 // ============================================
@@ -380,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeChapterSelect();
     displayChapters();
+    showResumeReading();
     
     // Tracker après 3 secondes
     setTimeout(trackChapterReading, 3000);
