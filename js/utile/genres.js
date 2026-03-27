@@ -1,12 +1,14 @@
 // Utilise la source unique de donnees manga
 const mangas = window.MANGA_DATA || [];
 
-// Récupérer la progression de lecture depuis localStorage
+// Récupérer la progression de lecture depuis localStorage (source unique: read_chapters)
 function getReadingProgress(mangaId, totalChapters) {
     try {
-        const stats = JSON.parse(localStorage.getItem('lanortrad_stats') || '{}');
-        if (stats.mangaStats && stats.mangaStats[mangaId]) {
-            const read = stats.mangaStats[mangaId].chaptersRead || 0;
+        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters') || '{}');
+        const lower = mangaId.toLowerCase();
+        const key = Object.keys(readChapters).find(k => k.toLowerCase() === lower);
+        if (key && readChapters[key].length > 0) {
+            const read = readChapters[key].length;
             return { read, total: totalChapters, percent: Math.min(100, Math.round((read / totalChapters) * 100)) };
         }
     } catch (e) {}

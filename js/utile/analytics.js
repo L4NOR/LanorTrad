@@ -38,6 +38,23 @@ class ReadingAnalytics {
     localStorage.setItem("lanortrad_stats", JSON.stringify(this.stats));
   }
 
+  _normalizeMangaId(mangaId) {
+    if (window.MANGA_DATA) {
+      const lower = mangaId.toLowerCase();
+      const manga = window.MANGA_DATA.find(m => m.id.toLowerCase() === lower || m.title.toLowerCase() === lower);
+      if (manga) return manga.id;
+    }
+    return mangaId;
+  }
+
+  _findMangaKey(mangaId) {
+    const normalized = this._normalizeMangaId(mangaId);
+    if (this.stats.mangaStats[normalized]) return normalized;
+    const lower = mangaId.toLowerCase();
+    const existing = Object.keys(this.stats.mangaStats).find(k => k.toLowerCase() === lower);
+    return existing || normalized;
+  }
+
   trackChapterRead(mangaId, chapterNumber, readingTime = 5) {
     if (!this.stats) {
       console.warn("⚠️ Stats non initialisées, rechargement...");
@@ -48,6 +65,9 @@ class ReadingAnalytics {
     if (!this.stats.oneshotsRead) this.stats.oneshotsRead = [];
 
     if (!mangaId || !chapterNumber) return;
+
+    // Normaliser le mangaId pour eviter les doublons de casse
+    mangaId = this._findMangaKey(mangaId);
 
     const isOneshot =
       chapterNumber === "oneshot" || this.isOneshotManga(mangaId);
@@ -121,15 +141,13 @@ class ReadingAnalytics {
   // ✨ Liste complète des oneshots
   isOneshotManga(mangaId) {
     const oneshots = [
-      "Countdown",
-      "Gestation of Kalavinka",
-      "Gestation Of Kalavinka",
-      "In the White",
-      "Sake to Sakana",
-      "Sake To Sakana",
-      "Second Coming",
+      "countdown",
+      "gestation of kalavinka",
+      "in the white",
+      "sake to sakana",
+      "second coming",
     ];
-    return oneshots.includes(mangaId);
+    return oneshots.includes(mangaId.toLowerCase());
   }
 
   updateStreak() {

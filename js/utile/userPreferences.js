@@ -55,17 +55,20 @@ class UserPreferences {
   }
 
   addToHistory(mangaId, chapterNumber, mangaData) {
-    // Supprimer l'ancienne entr\u00e9e si elle existe
+    const normalizedId = this._normalizeMangaId(mangaId);
+    const idLower = normalizedId.toLowerCase();
+
+    // Supprimer l'ancienne entree (case-insensitive)
     this.history = this.history.filter(
-      (h) => !(h.mangaId === mangaId && h.chapter === chapterNumber)
+      (h) => !(h.mangaId.toLowerCase() === idLower && h.chapter === chapterNumber)
     );
 
-    // Ajouter en premi\u00e8re position
+    // Ajouter en premiere position
     this.history.unshift({
-      mangaId,
+      mangaId: normalizedId,
       chapter: chapterNumber,
-      title: mangaData.title,
-      image: this.getMangaImage(mangaId),
+      title: mangaData.title || normalizedId,
+      image: this.getMangaImage(normalizedId),
       type: mangaData.type || "manga",
       readAt: Date.now(),
     });
@@ -172,10 +175,21 @@ class UserPreferences {
   }
 
   // Marquer un chapitre comme lu pour un manga sp\u00e9cifique
+  _normalizeMangaId(mangaId) {
+    if (window.MANGA_DATA) {
+      const lower = mangaId.toLowerCase();
+      const manga = window.MANGA_DATA.find(m => m.id.toLowerCase() === lower || m.title.toLowerCase() === lower);
+      if (manga) return manga.id;
+    }
+    return mangaId;
+  }
+
   _findMangaKey(obj, mangaId) {
+    const normalized = this._normalizeMangaId(mangaId);
+    if (obj[normalized]) return normalized;
     if (obj[mangaId]) return mangaId;
     const lower = mangaId.toLowerCase();
-    return Object.keys(obj).find(k => k.toLowerCase() === lower) || mangaId;
+    return Object.keys(obj).find(k => k.toLowerCase() === lower) || normalized;
   }
 
   markChapterAsRead(mangaId, chapterNumber) {
