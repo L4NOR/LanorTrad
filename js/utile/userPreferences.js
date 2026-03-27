@@ -205,29 +205,28 @@ class UserPreferences {
 
   getMangaImage(mangaId) {
     const base = this.getBaseUrl();
+    const mangaIdLower = mangaId.toLowerCase();
 
     // Utiliser MANGA_DATA si disponible (priorite aux images locales)
     if (window.MANGA_DATA) {
-      const manga = window.MANGA_DATA.find(m => m.id === mangaId || m.title === mangaId);
+      const manga = window.MANGA_DATA.find(m => m.id.toLowerCase() === mangaIdLower || m.title.toLowerCase() === mangaIdLower);
       if (manga && manga.image) return base + manga.image;
     }
 
     // Fallback avec chemins locaux directs
     const localImages = {
-      "Ao No Exorcist": "images/Cover/AoNoExorcist.jpg",
-      "Tougen Anki": "images/Cover/TougenAnki.jpg",
-      "Tokyo Underworld": "images/Cover/TokyoUnderworld.jpg",
-      "Satsudou": "images/Cover/Satsudou.jpg",
-      "Catenaccio": "images/Cover/Catenaccio.png",
-      "Countdown": "images/Cover/Countdown.jpg",
-      "Gestation of Kalavinka": "images/Cover/Gestation of Kalavinka.jpg",
-      "Gestation Of Kalavinka": "images/Cover/Gestation of Kalavinka.jpg",
-      "In the White": "images/Cover/In the White.jpg",
-      "Sake to Sakana": "images/Cover/Sake to Sakana.jpg",
-      "Sake To Sakana": "images/Cover/Sake to Sakana.jpg",
-      "Second Coming": "images/Cover/Second Coming.jpg",
+      "ao no exorcist": "images/Cover/AoNoExorcist.jpg",
+      "tougen anki": "images/Cover/TougenAnki.jpg",
+      "tokyo underworld": "images/Cover/TokyoUnderworld.jpg",
+      "satsudou": "images/Cover/Satsudou.jpg",
+      "catenaccio": "images/Cover/Catenaccio.png",
+      "countdown": "images/Cover/Countdown.jpg",
+      "gestation of kalavinka": "images/Cover/Gestation of Kalavinka.jpg",
+      "in the white": "images/Cover/In the White.jpg",
+      "sake to sakana": "images/Cover/Sake to Sakana.jpg",
+      "second coming": "images/Cover/Second Coming.jpg",
     };
-    if (localImages[mangaId]) return base + localImages[mangaId];
+    if (localImages[mangaIdLower]) return base + localImages[mangaIdLower];
 
     return base + "images/icons/icon-192x192.png";
   }
