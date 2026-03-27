@@ -172,35 +172,42 @@ class UserPreferences {
   }
 
   // Marquer un chapitre comme lu pour un manga sp\u00e9cifique
+  _findMangaKey(obj, mangaId) {
+    if (obj[mangaId]) return mangaId;
+    const lower = mangaId.toLowerCase();
+    return Object.keys(obj).find(k => k.toLowerCase() === lower) || mangaId;
+  }
+
   markChapterAsRead(mangaId, chapterNumber) {
     const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
-    if (!readChapters[mangaId]) readChapters[mangaId] = [];
+    const key = this._findMangaKey(readChapters, mangaId);
+    if (!readChapters[key]) readChapters[key] = [];
     const chapterStr = String(chapterNumber);
-    if (!readChapters[mangaId].includes(chapterStr)) {
-      readChapters[mangaId].push(chapterStr);
+    if (!readChapters[key].includes(chapterStr)) {
+      readChapters[key].push(chapterStr);
     }
     localStorage.setItem("lanortrad_read_chapters", JSON.stringify(readChapters));
   }
 
-  // V\u00e9rifier si un chapitre a \u00e9t\u00e9 lu
   isChapterRead(mangaId, chapterNumber) {
     const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
-    if (!readChapters[mangaId]) return false;
-    return readChapters[mangaId].includes(String(chapterNumber));
+    const key = this._findMangaKey(readChapters, mangaId);
+    if (!readChapters[key]) return false;
+    return readChapters[key].includes(String(chapterNumber));
   }
 
-  // Obtenir les chapitres lus pour un manga
   getReadChapters(mangaId) {
     const readChapters = JSON.parse(localStorage.getItem("lanortrad_read_chapters") || "{}");
-    return readChapters[mangaId] || [];
+    const key = this._findMangaKey(readChapters, mangaId);
+    return readChapters[key] || [];
   }
 
-  // Obtenir le dernier chapitre lu pour un manga
   getLastReadChapter(mangaId) {
     const history = this.loadHistory();
-    const mangaHistory = history.filter(h => h.mangaId === mangaId && h.chapter !== "oneshot");
+    const lower = mangaId.toLowerCase();
+    const mangaHistory = history.filter(h => h.mangaId.toLowerCase() === lower && h.chapter !== "oneshot");
     if (mangaHistory.length === 0) return null;
-    return mangaHistory[0]; // Le plus r\u00e9cent
+    return mangaHistory[0];
   }
 
   getMangaImage(mangaId) {

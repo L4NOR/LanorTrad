@@ -51,28 +51,38 @@ function getCurrentChapterFromURL() {
     return 1;
 }
 
+function findMangaKey(obj, mangaName) {
+    if (obj[mangaName]) return mangaName;
+    const lower = mangaName.toLowerCase();
+    return Object.keys(obj).find(k => k.toLowerCase() === lower) || mangaName;
+}
+
 function isChapterRead(chapterNumber) {
     try {
-        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters' ) || '{}' );
-        if (readChapters[CONFIG.currentManga] && readChapters[CONFIG.currentManga].includes(String(chapterNumber))) {
+        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters') || '{}');
+        const key = findMangaKey(readChapters, CONFIG.currentManga);
+        if (readChapters[key] && readChapters[key].includes(String(chapterNumber))) {
             return true;
         }
-        const history = JSON.parse(localStorage.getItem('lanortrad_history' ) || '[]' );
-        return history.some(h => h.mangaId === CONFIG.currentManga && String(h.chapter) === String(chapterNumber));
+        const history = JSON.parse(localStorage.getItem('lanortrad_history') || '[]');
+        const lower = CONFIG.currentManga.toLowerCase();
+        return history.some(h => h.mangaId.toLowerCase() === lower && String(h.chapter) === String(chapterNumber));
     } catch (e) { return false; }
 }
 
 function getReadChaptersCount() {
     try {
-        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters' ) || '{}' );
-        return (readChapters[CONFIG.currentManga] || []).length;
+        const readChapters = JSON.parse(localStorage.getItem('lanortrad_read_chapters') || '{}');
+        const key = findMangaKey(readChapters, CONFIG.currentManga);
+        return (readChapters[key] || []).length;
     } catch (e) { return 0; }
 }
 
 function getLastReadChapter() {
     try {
-        const history = JSON.parse(localStorage.getItem('lanortrad_history' ) || '[]' );
-        const mangaHistory = history.filter(h => h.mangaId === CONFIG.currentManga && h.chapter !== 'oneshot' );
+        const history = JSON.parse(localStorage.getItem('lanortrad_history') || '[]');
+        const lower = CONFIG.currentManga.toLowerCase();
+        const mangaHistory = history.filter(h => h.mangaId.toLowerCase() === lower && h.chapter !== 'oneshot');
         return mangaHistory.length > 0 ? mangaHistory[0] : null;
     } catch (e) { return null; }
 }
