@@ -771,19 +771,21 @@
     // === HISTORIQUE ===
 function getMangaImageForHistory(mangaId) {
     if (window.userPrefs) return window.userPrefs.getMangaImage(mangaId);
+    // Fallback si userPrefs pas encore chargé
+    const base = window.location.protocol === 'file:' ? '' : '/';
     const images = {
-        "Ao No Exorcist": "images/Cover/AoNoExorcist.jpg",
-        "Tougen Anki": "images/Cover/TougenAnki.jpg",
-        "Tokyo Underworld": "images/Cover/TokyoUnderworld.jpg",
-        "Satsudou": "images/Cover/Satsudou.jpg",
-        "Catenaccio": "images/Cover/Catenaccio.png",
-        "Countdown": "images/Cover/Countdown.jpg",
-        "Gestation of Kalavinka": "images/Cover/Gestation of Kalavinka.jpg",
-        "In the White": "images/Cover/In the White.jpg",
-        "Sake to Sakana": "images/Cover/Sake to Sakana.jpg",
-        "Second Coming": "images/Cover/Second Coming.jpg",
+        "Ao No Exorcist": base + "images/Cover/AoNoExorcist.jpg",
+        "Tougen Anki": base + "images/Cover/TougenAnki.jpg",
+        "Tokyo Underworld": base + "images/Cover/TokyoUnderworld.jpg",
+        "Satsudou": base + "images/Cover/Satsudou.jpg",
+        "Catenaccio": base + "images/Cover/Catenaccio.png",
+        "Countdown": base + "images/Cover/Countdown.jpg",
+        "Gestation of Kalavinka": base + "images/Cover/Gestation of Kalavinka.jpg",
+        "In the White": base + "images/Cover/In the White.jpg",
+        "Sake to Sakana": base + "images/Cover/Sake to Sakana.jpg",
+        "Second Coming": base + "images/Cover/Second Coming.jpg",
     };
-    return images[mangaId] || "images/icons/icon-192x192.png";
+    return images[mangaId] || base + "images/icons/icon-192x192.png";
 }
 
 function loadHistory() {
