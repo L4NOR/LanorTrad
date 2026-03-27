@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma Bibliothèque - LanorTrad</title>
-    <link rel="icon" href="/images/icons/icon-192x192.png">
+    <link rel="icon" href="images/icons/icon-192x192.png">
     
     <!--MetaTags-->
     <meta name="description" content="Explorez le catalogue de mangas de LanorTrad. Découvrez une large sélection de titres traduits en français, du shonen au seinen, avec des mises à jour régulières.">
@@ -121,6 +121,17 @@
     <script src="js/utile/theme.js"></script>
     <link rel="stylesheet" href="css/intros.css">
 
+    <!--OneSignal Push Notifications-->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            await OneSignal.init({
+                appId: "536ef027-62f0-4900-a517-a90fc6997b8f",
+            });
+        });
+    </script>
+
     <!--Scripts-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
     <script>
@@ -133,6 +144,7 @@
     <!-- Ezoic : décommente la ligne ci-dessous quand ton compte Ezoic est prêt -->
     <!-- <script async src="https://www.ezojs.com/ezoic/sa.min.js"></script> -->
     <meta name="google-site-verification" content="eImJAYI9qcdg0xDVXhoI6EWU97AaJQgT0-S9vOgLXFs"/>
+    <script src="js/utile/mangaData.js"></script>
     <script src="js/utile/navbar.js"></script>
     <script src="js/utile/search.js"></script>
     <script src="js/utile/toast.js"></script>
@@ -760,18 +772,18 @@
 function getMangaImageForHistory(mangaId) {
     if (window.userPrefs) return window.userPrefs.getMangaImage(mangaId);
     const images = {
-        "Ao No Exorcist": "/images/Cover/AoNoExorcist.jpg",
-        "Tougen Anki": "/images/Cover/TougenAnki.jpg",
-        "Tokyo Underworld": "/images/Cover/TokyoUnderworld.jpg",
-        "Satsudou": "/images/Cover/Satsudou.jpg",
-        "Catenaccio": "/images/Cover/Catenaccio.png",
-        "Countdown": "/images/Cover/Countdown.jpg",
-        "Gestation of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
-        "In the White": "/images/Cover/In the White.jpg",
-        "Sake to Sakana": "/images/Cover/Sake to Sakana.jpg",
-        "Second Coming": "/images/Cover/Second Coming.jpg",
+        "Ao No Exorcist": "images/Cover/AoNoExorcist.jpg",
+        "Tougen Anki": "images/Cover/TougenAnki.jpg",
+        "Tokyo Underworld": "images/Cover/TokyoUnderworld.jpg",
+        "Satsudou": "images/Cover/Satsudou.jpg",
+        "Catenaccio": "images/Cover/Catenaccio.png",
+        "Countdown": "images/Cover/Countdown.jpg",
+        "Gestation of Kalavinka": "images/Cover/Gestation of Kalavinka.jpg",
+        "In the White": "images/Cover/In the White.jpg",
+        "Sake to Sakana": "images/Cover/Sake to Sakana.jpg",
+        "Second Coming": "images/Cover/Second Coming.jpg",
     };
-    return images[mangaId] || "/images/icons/icon-192x192.png";
+    return images[mangaId] || "images/icons/icon-192x192.png";
 }
 
 function loadHistory() {
@@ -813,7 +825,7 @@ function loadHistory() {
         return `
             <div class="card rounded-xl p-4 flex items-center gap-4 hover:border-indigo-500/50 transition-all">
                 <a href="${mangaPageUrl}" class="flex-shrink-0">
-                    <img src="${coverImage}" alt="${item.title}" class="w-16 h-22 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform" onerror="this.src='/images/icons/icon-192x192.png'">
+                    <img src="${coverImage}" alt="${item.title}" class="w-16 h-22 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform" onerror="this.src='images/icons/icon-192x192.png'">
                 </a>
                 <div class="flex-grow min-w-0">
                     <a href="${mangaPageUrl}" class="font-bold text-white hover:text-indigo-400 transition-colors block truncate">${item.title || item.mangaId}</a>
@@ -941,7 +953,7 @@ function loadStatistics() {
             return `
                 <div class="card rounded-xl p-6">
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="${coverImage}" alt="${mangaId}" class="w-12 h-16 object-cover rounded-lg" onerror="this.src='/images/icons/icon-192x192.png'">
+                        <img src="${coverImage}" alt="${mangaId}" class="w-12 h-16 object-cover rounded-lg" onerror="this.src='images/icons/icon-192x192.png'">
                         <div>
                             ${oneshotBadge}
                             <h3 class="text-lg font-bold">${mangaId}</h3>

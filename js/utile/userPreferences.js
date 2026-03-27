@@ -204,21 +204,57 @@ class UserPreferences {
   }
 
   getMangaImage(mangaId) {
-    const mangaImages = {
-      "Ao No Exorcist": "/images/Cover/AoNoExorcist.jpg",
-      "Tougen Anki": "/images/Cover/TougenAnki.jpg",
-      "Tokyo Underworld": "/images/Cover/TokyoUnderworld.jpg",
-      "Satsudou": "/images/Cover/Satsudou.jpg",
-      "Catenaccio": "/images/Cover/Catenaccio.png",
-      "Countdown": "/images/Cover/Countdown.jpg",
-      "Gestation of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
-      "Gestation Of Kalavinka": "/images/Cover/Gestation of Kalavinka.jpg",
-      "In the White": "/images/Cover/In the White.jpg",
-      "Sake to Sakana": "/images/Cover/Sake to Sakana.jpg",
-      "Sake To Sakana": "/images/Cover/Sake to Sakana.jpg",
-      "Second Coming": "/images/Cover/Second Coming.jpg",
+    // Utiliser MANGA_DATA (CDN coverImage) si disponible pour un chargement fiable
+    if (window.MANGA_DATA) {
+      const manga = window.MANGA_DATA.find(m => m.id === mangaId || m.title === mangaId);
+      if (manga) return manga.coverImage || manga.image;
+    }
+
+    // Fallback avec URLs CDN directes
+    const cdnImages = {
+      "Ao No Exorcist": "https://i.postimg.cc/qMdNHK8C/Ao-No-Exorcist.jpg",
+      "Tougen Anki": "https://i.postimg.cc/4Nbmf35F/Tougen-Anki.jpg",
+      "Tokyo Underworld": "https://i.postimg.cc/tCtYqg5w/Tokyo-Underworld.jpg",
+      "Satsudou": "https://i.postimg.cc/Hs4VYLzH/Satsudou.jpg",
+      "Catenaccio": "https://i.postimg.cc/5Nq64t37/Catenaccio.png",
     };
-    return mangaImages[mangaId] || "/images/icons/icon-192x192.png";
+    if (cdnImages[mangaId]) return cdnImages[mangaId];
+
+    // Fallback local pour les oneshots
+    const base = this.getBaseUrl();
+    const mangaImages = {
+      "Countdown": base + "images/Cover/Countdown.jpg",
+      "Gestation of Kalavinka": base + "images/Cover/Gestation of Kalavinka.jpg",
+      "Gestation Of Kalavinka": base + "images/Cover/Gestation of Kalavinka.jpg",
+      "In the White": base + "images/Cover/In the White.jpg",
+      "Sake to Sakana": base + "images/Cover/Sake to Sakana.jpg",
+      "Sake To Sakana": base + "images/Cover/Sake to Sakana.jpg",
+      "Second Coming": base + "images/Cover/Second Coming.jpg",
+    };
+    return mangaImages[mangaId] || base + "images/icons/icon-192x192.png";
+  }
+
+  getBaseUrl() {
+    if (window.location.protocol === 'file:') {
+      const path = decodeURIComponent(window.location.pathname);
+      const idx = path.toLowerCase().indexOf('/lanortrad/');
+      if (idx !== -1) {
+        const nextSlash = path.indexOf('/', idx + '/LanorTrad/'.length);
+        if (nextSlash !== -1) {
+          return path.substring(0, nextSlash + 1);
+        }
+      }
+      // Fallback: remonter depuis le dossier courant
+      const parts = path.split('/');
+      parts.pop(); // remove filename
+      if (parts[parts.length - 1] === 'Manga' || path.includes('/Manga/')) {
+        // On est dans /Manga/ ou /Manga/xxx/ - remonter
+        while (parts.length > 0 && parts[parts.length - 1] !== 'LanorTrad') parts.pop();
+        return parts.join('/') + '/';
+      }
+      return parts.join('/') + '/';
+    }
+    return '/';
   }
 
   // UI Components
