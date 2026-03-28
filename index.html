@@ -64,23 +64,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/utile/theme.js"></script>
     <link rel="stylesheet" href="css/intros.css">
-
-    <!--OneSignal Push Notifications-->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-                appId: "536ef027-62f0-4900-a517-a90fc6997b8f",
-                serviceWorkerParam: { scope: "/" },
-                serviceWorkerPath: "/sw.js",
-                serviceWorkerParam: { scope: "/" },
-                serviceWorkerPath: "/sw.js",
-            });
-        });
-    </script>
-
-    <!--Scripts-->
+<!--Scripts-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2MZGH30P4J"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -108,7 +92,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LanorTrad">
     <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
-    <!-- Service Worker enregistré automatiquement par OneSignal -->
 </head>
 
 <body class="min-h-screen">

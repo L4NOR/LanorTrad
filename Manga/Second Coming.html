@@ -70,15 +70,8 @@
     <script src="../js/utile/theme.js"></script>
     <link rel="stylesheet" href="../css/intros.css">
 
-    <!--OneSignal Push Notifications-->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
                 appId: "536ef027-62f0-4900-a517-a90fc6997b8f",
-                serviceWorkerParam: { scope: "/" },
-                serviceWorkerPath: "/sw.js",
             });
         });
     </script>
