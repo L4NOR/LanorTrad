@@ -1,6 +1,9 @@
-// v2.0 - LanorTrad Service Worker (notifications + ads)
+// v3.0 - LanorTrad Service Worker (OneSignal + notifications)
 
-// Handler : clic sur une notification
+// Importer le SDK OneSignal pour les push notifications
+importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
+
+// Handler : clic sur une notification custom (hors OneSignal)
 self.addEventListener('notificationclick', function(event) {
     event.notification.close();
     event.waitUntil(
@@ -17,11 +20,3 @@ self.addEventListener('notificationclick', function(event) {
         })
     );
 });
-
-// Ads service worker
-self.options = {
-    "domain": "3nbf4.com",
-    "zoneId": 10644610
-}
-self.lary = ""
-importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw')
