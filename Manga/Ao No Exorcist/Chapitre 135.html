@@ -245,6 +245,14 @@
                 imgElement.alt = `Ao No Exorcist Chapitre 135 Page ${num}`; 
                 container.appendChild(imgElement); 
             }
+
+
+            // Ajoute l'image de recrutement en dernière position
+            let lastImg = document.createElement('img');
+            lastImg.src = '../../images/Affiche/recrutement lanortrad.png';
+            lastImg.alt = 'Recrutement LanorTrad';
+            lastImg.style.marginTop = '5px';
+            container.appendChild(lastImg);
         }
     
         generateImages();
