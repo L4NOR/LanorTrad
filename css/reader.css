@@ -1,6 +1,6 @@
 /* ========================================
-   LANORTRAD READER v3.0
-   Design mobile-first amélioré
+   LANORTRAD READER v4.0
+   Lecteur adaptatif + outils de zoom
    ======================================== */
 
 /* ========================================
@@ -8,11 +8,33 @@
    ======================================== */
 :root {
     --reader-bg: rgba(17, 24, 39, 0.95);
+    --reader-bg-solid: rgba(17, 24, 39, 0.98);
     --reader-border: rgba(var(--accent-rgb, 99, 102, 241), 0.3);
     --reader-accent: var(--primary-light, #6366f1);
     --reader-accent-light: var(--accent, #818cf8);
     --reader-text: var(--text-primary, #e5e7eb);
     --reader-text-muted: var(--text-secondary, #9CA3AF);
+    --reader-max-width: 900px;
+    --reader-zoom: 1;
+}
+
+/* Largeur de lecture (préférence utilisateur) */
+html.reader-width-compact { --reader-max-width: 640px; }
+html.reader-width-normal  { --reader-max-width: 900px; }
+html.reader-width-wide    { --reader-max-width: 1200px; }
+html.reader-width-full    { --reader-max-width: 100%; }
+
+/* En modes Large et Pleine, on libère le container parent (max-w-4xl) */
+html.reader-width-wide #readerContainer,
+html.reader-width-full #readerContainer {
+    max-width: 100%;
+}
+html.reader-width-wide #readerContainer { max-width: 1240px; }
+
+/* Hauteurs sûres mobile (compatibilité dvh) */
+@supports not (height: 100dvh) {
+    .page-image-container.zoomed { max-height: calc(100vh - 200px); }
+    .page-mode-container.fit-height .page-image-container { max-height: calc(100vh - 200px); }
 }
 
 /* ========================================
@@ -37,18 +59,28 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* ✅ Alignement à droite */
+    justify-content: flex-end;
     gap: 1rem;
 }
 
+/* Le wrapper de boutons du haut, injecté par JS, sert d'ancre */
+.reader-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
 /* ========================================
-   SÉLECTEUR DE CHAPITRE - MASQUÉ EN MODE PAGE
+   SÉLECTEUR DE CHAPITRE
    ======================================== */
 .chapter-select-wrapper {
     position: relative;
     flex: 1;
     max-width: 200px;
-    display: none; /* ✅ Masqué par défaut, montré uniquement si nécessaire */
+    display: none;
 }
 
 .chapter-select {
@@ -87,7 +119,7 @@
 }
 
 /* ========================================
-   SÉLECTEUR DE MODE - COMPACT & ÉLÉGANT
+   SÉLECTEUR DE MODE
    ======================================== */
 .reader-mode-selector {
     display: flex;
@@ -96,7 +128,6 @@
     padding: 0.25rem;
     border-radius: 10px;
     border: 1px solid rgba(99, 102, 241, 0.15);
-    margin-left: auto; /* ✅ Force l'alignement à droite */
 }
 
 .mode-btn {
@@ -138,27 +169,115 @@
     box-shadow: 0 2px 8px rgba(var(--accent-rgb, 99, 102, 241), 0.4);
 }
 
-.mode-btn.shortcuts-btn {
+.mode-btn.shortcuts-btn,
+.mode-btn.settings-btn {
     padding: 0.5rem;
 }
 
-/* Desktop: afficher les labels */
 @media (min-width: 640px) {
-    .mode-btn span {
-        display: inline;
-    }
-    
-    .mode-btn {
-        padding: 0.5rem 1rem;
-    }
+    .mode-btn span { display: inline; }
+    .mode-btn { padding: 0.5rem 1rem; }
+}
+
+/* ========================================
+   PANNEAU DE PARAMÈTRES (slide-down)
+   ======================================== */
+.reader-settings-panel {
+    position: fixed;
+    top: 140px;
+    right: 1rem;
+    z-index: 45;
+    width: min(360px, calc(100vw - 2rem));
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(31, 41, 55, 0.98));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--reader-border);
+    border-radius: 16px;
+    padding: 1rem 1.1rem 1.1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+.reader-settings-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.settings-section {
+    margin-bottom: 0.9rem;
+}
+
+.settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.settings-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--reader-text-muted);
+    margin: 0 0 0.45rem;
+}
+
+.settings-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 0.35rem;
+}
+
+.settings-option {
+    padding: 0.5rem 0.6rem;
+    background: rgba(31, 41, 55, 0.6);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 8px;
+    color: var(--reader-text-muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.settings-option:hover {
+    color: var(--reader-text);
+    background: rgba(99, 102, 241, 0.15);
+}
+
+.settings-option.active {
+    color: white;
+    background: linear-gradient(135deg, var(--primary, #4f46e5), var(--accent-light, #7c3aed));
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(var(--accent-rgb, 99, 102, 241), 0.35);
+}
+
+.settings-reset-btn {
+    width: 100%;
+    padding: 0.6rem;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.settings-reset-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
 }
 
 /* ========================================
    CONTAINER DU LECTEUR
    ======================================== */
 .reader-container {
-    padding-top: 140px; /* Espace pour navbar + contrôles */
-    padding-bottom: 100px; /* Espace pour les contrôles du bas */
+    padding-top: 140px;
+    padding-bottom: 100px;
     min-height: 100vh;
 }
 
@@ -176,12 +295,15 @@
     padding: 0;
 }
 
+#readerContainer .scroll-mode-container img,
 .scroll-mode-container img {
     width: 100%;
-    max-width: 900px;
+    max-width: var(--reader-max-width);
     height: auto;
     display: block;
     margin: 0 auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .scroll-mode-container.hidden {
@@ -189,7 +311,7 @@
 }
 
 /* ========================================
-   MODE PAGE - SANS FLÈCHES SUPERPOSÉES
+   MODE PAGE
    ======================================== */
 .page-mode-container {
     display: none;
@@ -199,14 +321,13 @@
     max-width: 100%;
     margin: 0 auto;
     padding: 0 1rem;
-    gap: 1.5rem;
+    gap: 1.2rem;
 }
 
 .page-mode-container.active {
     display: flex;
 }
 
-/* Zone d'affichage de l'image */
 .page-display {
     position: relative;
     width: 100%;
@@ -215,22 +336,89 @@
     align-items: center;
 }
 
+/* Conteneur scrollable de l'image (utilisé pour le zoom) */
 .page-image-container {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: var(--reader-max-width);
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+    border-radius: 4px;
+    /* Permet le pinch-zoom natif tout en gardant nos gestes */
+    touch-action: pan-x pan-y;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.4) transparent;
 }
 
-.page-display img {
+/* Quand zoomé, on contraint la hauteur et on active le défilement interne */
+.page-image-container.zoomed {
+    overflow: auto;
+    max-height: calc(100dvh - 200px);
+}
+
+.page-image-container.zoomed {
+    cursor: grab;
+}
+
+.page-image-container.zoomed.grabbing {
+    cursor: grabbing;
+}
+
+.page-image-container.zoomed::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.page-image-container.zoomed::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.4);
+    border-radius: 4px;
+}
+
+.page-image-container.zoomed img {
+    cursor: inherit;
+}
+
+#readerContainer .page-display img {
     width: 100%;
-    max-width: 900px;
+    max-width: var(--reader-max-width);
     height: auto;
     object-fit: contain;
     display: block;
     border-radius: 4px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    transform: scale(var(--reader-zoom));
+    transform-origin: center top;
+    transition: transform 0.2s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Ajustement page mode : largeur (par défaut) */
+#readerContainer .page-mode-container.fit-width .page-display img {
+    width: 100%;
+    height: auto;
+    max-width: var(--reader-max-width);
+}
+
+/* Ajustement page mode : hauteur (idéal mobile paysage / desktop) */
+#readerContainer .page-mode-container.fit-height .page-image-container {
+    max-height: calc(100dvh - 200px);
+    display: block;
+    text-align: center;
+    overflow: visible;
+}
+#readerContainer .page-mode-container.fit-height .page-image-container.zoomed {
+    overflow: auto;
+}
+#readerContainer .page-mode-container.fit-height .page-display img {
+    width: auto;
+    height: calc(100dvh - 220px);
+    max-width: 100%;
+    max-height: calc(100dvh - 220px);
+    display: inline-block;
     margin: 0 auto;
 }
 
@@ -246,6 +434,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    pointer-events: none;
 }
 
 .page-loader.active {
@@ -267,14 +456,12 @@
 }
 
 /* ========================================
-   NAVIGATION - FLÈCHES CACHÉES SUR MOBILE
-   Les flèches sont remplacées par le tap sur l'image
+   FLÈCHES DE NAVIGATION (desktop)
    ======================================== */
 .page-nav-arrow {
-    display: none; /* Cachées par défaut sur mobile */
+    display: none;
 }
 
-/* Afficher les flèches uniquement sur desktop */
 @media (min-width: 1024px) {
     .page-nav-arrow {
         display: flex;
@@ -293,25 +480,87 @@
         transition: all 0.2s ease;
         z-index: 10;
     }
-    
+
     .page-nav-arrow:hover:not(.disabled) {
         background: linear-gradient(135deg, var(--primary, #4f46e5), var(--accent-light, #7c3aed));
         border-color: transparent;
         transform: translateY(-50%) scale(1.05);
     }
-    
+
     .page-nav-arrow.disabled {
         opacity: 0.3;
         cursor: not-allowed;
     }
-    
-    .page-nav-arrow.prev {
-        left: -70px;
-    }
-    
-    .page-nav-arrow.next {
-        right: -70px;
-    }
+
+    .page-nav-arrow.prev { left: -70px; }
+    .page-nav-arrow.next { right: -70px; }
+}
+
+/* Sur écrans 1024-1200 où la marge devient juste */
+@media (min-width: 1024px) and (max-width: 1280px) {
+    .page-nav-arrow.prev { left: -56px; }
+    .page-nav-arrow.next { right: -56px; }
+}
+
+/* ========================================
+   BARRE DE ZOOM (mode page)
+   ======================================== */
+.zoom-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: rgba(31, 41, 55, 0.6);
+    border: 1px solid var(--reader-border);
+    border-radius: 12px;
+    padding: 0.3rem;
+}
+
+.zoom-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--reader-text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.zoom-btn:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.18);
+    color: white;
+}
+
+.zoom-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.zoom-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.zoom-level {
+    min-width: 56px;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--reader-text);
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+}
+
+.zoom-level:hover {
+    background: rgba(99, 102, 241, 0.12);
 }
 
 /* ========================================
@@ -319,11 +568,10 @@
    ======================================== */
 .reading-progress-container {
     width: 100%;
-    max-width: 900px;
+    max-width: var(--reader-max-width);
     padding: 0;
 }
 
-/* Barre de progression */
 .progress-bar-wrapper {
     position: relative;
     width: 100%;
@@ -367,18 +615,19 @@
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     transition: transform 0.15s ease;
+    pointer-events: none;
 }
 
 .progress-bar-wrapper:hover .progress-handle {
     transform: translate(-50%, -50%) scale(1.2);
 }
 
-/* Navigation par page */
 .page-nav-container {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .page-input-group {
@@ -392,10 +641,7 @@
     font-size: 0.85rem;
 }
 
-.page-input-group span {
-    color: var(--reader-text-muted);
-}
-
+.page-input-group span { color: var(--reader-text-muted); }
 .page-input-group span.total {
     color: var(--reader-accent-light);
     font-weight: 600;
@@ -418,38 +664,8 @@
     border-color: var(--reader-accent);
 }
 
-/* Boutons de navigation page (mobile) */
-.page-nav-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(31, 41, 55, 0.6);
-    border: 1px solid var(--reader-border);
-    border-radius: 10px;
-    color: var(--reader-text);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.page-nav-btn:hover:not(:disabled) {
-    background: var(--reader-accent);
-    border-color: var(--reader-accent);
-}
-
-.page-nav-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.page-nav-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
 /* ========================================
-   CONTRÔLES DU BAS - BARRE FLOTTANTE
+   CONTRÔLES DU BAS
    ======================================== */
 .reader-controls {
     position: fixed;
@@ -467,6 +683,14 @@
     gap: 0.5rem;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    max-width: calc(100vw - 1rem);
+}
+
+.reader-controls.hidden-bar {
+    transform: translateX(-50%) translateY(120%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .control-button {
@@ -484,6 +708,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .control-button:hover {
@@ -495,30 +720,6 @@
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-}
-
-/* Mobile: boutons plus compacts */
-@media (max-width: 640px) {
-    .reader-controls {
-        bottom: 10px;
-        padding: 0.5rem 0.75rem;
-        border-radius: 14px;
-        gap: 0.4rem;
-    }
-    
-    .control-button {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.8rem;
-    }
-    
-    .control-button span {
-        display: none;
-    }
-    
-    .control-button svg {
-        width: 20px;
-        height: 20px;
-    }
 }
 
 /* ========================================
@@ -544,10 +745,13 @@
     background: linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(31, 41, 55, 0.98));
     border: 1px solid var(--reader-border);
     border-radius: 16px;
-    max-width: 380px;
+    max-width: 420px;
     width: 100%;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-height: 90dvh;
+    display: flex;
+    flex-direction: column;
 }
 
 .shortcuts-header {
@@ -585,15 +789,17 @@
 }
 
 .shortcuts-list {
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1.5rem;
+    overflow-y: auto;
 }
 
 .shortcut-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0;
+    padding: 0.65rem 0;
     border-bottom: 1px solid rgba(75, 85, 99, 0.15);
+    gap: 1rem;
 }
 
 .shortcut-item:last-child {
@@ -614,11 +820,13 @@
     font-size: 0.75rem;
     font-weight: 600;
     font-family: ui-monospace, monospace;
+    flex-shrink: 0;
 }
 
 .shortcut-desc {
     color: var(--reader-text-muted);
     font-size: 0.85rem;
+    text-align: right;
 }
 
 .close-shortcuts {
@@ -638,7 +846,7 @@
 }
 
 /* ========================================
-   INDICATION DE TAP (MOBILE)
+   HINT D'AIDE (premier affichage)
    ======================================== */
 .tap-hint {
     position: absolute;
@@ -653,6 +861,7 @@
     opacity: 0;
     animation: fadeInOut 3s ease forwards;
     pointer-events: none;
+    z-index: 100;
 }
 
 @keyframes fadeInOut {
@@ -663,68 +872,192 @@
 }
 
 /* ========================================
-   RESPONSIVE FINAL
+   RESPONSIVE - TABLETTES & MOBILES
    ======================================== */
+
+/* Tablette portrait / petit laptop */
+@media (max-width: 1024px) {
+    .reader-settings-panel {
+        top: 130px;
+    }
+    .page-image-container.zoomed {
+        max-height: calc(100dvh - 180px);
+    }
+}
+
+/* Tablette / petit écran */
+@media (max-width: 768px) {
+    .reader-container {
+        padding-top: 130px;
+        padding-bottom: 90px;
+    }
+    .page-mode-container {
+        padding: 0 0.5rem;
+        gap: 1rem;
+    }
+    .page-image-container.zoomed {
+        max-height: calc(100dvh - 170px);
+    }
+    #readerContainer .page-mode-container.fit-height .page-image-container {
+        max-height: calc(100dvh - 190px);
+    }
+    #readerContainer .page-mode-container.fit-height .page-display img {
+        height: calc(100dvh - 210px);
+        max-height: calc(100dvh - 210px);
+    }
+}
+
+/* Mobile classique */
+@media (max-width: 640px) {
+    .reader-controls {
+        bottom: 12px;
+        padding: 0.5rem 0.75rem;
+        border-radius: 14px;
+        gap: 0.4rem;
+    }
+    .control-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    .control-button span {
+        display: none;
+    }
+    .control-button svg {
+        width: 20px;
+        height: 20px;
+    }
+    .reader-settings-panel {
+        right: 0.5rem;
+        left: 0.5rem;
+        width: auto;
+        top: 130px;
+    }
+    .zoom-toolbar {
+        gap: 0.25rem;
+        padding: 0.25rem;
+    }
+    .zoom-btn {
+        width: 32px;
+        height: 32px;
+    }
+    .zoom-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .zoom-level {
+        min-width: 46px;
+        font-size: 0.72rem;
+        padding: 0.25rem 0.35rem;
+    }
+}
+
+/* Mobile petit */
 @media (max-width: 480px) {
+    .reader-container {
+        padding-top: 124px;
+    }
     .reader-top-bar {
         padding: 0.5rem 0.75rem;
     }
-    
     .chapter-select-wrapper {
         max-width: 140px;
     }
-    
     .chapter-select {
         padding: 0.5rem 2rem 0.5rem 0.75rem;
         font-size: 0.85rem;
     }
-    
     .reader-mode-selector {
         padding: 0.2rem;
     }
-    
     .mode-btn {
         padding: 0.4rem 0.6rem;
     }
-    
     .mode-btn svg {
         width: 18px;
         height: 18px;
     }
-    
     .page-input-group {
         padding: 0.4rem 0.6rem;
         font-size: 0.8rem;
     }
-    
     .page-jump-input {
         width: 42px;
         padding: 0.3rem 0.4rem;
         font-size: 0.85rem;
     }
-    
-    .page-nav-btn {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .progress-bar-wrapper {
-        height: 5px;
-    }
-    
-    .progress-handle {
-        width: 14px;
-        height: 14px;
+    .progress-bar-wrapper { height: 5px; }
+    .progress-handle { width: 14px; height: 14px; }
+    .page-image-container.zoomed {
+        max-height: calc(100dvh - 160px);
     }
 }
 
-/* Écrans très petits */
+/* Très petits écrans */
 @media (max-width: 360px) {
-    .chapter-select-wrapper {
-        max-width: 120px;
+    .chapter-select-wrapper { max-width: 120px; }
+    .mode-btn { padding: 0.35rem 0.5rem; }
+}
+
+/* Mobile paysage : optimise la hauteur */
+@media (max-height: 500px) and (orientation: landscape) {
+    .reader-container {
+        padding-top: 130px;
+        padding-bottom: 80px;
     }
-    
-    .mode-btn {
-        padding: 0.35rem 0.5rem;
+    .page-image-container.zoomed {
+        max-height: calc(100dvh - 140px);
+    }
+    #readerContainer .page-mode-container.fit-height .page-image-container {
+        max-height: calc(100dvh - 150px);
+    }
+    #readerContainer .page-mode-container.fit-height .page-display img {
+        height: calc(100dvh - 170px);
+        max-height: calc(100dvh - 170px);
+    }
+    .reader-controls {
+        bottom: 6px;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+/* ========================================
+   PLEIN ÉCRAN
+   ======================================== */
+:fullscreen .reader-container,
+:-webkit-full-screen .reader-container {
+    padding-top: 60px;
+}
+
+:fullscreen .reader-top-bar,
+:-webkit-full-screen .reader-top-bar {
+    top: 0;
+}
+
+:fullscreen .page-image-container.zoomed,
+:-webkit-full-screen .page-image-container.zoomed {
+    max-height: calc(100dvh - 140px);
+}
+
+:fullscreen #readerContainer .page-mode-container.fit-height .page-display img,
+:-webkit-full-screen #readerContainer .page-mode-container.fit-height .page-display img {
+    height: calc(100dvh - 160px);
+    max-height: calc(100dvh - 160px);
+}
+
+/* ========================================
+   ACCESSIBILITÉ : préférences utilisateur
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    .page-display img,
+    .reader-controls,
+    .progress-bar-fill,
+    .reader-settings-panel,
+    .mode-btn,
+    .control-button,
+    .zoom-btn {
+        transition: none !important;
+    }
+    .progress-bar-fill::after {
+        animation: none;
     }
 }

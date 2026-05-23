@@ -1,6 +1,14 @@
 // === THEME MANAGER - LanorTrad ===
 // Loaded synchronously in <head> to prevent flash of wrong theme.
 
+// Domaine déprécié : on dirige vers la page d'annonce.
+(function () {
+  if (location.hostname === 'lanortrad.netlify.app' &&
+      !/\/redirect\.html$/i.test(location.pathname)) {
+    location.replace('/redirect.html');
+  }
+})();
+
 (function () {
   'use strict';
 
