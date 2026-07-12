@@ -1,5 +1,5 @@
 const CONFIG = {
-    maxChapters: 239,
+    maxChapters: 247,
     currentManga: "Tougen Anki",
     chapterPrefix: "Chapitre",
     baseDate: new Date(2025, 0, 1)
@@ -8,7 +8,9 @@ const CONFIG = {
 // Bonus chapters definition
 const bonusChapters = [
     { number: 181.5},
-    { number: 181.6}
+    { number: 181.6},
+    { number: 246.5 },
+    { number: 246.6 }
 ].map(ch => ({
     ...ch,
     date: CONFIG.baseDate,
